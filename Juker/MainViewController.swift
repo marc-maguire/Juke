@@ -110,7 +110,82 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         updateLabels(song: trackArray[1])
         
     }
-
+    
+//    func getSongs(songs: [Song]) {
+//        
+//        
+//        var urlComponents = URLComponents()
+//        urlComponents.scheme = "https"
+//        urlComponents.host = "spotify.something"
+//        urlComponents.path = "slash slash stuff"
+//    }
+    
+    //get playlists -> ownerID, playlistName & playlistID
+    //playlist object
+    
+    //get tracks(playlist: Playlist)
+    
+    
+    func getTracks(tracks: [String], completion: @escaping (String?) -> ()) {
+        let urlPath = "https://api.spotify.com/v1/tracks?ids=11dFghVXANMlKmJXsNCbNl,2takcwOaAZWiXQijPHIx7B"
+        guard let endpoint = URL(string: urlPath) else {
+            print("Error creating endpoint")
+            return
+        }
+        
+        guard let token = session.accessToken else {
+            return
+        }
+        
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "GET"
+        // Set headers
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        request.setValue("application/x-www-form-urlencoded; charset=utf-8", forHTTPHeaderField: "Content-Type")
+        
+        URLSession.shared.dataTask(with: request) { [weak self] (data, response, error) in
+            do {
+                guard let data = data else {
+                    return
+                }
+                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String:AnyObject] else {
+                    return
+                }
+                
+                guard let strongSelf = self else {
+                    return
+                }
+                
+                print(json)
+                
+                guard let tracks = json["tracks"] as? [[String:AnyObject]] else {
+                    return
+                }
+                
+                
+                for track in tracks {
+                    
+                    let song = Song(singleTrackDict: track)
+                    
+                    strongSelf.trackArray.append(song!)
+                    
+                }
+                
+                let trackString = strongSelf.trackArray.first?.songURI
+                print(trackString!)
+                
+                completion(trackString)
+                
+                
+                
+            }
+            catch {
+                
+            }
+            
+            }.resume()
+        
+    }
     
     func jsonParser(completion: @escaping (String?) -> ()) {
         let urlPath = "https://api.spotify.com/v1/tracks?ids=11dFghVXANMlKmJXsNCbNl,2takcwOaAZWiXQijPHIx7B"
