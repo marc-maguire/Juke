@@ -1,0 +1,456 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		189CE6ADF1AC812E2EF8718B /* Pods_Juker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */; };
+		D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F71EEF5D5800AD29BB /* DataManager.swift */; };
+		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
+		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
+		D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FF1EF068F000AD29BB /* ConfigCreds.swift */; };
+		D0C8A6D61EEC45A30058031D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6D51EEC45A30058031D /* AppDelegate.swift */; };
+		D0C8A6D81EEC45A30058031D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6D71EEC45A30058031D /* MainViewController.swift */; };
+		D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8A6D91EEC45A40058031D /* Main.storyboard */; };
+		D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */; };
+		D0C8A6E01EEC45A50058031D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0C8A6DF1EEC45A50058031D /* Assets.xcassets */; };
+		D0C8A6E31EEC45A50058031D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */; };
+		D0C8A6ED1EEC45E90058031D /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */; };
+		D0C8A6EE1EEC45E90058031D /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */; };
+		D0C8A6EF1EEC45E90058031D /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */; };
+		D0C8A6F31EEC46C10058031D /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6F21EEC46C10058031D /* BridgeViewController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Juker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.release.xcconfig"; sourceTree = "<group>"; };
+		BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.debug.xcconfig"; sourceTree = "<group>"; };
+		D09105F71EEF5D5800AD29BB /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeBoxManager.swift; sourceTree = "<group>"; };
+		D09105FB1EEF5F4E00AD29BB /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
+		D09105FF1EF068F000AD29BB /* ConfigCreds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigCreds.swift; sourceTree = "<group>"; };
+		D0C8A6D21EEC45A30058031D /* Juker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Juker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0C8A6D51EEC45A30058031D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D0C8A6D71EEC45A30058031D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		D0C8A6DA1EEC45A40058031D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D0C8A6DD1EEC45A40058031D /* Juker.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Juker.xcdatamodel; sourceTree = "<group>"; };
+		D0C8A6DF1EEC45A50058031D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D0C8A6E21EEC45A50058031D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D0C8A6E41EEC45A50058031D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		D0C8A6F01EEC46C00058031D /* Juker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Juker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		D0C8A6F11EEC46C10058031D /* BridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
+		D0C8A6F21EEC46C10058031D /* BridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D0C8A6CF1EEC45A30058031D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C8A6ED1EEC45E90058031D /* SpotifyAudioPlayback.framework in Frameworks */,
+				D0C8A6EF1EEC45E90058031D /* SpotifyMetadata.framework in Frameworks */,
+				D0C8A6EE1EEC45E90058031D /* SpotifyAuthentication.framework in Frameworks */,
+				189CE6ADF1AC812E2EF8718B /* Pods_Juker.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16408986C3B10094554BD423 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CE4B2549E1157728CCC81C46 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */,
+				AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D0C8A6C91EEC45A30058031D = {
+			isa = PBXGroup;
+			children = (
+				D0C8A6D41EEC45A30058031D /* Juker */,
+				D0C8A6D31EEC45A30058031D /* Products */,
+				D0C8A6F01EEC46C00058031D /* Juker-Bridging-Header.h */,
+				CE4B2549E1157728CCC81C46 /* Pods */,
+				16408986C3B10094554BD423 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D0C8A6D31EEC45A30058031D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D0C8A6D21EEC45A30058031D /* Juker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D0C8A6D41EEC45A30058031D /* Juker */ = {
+			isa = PBXGroup;
+			children = (
+				D09105FF1EF068F000AD29BB /* ConfigCreds.swift */,
+				D0C8A6D51EEC45A30058031D /* AppDelegate.swift */,
+				D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */,
+				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
+				D0C8A6D71EEC45A30058031D /* MainViewController.swift */,
+				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
+				D0C8A6F11EEC46C10058031D /* BridgeViewController.h */,
+				D0C8A6F21EEC46C10058031D /* BridgeViewController.m */,
+				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
+				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
+				D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */,
+				D0C8A6E41EEC45A50058031D /* Info.plist */,
+				D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */,
+				D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */,
+				D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */,
+				D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */,
+			);
+			path = Juker;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D0C8A6D11EEC45A30058031D /* Juker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0C8A6E71EEC45A50058031D /* Build configuration list for PBXNativeTarget "Juker" */;
+			buildPhases = (
+				87A9E4B55133B0F798F3DCB5 /* [CP] Check Pods Manifest.lock */,
+				D0C8A6CE1EEC45A30058031D /* Sources */,
+				D0C8A6CF1EEC45A30058031D /* Frameworks */,
+				D0C8A6D01EEC45A30058031D /* Resources */,
+				0AF01B97F13B3F4B739CC141 /* [CP] Embed Pods Frameworks */,
+				D469C1DD93B48A15C85723F0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Juker;
+			productName = Juker;
+			productReference = D0C8A6D21EEC45A30058031D /* Juker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D0C8A6CA1EEC45A30058031D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Alex Mitchell";
+				TargetAttributes = {
+					D0C8A6D11EEC45A30058031D = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = SLXQD48E5E;
+						LastSwiftMigration = 0820;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = D0C8A6CD1EEC45A30058031D /* Build configuration list for PBXProject "Juker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D0C8A6C91EEC45A30058031D;
+			productRefGroup = D0C8A6D31EEC45A30058031D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D0C8A6D11EEC45A30058031D /* Juker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D0C8A6D01EEC45A30058031D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C8A6E31EEC45A50058031D /* LaunchScreen.storyboard in Resources */,
+				D0C8A6E01EEC45A50058031D /* Assets.xcassets in Resources */,
+				D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0AF01B97F13B3F4B739CC141 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Juker/Pods-Juker-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		87A9E4B55133B0F798F3DCB5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D469C1DD93B48A15C85723F0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Juker/Pods-Juker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D0C8A6CE1EEC45A30058031D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
+				D0C8A6D81EEC45A30058031D /* MainViewController.swift in Sources */,
+				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
+				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
+				D0C8A6F31EEC46C10058031D /* BridgeViewController.m in Sources */,
+				D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */,
+				D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */,
+				D0C8A6D61EEC45A30058031D /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D0C8A6D91EEC45A40058031D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0C8A6DA1EEC45A40058031D /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0C8A6E21EEC45A50058031D /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D0C8A6E51EEC45A50058031D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D0C8A6E61EEC45A50058031D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D0C8A6E81EEC45A50058031D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = SLXQD48E5E;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Juker",
+				);
+				INFOPLIST_FILE = Juker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		D0C8A6E91EEC45A50058031D /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				DEVELOPMENT_TEAM = SLXQD48E5E;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Juker",
+				);
+				INFOPLIST_FILE = Juker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D0C8A6CD1EEC45A30058031D /* Build configuration list for PBXProject "Juker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0C8A6E51EEC45A50058031D /* Debug */,
+				D0C8A6E61EEC45A50058031D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0C8A6E71EEC45A50058031D /* Build configuration list for PBXNativeTarget "Juker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0C8A6E81EEC45A50058031D /* Debug */,
+				D0C8A6E91EEC45A50058031D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D0C8A6DD1EEC45A40058031D /* Juker.xcdatamodel */,
+			);
+			currentVersion = D0C8A6DD1EEC45A40058031D /* Juker.xcdatamodel */;
+			path = Juker.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = D0C8A6CA1EEC45A30058031D /* Project object */;
+}
