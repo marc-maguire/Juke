@@ -18,14 +18,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var albumArtImageView: UIImageView!
     var timer = Timer()
     var counter = 0
-    var isTimerRunning = false
     var resumeTapped = false
+    var songLength = 240
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        setTimer(seconds: 240)
+        setTimer(seconds: 0)
         durationLabel.text = String(counter)
         startTimer()
         
@@ -50,8 +50,15 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     func updateCounter() {
-        counter -= 1 //count up by 1 second at a time
-        durationLabel.text = timeString(time: TimeInterval(counter))
+        if counter == songLength {
+            timer.invalidate()
+            let notificationName = Notification.Name("songDidFinishPlaying")
+            NotificationCenter.default.post(name: notificationName, object: nil, userInfo:  ["nextSong" : "testNextSong", "finishedSong": "testFinishedSong"])
+        } else {
+            counter -= 1 //count up by 1 second at a time
+            durationLabel.text = timeString(time: TimeInterval(counter))
+        }
+        
     }
     
     func pauseTimer() {
