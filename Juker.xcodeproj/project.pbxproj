@@ -10,6 +10,7 @@
 		189CE6ADF1AC812E2EF8718B /* Pods_Juker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */; };
 		9241B5251EF08C030059335C /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5241EF08C030059335C /* TableViewController.swift */; };
 		9241B5271EF08C660059335C /* JukeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5261EF08C660059335C /* JukeTableViewCell.swift */; };
+		9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */; };
 		D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F71EEF5D5800AD29BB /* DataManager.swift */; };
 		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
 		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
@@ -23,13 +24,13 @@
 		D0C8A6ED1EEC45E90058031D /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */; };
 		D0C8A6EE1EEC45E90058031D /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */; };
 		D0C8A6EF1EEC45E90058031D /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */; };
-		D0C8A6F31EEC46C10058031D /* BridgeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6F21EEC46C10058031D /* BridgeViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Juker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9241B5241EF08C030059335C /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9241B5261EF08C660059335C /* JukeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeTableViewCell.swift; sourceTree = "<group>"; };
+		9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMusicViewController.swift; sourceTree = "<group>"; };
 		AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.release.xcconfig"; sourceTree = "<group>"; };
 		BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.debug.xcconfig"; sourceTree = "<group>"; };
 		D09105F71EEF5D5800AD29BB /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -48,8 +49,6 @@
 		D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
 		D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
 		D0C8A6F01EEC46C00058031D /* Juker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Juker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
-		D0C8A6F11EEC46C10058031D /* BridgeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgeViewController.h; sourceTree = "<group>"; };
-		D0C8A6F21EEC46C10058031D /* BridgeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgeViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,9 +111,8 @@
 				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
 				D0C8A6D71EEC45A30058031D /* MainViewController.swift */,
 				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
-				D0C8A6F11EEC46C10058031D /* BridgeViewController.h */,
-				D0C8A6F21EEC46C10058031D /* BridgeViewController.m */,
 				9241B5241EF08C030059335C /* TableViewController.swift */,
+				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
 				9241B5261EF08C660059335C /* JukeTableViewCell.swift */,
 				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
@@ -255,9 +253,9 @@
 			files = (
 				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
 				D0C8A6D81EEC45A30058031D /* MainViewController.swift in Sources */,
+				9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */,
 				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
 				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
-				D0C8A6F31EEC46C10058031D /* BridgeViewController.m in Sources */,
 				D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */,
 				D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */,
 				9241B5251EF08C030059335C /* TableViewController.swift in Sources */,

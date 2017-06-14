@@ -15,18 +15,32 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var songTitleLabel: UILabel!
     @IBOutlet weak var ArtistNameLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
+    //shows as zero before it is set (need to set it when we are transitioning)
+    @IBOutlet weak var timeElapsedLabel: UILabel!
+    @IBOutlet weak var songProgressBar: UIProgressView!
+
+    
     @IBOutlet weak var albumArtImageView: UIImageView!
-    var timer = Timer()
-    var counter = 0
+    var countDownTimer = Timer()
+    var countUpTimer = Timer()
+    var timeRemaining = 0
+    var timeElapsed = 0 {
+        didSet {
+            updateProgressBar()
+        }
+    }
     var resumeTapped = false
-    var songLength = 240
+    var songLength = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        setTimer(seconds: 0)
-        durationLabel.text = String(counter)
+        
+        durationLabel.text = String(timeRemaining)
+        setMaxSongtime(seconds: 240) //use to set new song length
+        timeElapsedLabel.text = String(timeElapsed)
+        
         startTimer()
         
         
@@ -41,29 +55,38 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: Timer Methods
     
-    func setTimer(seconds: Int) {
-        counter = seconds
+    func setMaxSongtime(seconds: Int) {
+        timeRemaining = seconds
     }
     
     func startTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCounter)), userInfo: nil, repeats: true)
+        countDownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCounter)), userInfo: nil, repeats: true)
+        countUpTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCountUpTimer)), userInfo: nil, repeats: true)
         
     }
     func updateCounter() {
-        if counter == songLength {
-            timer.invalidate()
+        if timeRemaining == 0 {
+            countDownTimer.invalidate()
+            countUpTimer.invalidate()
+            //notify everyone that the song is finished
             let notificationName = Notification.Name("songDidFinishPlaying")
             NotificationCenter.default.post(name: notificationName, object: nil, userInfo:  ["nextSong" : "testNextSong", "finishedSong": "testFinishedSong"])
         } else {
-            counter -= 1 //count up by 1 second at a time
-            durationLabel.text = timeString(time: TimeInterval(counter))
+            timeRemaining -= 1 //count up by 1 second at a time
+            durationLabel.text = timeString(time: TimeInterval(timeRemaining))
         }
         
     }
     
+    func updateCountUpTimer() {
+        
+            timeElapsed += 1 //count up by 1 second at a time
+            timeElapsedLabel.text = timeString(time: TimeInterval(timeElapsed))
+    }
+    
     func pauseTimer() {
         if self.resumeTapped == false {
-            timer.invalidate()
+            countDownTimer.invalidate()
             self.resumeTapped = true
         } else {
             startTimer()
@@ -78,7 +101,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         return String(format:"%02d:%02d", minutes, seconds)
        
     }
-    
+
+    func updateProgressBar(){
+        songProgressBar.progressTintColor = UIColor.blue
+        songProgressBar.setProgress(Float(timeElapsed) / Float(timeRemaining), animated: true)
+        songProgressBar.layoutIfNeeded()
+    }
+
     
     
     //MARK: TableView Data Source
