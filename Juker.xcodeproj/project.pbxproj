@@ -12,6 +12,7 @@
 		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
 		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
 		D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FF1EF068F000AD29BB /* ConfigCreds.swift */; };
+		D09106021EF0A27200AD29BB /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09106011EF0A27200AD29BB /* Playlist.swift */; };
 		D0C8A6D61EEC45A30058031D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6D51EEC45A30058031D /* AppDelegate.swift */; };
 		D0C8A6D81EEC45A30058031D /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6D71EEC45A30058031D /* MainViewController.swift */; };
 		D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8A6D91EEC45A40058031D /* Main.storyboard */; };
@@ -32,6 +33,7 @@
 		D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeBoxManager.swift; sourceTree = "<group>"; };
 		D09105FB1EEF5F4E00AD29BB /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D09105FF1EF068F000AD29BB /* ConfigCreds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigCreds.swift; sourceTree = "<group>"; };
+		D09106011EF0A27200AD29BB /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		D0C8A6D21EEC45A30058031D /* Juker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Juker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C8A6D51EEC45A30058031D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0C8A6D71EEC45A30058031D /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
 				D0C8A6D71EEC45A30058031D /* MainViewController.swift */,
 				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
+				D09106011EF0A27200AD29BB /* Playlist.swift */,
 				D0C8A6F11EEC46C10058031D /* BridgeViewController.h */,
 				D0C8A6F21EEC46C10058031D /* BridgeViewController.m */,
 				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
@@ -249,6 +252,7 @@
 			files = (
 				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
 				D0C8A6D81EEC45A30058031D /* MainViewController.swift in Sources */,
+				D09106021EF0A27200AD29BB /* Playlist.swift in Sources */,
 				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
 				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
 				D0C8A6F31EEC46C10058031D /* BridgeViewController.m in Sources */,

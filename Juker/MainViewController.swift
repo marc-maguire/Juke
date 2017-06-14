@@ -15,6 +15,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     var session:SPTSession!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
+    var manager = DataManager.shared()
     
     var track: String?
     
@@ -66,7 +67,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
         
         
         //REMEMBER TO ADD BACK SCOPES
-        auth.requestedScopes = [SPTAuthStreamingScope]
+        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope,SPTAuthUserFollowReadScope,SPTAuthUserLibraryReadScope,SPTAuthUserReadPrivateScope,SPTAuthUserReadTopScope,SPTAuthUserReadBirthDateScope,SPTAuthUserReadEmailScope]
         
         loginUrl = auth.spotifyWebAuthenticationURL()
         
@@ -175,12 +176,16 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
     
     @IBAction func getSong(_ sender: UIButton) {
         
+        manager.getCurrentUserPlaylists()
+        
+        
         jsonParser { (uri) in
             self.track = uri!
             
             print("got here baby")
             
         }
+        
     }
     
     

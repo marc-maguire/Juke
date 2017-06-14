@@ -12,6 +12,8 @@ import Alamofire
 
 class DataManager {
     
+    lazy var playlists = [Playlist?]()
+
     private static var sharedInstance: DataManager = {
         let dataManager = DataManager()
         //do any additional configuration
@@ -32,45 +34,62 @@ class DataManager {
     
     //MARK: - Network Calls
     
-    //get random image
-    
-    
-    
-    
-    static func fetchImage(completion:@escaping(UIImage?)->()) {
-        let session = URLSession.shared
+   
+    func getCurrentUserPlaylists() {
         
-        let components = URLComponents(string: "http://lorempixel.com/200/300")!
+        guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
+            return
+        }
         
-        let request = URLRequest(url: components.url!)
-        session.dataTask(with: request) { (data: Data?, response:URLResponse?, error: Error?) in
+        let sessionDataObj = sessionObj as! Data
+        let savedSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        let session = savedSession
+        let token = session.accessToken
+    
+        var urlWithComponents = URLComponents()
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token!)",
+            "Accept": "application/json"
+        ]
+      
+        urlWithComponents.scheme = "https"
+        urlWithComponents.host = "api.spotify.com"
+        urlWithComponents.path = "/v1/me/playlists/"
+
+    
+        Alamofire.request(urlWithComponents, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
             
-            var image: UIImage?
-            
-            defer {
-                completion(image)
+            if let status = dataResponse.response?.statusCode {
+                switch(status){
+                case 201:
+                    print("example success")
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+            //to get JSON return value
+            if let result = dataResponse.result.value {
+                let data = result as! [String:AnyObject]
+                
+                let items = data["items"] as! [[String:AnyObject]]
+                
+                for item in items {
+                    
+                    let playlist = Playlist(jsonDictionary: item)
+                    
+                    self.playlists.append(playlist)
+                    
+                }
+                print(data)
+                
             }
             
-            if let error = error {
-                print(#line, error.localizedDescription)
-                return
-            }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print(#line, "response is nil or status code not 200")
-                return
-            }
-            
-            guard let data = data else {
-                print(#line, "no data")
-                return
-            }
-            print(#line, data)
-            image = UIImage(data: data)
-            print(#line, image!)
-            
-            //            completion(image)
-            }.resume()
+        }
+        
+    }
+    
+    func getPlaylistTracks(playlistURL: String) {
         
     }
     
