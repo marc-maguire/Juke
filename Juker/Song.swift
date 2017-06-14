@@ -28,22 +28,21 @@ class Song: NSObject, NSCoding {
 //        
 //    }
     
-    init?(singleTrackDict: [String:AnyObject]) {
+    init?(trackDict: [String:AnyObject]) {
         
-//        let album = singleTrackDict["album"]
         
-        guard let album = singleTrackDict["album"], let artists = album["artists"] as? [[String:AnyObject]] else {
+        guard let album = trackDict["album"], let artists = album["artists"] as? [[String:AnyObject]] else {
             return nil
         }
         
         
         
-        self.title = singleTrackDict["name"] as! String
+        self.title = trackDict["name"] as! String
         self.artist = artists.first?["name"] as! String
-        self.songURI = singleTrackDict["uri"] as! String
+        self.songURI = trackDict["uri"] as! String
         self.album = album["name"] as! String
         self.albumURI = album["uri"] as! String
-        self.duration = singleTrackDict["duration_ms"] as! TimeInterval
+        self.duration = trackDict["duration_ms"] as! TimeInterval
         super.init()
         
     }

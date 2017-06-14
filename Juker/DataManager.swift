@@ -13,6 +13,7 @@ import Alamofire
 class DataManager {
     
     lazy var playlists = [Playlist?]()
+    lazy var trackArray = [Song]()
 
     private static var sharedInstance: DataManager = {
         let dataManager = DataManager()
@@ -34,8 +35,76 @@ class DataManager {
     
     //MARK: - Network Calls
     
+    func spotifySearch(searchString: String, completionArray: @escaping ([Song]) -> ()) {
+        
+        guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
+            return
+        }
+        
+        let sessionDataObj = sessionObj as! Data
+        let savedSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        let session = savedSession
+        let token = session.accessToken
+        
+        var urlWithComponents = URLComponents()
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token!)",
+            "Accept": "application/json"
+        ]
+        
+//        let parameters: Parameters = ["query" : searchString, "type" : "track"]
+        
+       
+        
+        urlWithComponents.scheme = "https"
+        urlWithComponents.host = "api.spotify.com"
+        urlWithComponents.path = "/v1/search"
+        
+        let query = URLQueryItem(name: "query", value: searchString)
+        let type = URLQueryItem(name: "type", value: "track")
+        urlWithComponents.queryItems = [query, type]
+        print(urlWithComponents.url!)
+        
+        
+        Alamofire.request(urlWithComponents, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
+            
+            
+            
+            if let status = dataResponse.response?.statusCode {
+                switch(status){
+                case 200:
+                    print("example success")
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+            //to get JSON return value
+            if let result = dataResponse.result.value {
+                let data = result as! [String:AnyObject]
+                
+                
+                
+                let tracks = data["tracks"] as! [String:AnyObject]
+                let items = tracks["items"] as! [[String:AnyObject]]
+                
+                var searchArray = [Song]()
+                
+                for item in items {
+                    
+                    let song = Song(trackDict: item)
+                    
+                    searchArray.append(song!)
+                    
+                }
+                completionArray(searchArray)
+                print(searchArray)
+            }
+        }
+        
+    }
+    
    
-    func getCurrentUserPlaylists() {
+    func spotifyCurrentUserPlaylists() {
         
         guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
             return
@@ -54,14 +123,14 @@ class DataManager {
       
         urlWithComponents.scheme = "https"
         urlWithComponents.host = "api.spotify.com"
-        urlWithComponents.path = "/v1/me/playlists/"
+        urlWithComponents.path = "/v1/me/playlists"
 
     
         Alamofire.request(urlWithComponents, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
             
             if let status = dataResponse.response?.statusCode {
                 switch(status){
-                case 201:
+                case 200:
                     print("example success")
                 default:
                     print("error with response status: \(status)")
@@ -81,6 +150,64 @@ class DataManager {
                     
                 }
                 print(data)
+            }
+        }
+    }
+    //playlistURL: String, completion: @escaping ([Song]) -> ()
+    func spotifyPlaylistTracks(ownerID: String, playlistID: String) {
+        
+        
+        guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
+            return
+        }
+        
+        
+        let sessionDataObj = sessionObj as! Data
+        let savedSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        let session = savedSession
+        let token = session.accessToken
+        
+        var urlWithComponents = URLComponents()
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token!)",
+            "Accept": "application/json"
+        ]
+        
+        urlWithComponents.scheme = "https"
+        urlWithComponents.host = "api.spotify.com"
+        urlWithComponents.path = "/v1/users/\(ownerID)/playlists/\(playlistID)/tracks"
+        
+        
+        
+        Alamofire.request(urlWithComponents, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
+            
+            if let status = dataResponse.response?.statusCode {
+                switch(status){
+                case 200:
+                    print("example success")
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+            //to get JSON return value
+            if let result = dataResponse.result.value {
+                
+                let data = result as! [String:AnyObject]
+                
+                let items = data["items"] as! [[String:AnyObject]]
+                print(items)
+                
+                
+                for item in items {
+                    
+                    let trackDict = item["track"] as! [String:AnyObject]
+                    print(trackDict)
+                    let song = Song(trackDict: trackDict)
+                    
+                    self.trackArray.append(song!)
+                }
+                
+                print(data)
                 
             }
             
@@ -89,95 +216,5 @@ class DataManager {
         
     }
     
-    func getPlaylistTracks(playlistURL: String) {
-        
-    }
-    
-    static func fetchQuote(completion:@escaping(String?)->()) {
-        
-        let session = URLSession.shared
-        let components = URLComponents(string: "http://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json")!
-        let request = URLRequest(url: components.url!)
-        
-        
-        
-        session.dataTask(with: request) { (data: Data?, response:URLResponse?, error: Error?) in
-            
-            var quote: String?
-            //when we call this and the above, we need to create our data model object and store it in an array
-            
-            
-            defer {
-                completion(quote)
-            }
-            
-            if let error = error {
-                print(#line, error.localizedDescription)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                print(#line, "response is nil or status code not 200")
-                return
-            }
-            
-            
-            guard let data = data else {
-                print(#line, "no data")
-                return
-            }
-            
-            do {
-                var json = try JSONSerialization.jsonObject(with: data, options: []) as! [String:String]
-                if let json = json["quoteText"] {
-                    quote = json
-                    completion(quote)
-                }
-                
-            } catch {
-                print(#line, "could not get json")
-            }
-            
-            }.resume()
-        
-    }
-
-/*   private func fetchQuote() {
- NetworkManager.fetchQuote { [weak self] (quoteString: String?) in
- guard let quoteString = quoteString else {
- print(#line, "no quote")
- return
- }
- guard let welf = self else {
- return
- }
- welf.quoteLabel.text = quoteString
- }
- }
-*/
- 
-    }
-
-
-/*
- + (NSURL *)createURLFromSearchString:(NSString *)string {
- NSURLComponents *URLFromComponents = [[NSURLComponents alloc]init];
- 
- URLFromComponents.scheme = @"https";
- URLFromComponents.host = @"api.flickr.com";
- URLFromComponents.path = @"/services/rest/";
- 
- NSURLQueryItem *method = [[NSURLQueryItem alloc]initWithName:@"method" value:@"flickr.photos.search"];
- NSURLQueryItem *APIKey = [[NSURLQueryItem alloc]initWithName:@"api_key" value:API_KEY];
- NSURLQueryItem *tags = [[NSURLQueryItem alloc]initWithName:@"tags" value:string];
- NSURLQueryItem *hasGeo = [[NSURLQueryItem alloc]initWithName:@"has_geo" value:@"1"];
- NSURLQueryItem *format = [[NSURLQueryItem alloc]initWithName:@"format" value:@"json"];
- NSURLQueryItem *extras = [[NSURLQueryItem alloc]initWithName:@"extras" value:@"url_m"];
- NSURLQueryItem *noJson = [[NSURLQueryItem alloc]initWithName:@"nojsoncallback" value:@"1"];
- URLFromComponents.queryItems = @[method, APIKey, tags, hasGeo, extras, format, noJson];
- 
- NSLog(@"%@",URLFromComponents.URL);
- return URLFromComponents.URL;
- }
- */
+}
  
