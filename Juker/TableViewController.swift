@@ -30,7 +30,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     var resumeTapped = false
-    var songLength = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
