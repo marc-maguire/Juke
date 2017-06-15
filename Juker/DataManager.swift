@@ -104,7 +104,7 @@ class DataManager {
     }
 
 
-    func spotifyCurrentUserPlaylists() {
+    func spotifyCurrentUserPlaylists(completionArray: @escaping ([Playlist]) -> ()) {
 
         guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
             return
@@ -137,6 +137,7 @@ class DataManager {
                 }
             }
             //to get JSON return value
+            var playlistArray: [Playlist] = []
             if let result = dataResponse.result.value {
                 let data = result as! [String:AnyObject]
 
@@ -146,8 +147,8 @@ class DataManager {
 
                     let playlist = Playlist(jsonDictionary: item)
 
-                    self.playlists.append(playlist)
-
+                    playlistArray.append(playlist)
+                    completionArray(playlistArray)
                 }
                 print(data)
             }
@@ -197,7 +198,7 @@ class DataManager {
                 let items = data["items"] as! [[String:AnyObject]]
                 print(items)
 
-
+               
                 for item in items {
 
                     let trackDict = item["track"] as! [String:AnyObject]

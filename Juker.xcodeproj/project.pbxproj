@@ -12,6 +12,8 @@
 		9241B5271EF08C660059335C /* JukeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5261EF08C660059335C /* JukeTableViewCell.swift */; };
 		9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */; };
 		9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52C1EF1E2F40059335C /* Playlist.swift */; };
+		9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52E1EF309430059335C /* PlaylistViewController.swift */; };
+		9241B5311EF3094C0059335C /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5301EF3094C0059335C /* SongViewController.swift */; };
 		D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F71EEF5D5800AD29BB /* DataManager.swift */; };
 		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
 		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
@@ -33,6 +35,8 @@
 		9241B5261EF08C660059335C /* JukeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeTableViewCell.swift; sourceTree = "<group>"; };
 		9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMusicViewController.swift; sourceTree = "<group>"; };
 		9241B52C1EF1E2F40059335C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		9241B52E1EF309430059335C /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		9241B5301EF3094C0059335C /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
 		AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.release.xcconfig"; sourceTree = "<group>"; };
 		BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.debug.xcconfig"; sourceTree = "<group>"; };
 		D09105F71EEF5D5800AD29BB /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -113,9 +117,11 @@
 				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
 				D0C8A6D71EEC45A30058031D /* MainViewController.swift */,
 				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
-				9241B5241EF08C030059335C /* TableViewController.swift */,
 				9241B52C1EF1E2F40059335C /* Playlist.swift */,
+				9241B5241EF08C030059335C /* TableViewController.swift */,
 				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
+				9241B52E1EF309430059335C /* PlaylistViewController.swift */,
+				9241B5301EF3094C0059335C /* SongViewController.swift */,
 				9241B5261EF08C660059335C /* JukeTableViewCell.swift */,
 				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
@@ -262,6 +268,8 @@
 				D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */,
 				D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */,
 				9241B5251EF08C030059335C /* TableViewController.swift in Sources */,
+				9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */,
+				9241B5311EF3094C0059335C /* SongViewController.swift in Sources */,
 				9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */,
 				9241B5271EF08C660059335C /* JukeTableViewCell.swift in Sources */,
 				D0C8A6D61EEC45A30058031D /* AppDelegate.swift in Sources */,

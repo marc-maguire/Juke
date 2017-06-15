@@ -11,6 +11,8 @@ import UIKit
 class AddMusicViewController: UIViewController, UITableViewDelegate, UITableViewDataSource{
 
     @IBOutlet weak var tableView: UITableView!
+
+    var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,20 +21,52 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    //check which cell was clicked
+    //perform segue
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            performSegue(withIdentifier: "playlist", sender: self)
+        case 1:
+            performSegue(withIdentifier: "playlist", sender: self) //update this to recommendation
+        case 2:
+            performSegue(withIdentifier: "playlist", sender: self) //update this to saved music
+        case 3:
+            performSegue(withIdentifier: "playlist", sender: self) //Recently Played
+        default:
+            return
+        }
     }
+
+
+    
+    
+//    @IBAction func getSong(_ sender: UIButton) {
+//        
+//        //        manager.spotifyCurrentUserPlaylists()
+//        //
+//        //        manager.spotifyPlaylistTracks(ownerID: "jmperezperez", playlistID: "3cEYpjA9oz9GiPac4AsH4n")
+//        
+//        manager.spotifySearch(searchString: "perez") {(array) in
+//            print("YAAAAAAAA")
+//            print("Array deets, # of songs: \(array.count) array deets: \(array)")
+//            
+//            self.trackArray = array
+//        }
+//    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 1
+        return addMusicOptions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "musicCell", for: indexPath)
-        
+        cell.textLabel?.text = addMusicOptions[indexPath.row]
+
         return cell
     }
 

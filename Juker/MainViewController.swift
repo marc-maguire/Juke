@@ -125,6 +125,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
 
         manager.spotifySearch(searchString: "perez") { (array) in
             print("YAAAAAAAA")
+            print("Array deets, # of songs: \(array.count) array deets: \(array)")
         }
 
 
