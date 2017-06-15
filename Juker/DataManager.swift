@@ -155,7 +155,7 @@ class DataManager {
         }
     }
     //playlistURL: String, completion: @escaping ([Song]) -> ()
-    func spotifyPlaylistTracks(ownerID: String, playlistID: String) {
+    func spotifyPlaylistTracks(ownerID: String, playlistID: String, completionArray: @escaping ([Song]) -> ()) {
 
 
         guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
@@ -198,18 +198,23 @@ class DataManager {
                 let items = data["items"] as! [[String:AnyObject]]
                 print(items)
 
-               
+                var trackArray: [Song] = []
                 for item in items {
 
                     let trackDict = item["track"] as! [String:AnyObject]
                     print(trackDict)
                     let song = Song(trackDict: trackDict)
-
-                    self.trackArray.append(song!)
+                    
+                    if let song = song {
+                        trackArray.append(song)
+                    } else {
+                        print("Song is nil")
+                    }
+                   
                 }
 
                 print(data)
-
+                completionArray(trackArray)
             }
 
 

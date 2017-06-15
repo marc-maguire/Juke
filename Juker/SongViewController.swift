@@ -12,6 +12,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     var tracksArray: [Song] = []
+    var manager = DataManager.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,22 +22,22 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(<#Bool#>)
+        super.viewWillAppear(true)
         tableView.reloadData()
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 1
+        return tracksArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "musicCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-//        cell.textLabel?.text = tracksArray[indexPath.row].title
-//        cell.detailTextLabel?.text = tracksArray[indexPath.row].artist
+        cell.textLabel?.text = tracksArray[indexPath.row].title
+        cell.detailTextLabel?.text = tracksArray[indexPath.row].artist
         
         return cell
     }

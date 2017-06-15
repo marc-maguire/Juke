@@ -64,9 +64,9 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "musicCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.textLabel?.text = addMusicOptions[indexPath.row]
-
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
 
