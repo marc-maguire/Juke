@@ -270,9 +270,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="bqk-Op-qFt" kind="show" identifier="playlist" id="7sV-dp-23d"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -289,6 +286,7 @@
                     <connections>
                         <outlet property="searchDisplayController" destination="ju5-L3-ZzS" id="ZFf-Wl-EMB"/>
                         <outlet property="tableView" destination="YXZ-GY-uiH" id="m0d-YV-GBR"/>
+                        <segue destination="bqk-Op-qFt" kind="show" identifier="playlist" id="ETF-Zm-Yed"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9kB-D2-Y5c" userLabel="First Responder" sceneMemberID="firstResponder"/>
