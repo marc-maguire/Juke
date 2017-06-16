@@ -81,6 +81,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
      
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
+        if segue.identifier == "first" {
+            let initialVC = segue.source as! SongViewController
+            guard let newSong = initialVC.selectedSong else {
+                print("no song returned")
+                return
+            }
+            trackArray.append(newSong)
+        }
     }
 
     
