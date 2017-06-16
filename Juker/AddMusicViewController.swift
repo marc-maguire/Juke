@@ -14,6 +14,7 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     let searchController = UISearchController(searchResultsController: nil)
     var songs = [Song]()
     var filteredSongs = [Song]()
+    var manager = DataManager.shared()
     
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     
@@ -32,10 +33,15 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     
 
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        filteredSongs = songs.filter { song in
-            return song.title.lowercased().contains(searchText.lowercased())
-    
+        //do network call here
+        if searchText.characters.count >= 1 {
+        manager.spotifySearch(searchString: searchText.lowercased()) { (songs) in
+            self.filteredSongs = songs
         }
+        }
+//        filteredSongs = songs.filter { song in
+//            return song.title.lowercased().contains(searchText.lowercased())
+    
         
         tableView.reloadData()
     }
@@ -44,6 +50,11 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     //perform segue
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return
+        }
+
         switch indexPath.row {
         case 0:
             performSegue(withIdentifier: "playlist", sender: self)
@@ -56,6 +67,7 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             return
         }
+            
     }
 
 
