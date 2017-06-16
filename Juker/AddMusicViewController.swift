@@ -36,7 +36,10 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
         //do network call here
         if searchText.characters.count >= 1 {
         manager.spotifySearch(searchString: searchText.lowercased()) { (songs) in
-            self.filteredSongs = songs
+            DispatchQueue.main.async {
+                self.filteredSongs = []
+                self.filteredSongs = songs
+            }
         }
         }
 //        filteredSongs = songs.filter { song in
@@ -95,9 +98,12 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
         return addMusicOptions.count
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if searchController.isActive && searchController.searchBar.text != "" {
+            
             cell.textLabel?.text = filteredSongs[indexPath.row].title
             cell.detailTextLabel?.text = filteredSongs[indexPath.row].artist
 
