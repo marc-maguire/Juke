@@ -88,6 +88,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
+        } else if segue.identifier == "newSearchSong" {
+            let initialVC = segue.source as! AddMusicViewController
+            guard let newSong = initialVC.selectedSong else {
+                print("no song returned")
+                return
+            }
+            trackArray.append(newSong)
         }
     }
 

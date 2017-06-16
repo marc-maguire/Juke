@@ -12,9 +12,10 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var tableView: UITableView!
     let searchController = UISearchController(searchResultsController: nil)
-    var songs = [Song]()
+//    var songs = [Song]()
     var filteredSongs = [Song]()
     var manager = DataManager.shared()
+    var selectedSong: Song?
     
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     
@@ -52,7 +53,9 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if searchController.isActive && searchController.searchBar.text != "" {
-            return
+            selectedSong = filteredSongs[indexPath.row]
+            performSegue(withIdentifier: "newSearchSong", sender: self)
+            //perform segue
         }
 
         switch indexPath.row {
