@@ -79,8 +79,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 
      // MARK: - Navigation
      
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        
+    }
 
     
     //MARK: Timer Methods
@@ -231,12 +232,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         //
         //        manager.spotifyPlaylistTracks(ownerID: "jmperezperez", playlistID: "3cEYpjA9oz9GiPac4AsH4n")
         
-        manager.spotifySearch(searchString: "perez") {(array) in
-            print("YAAAAAAAA")
-            print("Array deets, # of songs: \(array.count) array deets: \(array)")
-
-            self.trackArray = array
-        }
+//        manager.spotifySearch(searchString: "perez") {(array) in
+//            print("YAAAAAAAA")
+//            print("Array deets, # of songs: \(array.count) array deets: \(array)")
+//
+//            self.trackArray = array
+//        }
         
         
         

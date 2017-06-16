@@ -38,7 +38,12 @@ class Song: NSObject, NSCoding {
         
         
         self.title = trackDict["name"] as! String
-        self.artist = artists.first?["name"] as! String
+        //sometimes we are getting nil here
+        if let artist = artists.first?["name"] {
+        self.artist = artist as! String
+        } else {
+            self.artist = ""
+        }
         self.songURI = trackDict["uri"] as! String
         self.album = album["name"] as! String
         self.albumURI = album["uri"] as! String

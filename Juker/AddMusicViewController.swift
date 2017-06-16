@@ -35,16 +35,13 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         //do network call here
         if searchText.characters.count >= 1 {
-        manager.spotifySearch(searchString: searchText.lowercased()) { (songs) in
+        manager.spotifySearch(searchString: searchText) { (songs) in
             DispatchQueue.main.async {
-                self.filteredSongs = []
                 self.filteredSongs = songs
+                self.tableView.reloadData()
             }
         }
         }
-//        filteredSongs = songs.filter { song in
-//            return song.title.lowercased().contains(searchText.lowercased())
-    
         
         tableView.reloadData()
     }
@@ -104,11 +101,13 @@ class AddMusicViewController: UIViewController, UITableViewDelegate, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         if searchController.isActive && searchController.searchBar.text != "" {
             
+            cell.accessoryType = .none
             cell.textLabel?.text = filteredSongs[indexPath.row].title
             cell.detailTextLabel?.text = filteredSongs[indexPath.row].artist
 
         }else {
             cell.textLabel?.text = addMusicOptions[indexPath.row]
+            cell.detailTextLabel?.text = ""
             cell.accessoryType = .disclosureIndicator
         
         }

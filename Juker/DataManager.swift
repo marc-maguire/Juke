@@ -67,8 +67,11 @@ class DataManager {
 
 
         Alamofire.request(urlWithComponents, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
+            
+            if let request = dataResponse.request {
+            print("\(request)")
 
-
+            }
 
             if let status = dataResponse.response?.statusCode {
                 switch(status){
