@@ -12,6 +12,7 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     @IBOutlet weak var tableView: UITableView!
     var tracksArray: [Song] = []
+    var selectedSong: Song?
     var manager = DataManager.shared()
     
     override func viewDidLoad() {
@@ -40,6 +41,11 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.detailTextLabel?.text = tracksArray[indexPath.row].artist
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedSong = tracksArray[indexPath.row]
+        performSegue(withIdentifier: "first", sender: self)
     }
     
     /*

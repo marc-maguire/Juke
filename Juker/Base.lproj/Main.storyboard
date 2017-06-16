@@ -416,9 +416,11 @@
                     </view>
                     <connections>
                         <outlet property="tableView" destination="63N-gq-mjN" id="eMK-ZK-Vcg"/>
+                        <segue destination="8up-T7-JaC" kind="unwind" identifier="first" unwindAction="prepareForUnwindWithSegue:" id="2ax-pA-Fkc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LbZ-2t-eDI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="8up-T7-JaC" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4252" y="138.98050974512745"/>
         </scene>
