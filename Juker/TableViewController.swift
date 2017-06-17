@@ -24,6 +24,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var albumArtImageView: UIImageView!
     var countDownTimer = Timer()
     var countUpTimer = Timer()
+    var totalSongTime: Float = 0.0
     var timeRemaining = 0
     var timeElapsed = 0 {
         didSet {
@@ -161,6 +162,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func setMaxSongtime(milliseconds: Int) {
         timeRemaining = milliseconds/1000
+        totalSongTime = Float(milliseconds/1000)
         timeElapsed = 0
     }
     
@@ -217,7 +219,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     func updateProgressBar(){
         songProgressBar.progressTintColor = UIColor.blue
-        songProgressBar.setProgress(Float(timeElapsed) / Float(timeRemaining), animated: true)
+        songProgressBar.setProgress(Float(timeElapsed) / totalSongTime, animated: true)
         songProgressBar.layoutIfNeeded()
     }
 
