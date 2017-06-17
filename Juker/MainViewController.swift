@@ -155,7 +155,7 @@ class MainViewController: UIViewController, SPTAudioStreamingPlaybackDelegate, S
 
 }
 
-extension MainViewController : ColorServiceManagerDelegate {
+extension MainViewController : JukeBoxManagerDelegate {
 
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
@@ -164,7 +164,7 @@ extension MainViewController : ColorServiceManagerDelegate {
     }
 
     //MARK: NEW-----------
-    func songChanged(manager: JukeBoxManager, song: Song) {
+    func newSong(manager: JukeBoxManager, song: Song) {
         OperationQueue.main.addOperation {
             self.updateLabels(song: song)
         }

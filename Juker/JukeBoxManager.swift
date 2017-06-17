@@ -20,7 +20,7 @@ class JukeBoxManager: NSObject {
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
     private let serviceBrowser : MCNearbyServiceBrowser
     
-    var delegate : ColorServiceManagerDelegate?
+    var delegate : JukeBoxManagerDelegate?
     
     //MARK: NEW-----------
     func send(song : NSData) {
@@ -110,7 +110,7 @@ extension JukeBoxManager : MCSessionDelegate {
         let newSong = NSKeyedUnarchiver.unarchiveObject(with: data) as! Song
         
         //self.delegate?.colorChanged(manager: self, colorString: str)
-        self.delegate?.songChanged(manager: self, song: newSong)
+        self.delegate?.newSong(manager: self, song: newSong)
         
     }
     
@@ -128,11 +128,11 @@ extension JukeBoxManager : MCSessionDelegate {
     
 }
 
-protocol ColorServiceManagerDelegate {
+protocol JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager : JukeBoxManager, connectedDevices: [String])
     //MARK: NEW-----------
-    func songChanged(manager: JukeBoxManager, song: Song)
+    func newSong(manager: JukeBoxManager, song: Song)
     
     
 }

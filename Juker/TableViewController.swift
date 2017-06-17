@@ -88,6 +88,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
+            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
+            jukeBox.send(song: savedSong as NSData)
+
+            
         } else if segue.identifier == "newSearchSong" {
             let initialVC = segue.source as! AddMusicViewController
             guard let newSong = initialVC.selectedSong else {
@@ -95,9 +99,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
+            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
+            jukeBox.send(song: savedSong as NSData)
+
         }
     }
-
     
     //MARK: Timer Methods
     
@@ -281,7 +287,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
 }
 
-extension TableViewController : ColorServiceManagerDelegate {
+extension TableViewController : JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
@@ -290,9 +296,9 @@ extension TableViewController : ColorServiceManagerDelegate {
     }
     
     //MARK: NEW-----------
-    func songChanged(manager: JukeBoxManager, song: Song) {
+    func newSong(manager: JukeBoxManager, song: Song) {
         OperationQueue.main.addOperation {
-            self.updateLabels(song: song)
+            self.trackArray.append(song)
         }
     }
 
