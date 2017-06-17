@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PlaybackButton
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
 
@@ -38,6 +39,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     var loginUrl: URL?
     var manager = DataManager.shared()
     let jukeBox = JukeBoxManager()
+    var playerIsActive: Bool = false
     
     
     var trackArray: [Song] = [] {
@@ -45,11 +47,15 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             tableView.reloadData()
             songTitleLabel.text = trackArray[0].title
             artistNameLabel.text = trackArray[0].artist
-            setMaxSongtime(milliseconds: Int(trackArray[0].duration))
-            startTimer()
+//            setMaxSongtime(milliseconds: Int(trackArray[0].duration))
+//            startTimer()
+
+//            self.player!.playSpotifyURI(trackArray[0].songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
         }
     }
     var track: String?
+    
+    @IBOutlet weak var playbackButton: PlaybackButton!
     
     
     override func viewDidLoad() {
@@ -70,11 +76,53 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         jukeBox.delegate = self
 
-        
+//        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
+//        self.playbackButton.layer.borderWidth = 2.0
+        self.playbackButton.adjustMargin = 1
+        self.playbackButton.duration = 0.3 // animation duration default 0.24
+//        self.playbackButton.setButtonColor(.clear)
         
 
         // Do any additional setup after loading the view.
     }
+
+    
+    //need to queue all songs (can be done through play with an optional array of URIs
+    //PUT https://api.spotify.com/v1/me/player/pause to pause
+    //PUT https://api.spotify.com/v1/me/player/play to resume play
+    //get info about current playback GET https://api.spotify.com/v1/me/player to check if is active
+    @IBAction func didTapPlaybackButton(_ sender: Any) {
+        
+        if self.playbackButton.buttonState == .playing {
+            self.player?.setIsPlaying(false, callback: nil)
+            self.playbackButton.setButtonState(.pausing, animated: true)
+            
+        } else if self.playbackButton.buttonState == .pausing {
+            //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
+            if !playerIsActive {
+                self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+                playerIsActive = true
+            } else {
+                self.player?.setIsPlaying(true, callback: nil)
+            }
+            
+            self.playbackButton.setButtonState(.playing, animated: true)
+            
+            
+        }
+    }
+    
+//            self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
+//                if (error != nil) {
+//                    print("playing!")
+//                }
+//                
+//                print(error ?? "no error")
+//            })
+           
+        
+
+ 
 
 
      // MARK: - Navigation
@@ -190,8 +238,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.player!.delegate = self
             try! player!.start(withClientId: auth.clientID)
             self.player!.login(withAccessToken: authSession.accessToken!)
+            
         }
     }
+    func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didReceive event: SpPlaybackEvent) {
+        
+    }
+    
     func setup() {
         auth.clientID = ConfigCreds.clientID
         auth.redirectURL = URL(string: ConfigCreds.redirectURLString)
@@ -266,7 +319,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     
     @IBAction func playSong(_ sender: UIButton) {
-        self.player!.playSpotifyURI(self.track!, startingWith: 0, startingWithPosition: 0, callback: { (error) in
+        self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
             if (error != nil) {
                 print("playing!")
             }
@@ -284,7 +337,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("\(session.encryptedRefreshToken)")
         print("\(auth.clientID)")
     }
-    
+
 }
 
 extension TableViewController : JukeBoxManagerDelegate {
@@ -299,6 +352,10 @@ extension TableViewController : JukeBoxManagerDelegate {
     func newSong(manager: JukeBoxManager, song: Song) {
         OperationQueue.main.addOperation {
             self.trackArray.append(song)
+            self.player!.queueSpotifyURI(song.songURI, callback: nil)
+//            self.player!.playSpotifyURI(song.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+            
+            
         }
     }
 

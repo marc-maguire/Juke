@@ -1,0 +1,6 @@
+framework module PlaybackButton {
+  umbrella header "PlaybackButton-umbrella.h"
+
+  export *
+  module * { export * }
+}

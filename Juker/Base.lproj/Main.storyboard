@@ -312,12 +312,18 @@
                                     <action selector="loginPressed:" destination="HKH-W9-CBT" eventType="touchUpInside" id="T2A-iw-OvW"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZ4-0L-6V7">
-                                <rect key="frame" x="131" y="87" width="152" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZ4-0L-6V7">
+                                <rect key="frame" x="131" y="87" width="77" height="30"/>
                                 <state key="normal" title="Get Playlist"/>
                                 <connections>
                                     <action selector="getSong:" destination="HKH-W9-CBT" eventType="touchUpInside" id="mw8-t8-FhX"/>
                                     <segue destination="T81-ih-dJ1" kind="show" identifier="addMusicSegue" id="9tL-DA-aOY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfT-NL-5SA" customClass="PlaybackButton" customModule="PlaybackButton">
+                                <rect key="frame" x="279" y="87" width="53" height="34"/>
+                                <connections>
+                                    <action selector="didTapPlaybackButton:" destination="HKH-W9-CBT" eventType="touchUpInside" id="gvp-W0-bfW"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -326,10 +332,13 @@
                             <constraint firstItem="gqP-ZU-REz" firstAttribute="leading" secondItem="kl3-wW-cEc" secondAttribute="leading" constant="22" id="94i-zY-YpY"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="InI-7N-gqq" secondAttribute="bottom" constant="125" id="9Vr-cP-ExH"/>
                             <constraint firstAttribute="trailing" secondItem="gqP-ZU-REz" secondAttribute="trailing" constant="22" id="AEF-ep-foO"/>
+                            <constraint firstItem="eZ4-0L-6V7" firstAttribute="leading" secondItem="IYE-Ae-ogm" secondAttribute="trailing" constant="16" id="HhS-xg-mBX"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ATU-wD-Tps" secondAttribute="trailing" constant="6" id="HkZ-Gn-DtA"/>
                             <constraint firstItem="IYE-Ae-ogm" firstAttribute="leading" secondItem="kl3-wW-cEc" secondAttribute="leadingMargin" constant="19" id="I0e-Od-Aan"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="eZ4-0L-6V7" secondAttribute="bottom" constant="28" id="NGp-jx-01W"/>
                             <constraint firstItem="Ebq-ry-lF5" firstAttribute="top" secondItem="gqP-ZU-REz" secondAttribute="bottom" constant="22" id="SfS-pL-uqi"/>
+                            <constraint firstItem="GfT-NL-5SA" firstAttribute="top" secondItem="InI-7N-gqq" secondAttribute="bottom" constant="67" id="ckE-fI-NVr"/>
+                            <constraint firstItem="GfT-NL-5SA" firstAttribute="leading" secondItem="eZ4-0L-6V7" secondAttribute="trailing" constant="71" id="kGj-XU-L8P"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="IYE-Ae-ogm" secondAttribute="bottom" constant="28" id="lGo-qV-jqy"/>
                         </constraints>
                     </view>
@@ -337,6 +346,7 @@
                         <outlet property="ArtistNameLabel" destination="9ec-Ns-ICe" id="nhm-f1-oyo"/>
                         <outlet property="albumArtImageView" destination="506-MA-96X" id="jqn-oH-sph"/>
                         <outlet property="durationLabel" destination="kMg-R7-hWA" id="qDP-w7-pJR"/>
+                        <outlet property="playbackButton" destination="GfT-NL-5SA" id="UOI-Os-tiV"/>
                         <outlet property="songProgressBar" destination="9LF-f8-M4k" id="DEm-Tp-5r1"/>
                         <outlet property="songTitleLabel" destination="S4d-CI-Kgf" id="APQ-wZ-Tsl"/>
                         <outlet property="tableView" destination="gqP-ZU-REz" id="XC7-1w-PaT"/>
