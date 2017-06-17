@@ -96,14 +96,18 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if self.playbackButton.buttonState == .playing {
             self.player?.setIsPlaying(false, callback: nil)
             self.playbackButton.setButtonState(.pausing, animated: true)
+            pauseTimer()
             
         } else if self.playbackButton.buttonState == .pausing {
             //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
             if !playerIsActive {
                 self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+                setMaxSongtime(milliseconds: Int(trackArray[0].duration))
+                startTimer()
                 playerIsActive = true
             } else {
                 self.player?.setIsPlaying(true, callback: nil)
+                pauseTimer()
             }
             
             self.playbackButton.setButtonState(.playing, animated: true)
@@ -157,6 +161,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func setMaxSongtime(milliseconds: Int) {
         timeRemaining = milliseconds/1000
+        timeElapsed = 0
     }
     
     func startTimer() {
@@ -164,10 +169,17 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         countUpTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCountUpTimer)), userInfo: nil, repeats: true)
         
     }
+    //spotify iOS SDK has been abandoned and does not currently support checking / being notified of the end of a song. Using this timer
     func updateCounter() {
         if timeRemaining == 0 {
             countDownTimer.invalidate()
             countUpTimer.invalidate()
+            playerIsActive = false
+            playbackButton.setButtonState(.pausing, animated: true)
+            trackArray.remove(at: 0)
+            songTitleLabel.text = trackArray[0].title
+            artistNameLabel.text = trackArray[0].artist
+            didTapPlaybackButton(self)
             //notify everyone that the song is finished
             let notificationName = Notification.Name("songDidFinishPlaying")
             NotificationCenter.default.post(name: notificationName, object: nil, userInfo:  ["nextSong" : "testNextSong", "finishedSong": "testFinishedSong"])
@@ -187,6 +199,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func pauseTimer() {
         if self.resumeTapped == false {
             countDownTimer.invalidate()
+            countUpTimer.invalidate()
             self.resumeTapped = true
         } else {
             startTimer()
