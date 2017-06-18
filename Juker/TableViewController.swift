@@ -47,27 +47,19 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        labelsNeedUpdate()
-        
-        
-        setup()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-        
-        
         jukeBox.delegate = self
-        
+        songTimer.delegate = self
+        labelsNeedUpdate()
+        setup()
+    
+        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+    
         //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
         //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
         self.playbackButton.duration = 0.3 // animation duration default 0.24
-        
-        
-        
-        songTimer.delegate = self
-    }
     
+    }
     
     //need to queue all songs (can be done through play with an optional array of URIs
     //PUT https://api.spotify.com/v1/me/player/pause to pause
@@ -168,12 +160,22 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     @IBAction func loginPressed(_ sender: UIButton) {
         
-        if UIApplication.shared.openURL(loginUrl!) {
-            if auth.canHandle(auth.redirectURL) {
-                // To do - build in error handling
+//        if UIApplication.shared.openURL(loginUrl!) {
+//            if auth.canHandle(auth.redirectURL) {
+//                // To do - build in error handling
+//            }
+//
+//        }
+        UIApplication.shared.open(loginUrl!, options: [:]) { (didFinish) in
+            if didFinish {
+                if self.auth.canHandle(self.auth.redirectURL) {
+                    //build in error handling
+                }
+                
             }
         }
     }
+    
     
     func updateAfterFirstLogin () {
         if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {

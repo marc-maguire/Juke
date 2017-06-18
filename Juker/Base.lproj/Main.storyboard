@@ -316,7 +316,6 @@
                                 <rect key="frame" x="131" y="87" width="77" height="30"/>
                                 <state key="normal" title="Get Playlist"/>
                                 <connections>
-                                    <action selector="getSong:" destination="HKH-W9-CBT" eventType="touchUpInside" id="mw8-t8-FhX"/>
                                     <segue destination="T81-ih-dJ1" kind="show" identifier="addMusicSegue" id="9tL-DA-aOY"/>
                                 </connections>
                             </button>
