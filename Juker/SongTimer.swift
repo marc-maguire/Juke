@@ -14,7 +14,6 @@ class SongTimer {
     
     var delegate: SongTimerProgressBarDelegate?
     var countDownTimer = Timer()
-    var countUpTimer = Timer()
     var totalSongTime: Float = 0.0
     var timeRemaining = 0
     var timeElapsed = 0 {
@@ -44,16 +43,33 @@ class SongTimer {
   @objc  func updateCounter() {
         if timeRemaining == 0 {
             countDownTimer.invalidate()
-            countUpTimer.invalidate()
             self.delegate?.songDidEnd()
         } else {
             timeRemaining -= 1 //count up by 1 second at a time
             timeElapsed += 1
+            self.delegate?.labelsNeedUpdate()
 
         }
         
     }
 
+    func pauseTimer() {
+        if self.resumeTapped == false {
+            countDownTimer.invalidate()
+            self.resumeTapped = true
+        } else {
+            startTimer()
+            self.resumeTapped = false
+        }
+    }
+    
+    func timeString(time:TimeInterval) -> String {
+        let minutes = Int(time) / 60 % 60
+        let seconds = Int(time) % 60
+        
+        return String(format:"%02d:%02d", minutes, seconds)
+        
+    }
 
 
     

@@ -22,17 +22,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 
     
     @IBOutlet weak var albumArtImageView: UIImageView!
-    var countDownTimer = Timer()
-    var countUpTimer = Timer()
-    var totalSongTime: Float = 0.0
-    var timeRemaining = 0
-    var timeElapsed = 0 {
-        didSet {
-            updateProgressBar()
-        }
-    }
-    var resumeTapped = false
-    
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
@@ -48,10 +37,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             tableView.reloadData()
             songTitleLabel.text = trackArray[0].title
             artistNameLabel.text = trackArray[0].artist
-//            setMaxSongtime(milliseconds: Int(trackArray[0].duration))
-//            startTimer()
-
-//            self.player!.playSpotifyURI(trackArray[0].songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
         }
     }
     var track: String?
@@ -66,9 +51,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         tableView.delegate = self
         tableView.dataSource = self
         
-        durationLabel.text = String(timeRemaining)
-//        setMaxSongtime(seconds: 240) //use to set new song length when we start playing a new song
-        timeElapsedLabel.text = String(timeElapsed)
+        durationLabel.text = String(songTimer.timeRemaining)
+        timeElapsedLabel.text = String(songTimer.timeElapsed)
         
       
         
@@ -94,27 +78,27 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     //PUT https://api.spotify.com/v1/me/player/pause to pause
     //PUT https://api.spotify.com/v1/me/player/play to resume play
     //get info about current playback GET https://api.spotify.com/v1/me/player to check if is active
+   
     @IBAction func didTapPlaybackButton(_ sender: Any) {
         
         if self.playbackButton.buttonState == .playing {
             self.player?.setIsPlaying(false, callback: nil)
             self.playbackButton.setButtonState(.pausing, animated: true)
-            //songtimer.pauseTimer()
-            pauseTimer()
+            
+            songTimer.pauseTimer()
             
         } else if self.playbackButton.buttonState == .pausing {
             //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
             if !playerIsActive {
                 self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
-                //songtimer
-                setMaxSongtime(milliseconds: Int(trackArray[0].duration))
-                //songTimer
-                startTimer()
+               
+                songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
+            
+                songTimer.startTimer()
                 playerIsActive = true
             } else {
                 self.player?.setIsPlaying(true, callback: nil)
-                //songTimer
-                pauseTimer()
+                songTimer.pauseTimer()
             }
             
             self.playbackButton.setButtonState(.playing, animated: true)
@@ -164,68 +148,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-    //MARK: Timer Methods
-    
-    func setMaxSongtime(milliseconds: Int) {
-        timeRemaining = milliseconds/1000
-        totalSongTime = Float(milliseconds/1000)
-        timeElapsed = 0
-    }
-    
-    func startTimer() {
-        countDownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCounter)), userInfo: nil, repeats: true)
-        countUpTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(TableViewController.updateCountUpTimer)), userInfo: nil, repeats: true)
-        
-    }
-    //spotify iOS SDK has been abandoned and does not currently support checking / being notified of the end of a song. Using this timer
-    func updateCounter() {
-        if timeRemaining == 0 {
-            countDownTimer.invalidate()
-            countUpTimer.invalidate()
-            playerIsActive = false
-            playbackButton.setButtonState(.pausing, animated: true)
-            trackArray.remove(at: 0)
-            songTitleLabel.text = trackArray[0].title
-            artistNameLabel.text = trackArray[0].artist
-            didTapPlaybackButton(self)
-            //notify everyone that the song is finished
-            let notificationName = Notification.Name("songDidFinishPlaying")
-            NotificationCenter.default.post(name: notificationName, object: nil, userInfo:  ["nextSong" : "testNextSong", "finishedSong": "testFinishedSong"])
-        } else {
-            timeRemaining -= 1 //count up by 1 second at a time
-            durationLabel.text = timeString(time: TimeInterval(timeRemaining))
-        }
-        
-    }
-    
-    func updateCountUpTimer() {
-        
-            timeElapsed += 1 //count up by 1 second at a time
-            timeElapsedLabel.text = timeString(time: TimeInterval(timeElapsed))
-    }
-    
-    func pauseTimer() {
-        if self.resumeTapped == false {
-            countDownTimer.invalidate()
-            countUpTimer.invalidate()
-            self.resumeTapped = true
-        } else {
-            startTimer()
-            self.resumeTapped = false
-        }
-    }
-    
-    func timeString(time:TimeInterval) -> String {
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-    
-        return String(format:"%02d:%02d", minutes, seconds)
-       
-    }
+
 
     func updateProgressBar(){
         songProgressBar.progressTintColor = UIColor.blue
-        songProgressBar.setProgress(Float(timeElapsed) / totalSongTime, animated: true)
+        songProgressBar.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         songProgressBar.layoutIfNeeded()
     }
 
@@ -394,8 +321,8 @@ extension TableViewController: SongTimerProgressBarDelegate {
         didTapPlaybackButton(self)
     }
     func labelsNeedUpdate() {
-        durationLabel?.text = timeString(time: TimeInterval(songTimer.timeRemaining))
-        timeElapsedLabel.text = timeString(time: TimeInterval(songTimer.timeElapsed))
+        durationLabel?.text = songTimer.timeString(time: TimeInterval(songTimer.timeRemaining))
+        timeElapsedLabel.text = songTimer.timeString(time: TimeInterval(songTimer.timeElapsed))
     }
 }
 
