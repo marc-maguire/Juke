@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HKH-W9-CBT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Omk-3F-Lga">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -77,7 +77,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="03m-Wb-Su0">
-                                <rect key="frame" x="147" y="318.5" width="80" height="30"/>
+                                <rect key="frame" x="147.5" y="318.5" width="80" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.63664317522747016" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="2go-Hq-9wn"/>
@@ -164,45 +164,55 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kaytranada" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbr-9n-GbT">
+                                        <rect key="frame" x="0.0" y="102" width="375" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="exW-sl-Cy9"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95675891637802124" green="0.95692259073257446" blue="0.95674854516983032" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="TCu-qr-YCY" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" id="9zD-YT-38l"/>
+                                    <constraint firstAttribute="height" constant="267" id="IAJ-HI-xvC"/>
                                     <constraint firstItem="TCu-qr-YCY" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="Sxf-cJ-4ui"/>
                                     <constraint firstItem="eJG-7l-Ipq" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="Ups-AW-8h1"/>
+                                    <constraint firstItem="Lbr-9n-GbT" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" id="h0a-sg-6Vm"/>
                                     <constraint firstItem="eJG-7l-Ipq" firstAttribute="top" secondItem="hSu-bR-tyR" secondAttribute="top" constant="20" id="kq1-Rp-ueO"/>
                                     <constraint firstItem="eJG-7l-Ipq" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" multiplier="0.7" id="lII-fE-jrC"/>
+                                    <constraint firstItem="Lbr-9n-GbT" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="uZi-Sp-6In"/>
                                     <constraint firstItem="TCu-qr-YCY" firstAttribute="top" secondItem="eJG-7l-Ipq" secondAttribute="bottom" constant="30" id="yo3-YR-Sfu"/>
+                                    <constraint firstItem="Lbr-9n-GbT" firstAttribute="top" secondItem="TCu-qr-YCY" secondAttribute="bottom" constant="10" id="zWg-Fj-5if"/>
                                 </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="L17-QE-1rZ" appends="YES" id="gaA-zN-flE"/>
+                                </connections>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kaytranada" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lbr-9n-GbT">
-                                <rect key="frame" x="-0.5" y="498" width="375" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="exW-sl-Cy9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.95976224120137188" green="1" blue="0.55259284043529933" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="Lbr-9n-GbT" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" id="6y3-vl-4I9"/>
                             <constraint firstItem="jTZ-y4-k39" firstAttribute="top" secondItem="hSu-bR-tyR" secondAttribute="bottom" id="LB0-fg-PDW"/>
                             <constraint firstItem="hSu-bR-tyR" firstAttribute="centerX" secondItem="KXt-gA-Pox" secondAttribute="centerX" id="OKD-up-UhT"/>
-                            <constraint firstItem="hSu-bR-tyR" firstAttribute="height" secondItem="KXt-gA-Pox" secondAttribute="height" multiplier="0.4" id="Th1-5A-yTg"/>
-                            <constraint firstItem="Lbr-9n-GbT" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="bjG-XE-LMw"/>
-                            <constraint firstItem="Lbr-9n-GbT" firstAttribute="top" secondItem="TCu-qr-YCY" secondAttribute="bottom" constant="6" id="nl9-Rb-mEQ"/>
                             <constraint firstItem="hSu-bR-tyR" firstAttribute="width" secondItem="KXt-gA-Pox" secondAttribute="width" id="wUR-th-NvE"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="albumImage" destination="ZQW-Of-urC" id="hLi-hx-lPX"/>
+                        <outlet property="jukeHeight" destination="IAJ-HI-xvC" id="ok7-lI-h0V"/>
                         <outlet property="jukeView" destination="hSu-bR-tyR" id="4tE-GF-E3G"/>
                         <outlet property="upNextImage" destination="l1N-1t-uzc" id="7M3-Oj-7rf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kPA-qD-Bsm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="L17-QE-1rZ">
+                    <connections>
+                        <action selector="swipeForTable:" destination="Omk-3F-Lga" id="xHd-lL-pKo"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="138.40000000000001" y="921.58920539730138"/>
         </scene>

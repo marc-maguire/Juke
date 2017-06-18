@@ -23,6 +23,7 @@
  -isShuffling
  -isActiveDevice
  -positionMs
+ 
  */
 @interface SPTPlaybackState : NSObject
 
