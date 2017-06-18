@@ -58,6 +58,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var playbackButton: PlaybackButton!
     
+    //MARK: CleanupSection
+    var songTimer = SongTimer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,10 +83,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
         self.playbackButton.duration = 0.3 // animation duration default 0.24
-//        self.playbackButton.setButtonColor(.clear)
+
         
 
-        // Do any additional setup after loading the view.
+      songTimer.delegate = self
     }
 
     
@@ -97,17 +99,21 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if self.playbackButton.buttonState == .playing {
             self.player?.setIsPlaying(false, callback: nil)
             self.playbackButton.setButtonState(.pausing, animated: true)
+            //songtimer.pauseTimer()
             pauseTimer()
             
         } else if self.playbackButton.buttonState == .pausing {
             //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
             if !playerIsActive {
                 self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+                //songtimer
                 setMaxSongtime(milliseconds: Int(trackArray[0].duration))
+                //songTimer
                 startTimer()
                 playerIsActive = true
             } else {
                 self.player?.setIsPlaying(true, callback: nil)
+                //songTimer
                 pauseTimer()
             }
             
@@ -367,12 +373,31 @@ extension TableViewController : JukeBoxManagerDelegate {
     func newSong(manager: JukeBoxManager, song: Song) {
         OperationQueue.main.addOperation {
             self.trackArray.append(song)
-            self.player!.queueSpotifyURI(song.songURI, callback: nil)
+//            self.player!.queueSpotifyURI(song.songURI, callback: nil)
 //            self.player!.playSpotifyURI(song.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
             
             
         }
     }
-
-   
 }
+
+extension TableViewController: SongTimerProgressBarDelegate {
+    func progressBarNeedsUpdate() {
+        self.updateProgressBar()
+    }
+    func songDidEnd() {
+        playerIsActive = false
+        playbackButton.setButtonState(.pausing, animated: true)
+        trackArray.remove(at: 0)
+        songTitleLabel.text = trackArray[0].title
+        artistNameLabel.text = trackArray[0].artist
+        didTapPlaybackButton(self)
+    }
+    func labelsNeedUpdate() {
+        durationLabel?.text = timeString(time: TimeInterval(songTimer.timeRemaining))
+        timeElapsedLabel.text = timeString(time: TimeInterval(songTimer.timeElapsed))
+    }
+}
+
+
+

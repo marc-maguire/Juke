@@ -14,6 +14,7 @@
 		9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52C1EF1E2F40059335C /* Playlist.swift */; };
 		9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52E1EF309430059335C /* PlaylistViewController.swift */; };
 		9241B5311EF3094C0059335C /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5301EF3094C0059335C /* SongViewController.swift */; };
+		928F843E1EF6FB0000614716 /* SongTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 928F843D1EF6FB0000614716 /* SongTimer.swift */; };
 		D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D0681EF45E9900A2E525 /* TestViewController.swift */; };
 		D014D06B1EF49CFD00A2E525 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06A1EF49CFD00A2E525 /* DraggableView.swift */; };
 		D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06C1EF4A17900A2E525 /* OverlayView.swift */; };
@@ -40,6 +41,7 @@
 		9241B52C1EF1E2F40059335C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		9241B52E1EF309430059335C /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		9241B5301EF3094C0059335C /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
+		928F843D1EF6FB0000614716 /* SongTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTimer.swift; sourceTree = "<group>"; };
 		AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.release.xcconfig"; sourceTree = "<group>"; };
 		BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.debug.xcconfig"; sourceTree = "<group>"; };
 		D014D0681EF45E9900A2E525 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				D0C8A6D71EEC45A30058031D /* MainViewController.swift */,
 				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
 				9241B52C1EF1E2F40059335C /* Playlist.swift */,
+				928F843D1EF6FB0000614716 /* SongTimer.swift */,
 				9241B5241EF08C030059335C /* TableViewController.swift */,
 				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
 				9241B52E1EF309430059335C /* PlaylistViewController.swift */,
@@ -278,6 +281,7 @@
 				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
 				D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */,
 				D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */,
+				928F843E1EF6FB0000614716 /* SongTimer.swift in Sources */,
 				D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */,
 				9241B5251EF08C030059335C /* TableViewController.swift in Sources */,
 				9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */,

@@ -105,12 +105,17 @@ extension JukeBoxManager : MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data)")
-        //let str = String(data: data, encoding: .utf8)!
-        //received data, call colorChanged
-        let newSong = NSKeyedUnarchiver.unarchiveObject(with: data) as! Song
+
+        //want to check if it is a new song or a timer object
+        if let newSong = NSKeyedUnarchiver.unarchiveObject(with: data) as? Song {
+            self.delegate?.newSong(manager: self, song: newSong)
+        }
         
+
         //self.delegate?.colorChanged(manager: self, colorString: str)
-        self.delegate?.newSong(manager: self, song: newSong)
+        
+        
+        //if timer object, sendStartTimer or stopTimer method (closure?)
         
     }
     
