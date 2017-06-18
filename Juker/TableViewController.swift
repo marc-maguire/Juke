@@ -11,6 +11,8 @@ import PlaybackButton
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
+   //MARK: IBOutlets
+    
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var songTitleLabel: UILabel!
@@ -23,6 +25,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     @IBOutlet weak var albumArtImageView: UIImageView!
     
+    
+    //MARK: Properties
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
     var player: SPTAudioStreamingController?

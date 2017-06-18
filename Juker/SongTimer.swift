@@ -22,13 +22,7 @@ class SongTimer {
         }
     }
     var resumeTapped = false
-   
-    //MARK: ProgressBar Delegate Method
     
-    func ProgressBarNeedsUpdate() {
-        
-        self.delegate?.progressBarNeedsUpdate()
-    }
     
     func setMaxSongtime(milliseconds: Int) {
         timeRemaining = milliseconds/1000
@@ -40,7 +34,7 @@ class SongTimer {
         countDownTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(SongTimer.updateCounter)), userInfo: nil, repeats: true)
     }
     
-  @objc  func updateCounter() {
+    @objc  func updateCounter() {
         if timeRemaining == 0 {
             countDownTimer.invalidate()
             self.delegate?.songDidEnd()
@@ -48,11 +42,10 @@ class SongTimer {
             timeRemaining -= 1 //count up by 1 second at a time
             timeElapsed += 1
             self.delegate?.labelsNeedUpdate()
-
+            
         }
-        
     }
-
+    
     func pauseTimer() {
         if self.resumeTapped == false {
             countDownTimer.invalidate()
@@ -70,6 +63,14 @@ class SongTimer {
         return String(format:"%02d:%02d", minutes, seconds)
         
     }
+    
+    //MARK: ProgressBar Delegate Method
+    
+    func ProgressBarNeedsUpdate() {
+        
+        self.delegate?.progressBarNeedsUpdate()
+    }
+
 }
 protocol SongTimerProgressBarDelegate {
     
