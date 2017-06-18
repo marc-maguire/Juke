@@ -10,16 +10,16 @@ import UIKit
 import PlaybackButton
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
-
+    
     @IBOutlet weak var tableView: UITableView!
-   
+    
     @IBOutlet weak var songTitleLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     //shows as zero before it is set (need to set it when we are transitioning)
     @IBOutlet weak var timeElapsedLabel: UILabel!
     @IBOutlet weak var songProgressBar: UIProgressView!
-
+    @IBOutlet weak var playbackButton: PlaybackButton!
     
     @IBOutlet weak var albumArtImageView: UIImageView!
     
@@ -31,30 +31,25 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     let jukeBox = JukeBoxManager()
     var playerIsActive: Bool = false
     
-    
+    var songTimer = SongTimer()
     var trackArray: [Song] = [] {
         didSet {
             tableView.reloadData()
             songTitleLabel.text = trackArray[0].title
             artistNameLabel.text = trackArray[0].artist
+            //need to fetch album art
         }
     }
-    var track: String?
-    
-    @IBOutlet weak var playbackButton: PlaybackButton!
-    
-    //MARK: CleanupSection
-    var songTimer = SongTimer()
+
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         
-        durationLabel.text = String(songTimer.timeRemaining)
-        timeElapsedLabel.text = String(songTimer.timeElapsed)
+        labelsNeedUpdate()
         
-      
         
         setup()
         
@@ -62,23 +57,23 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         
         jukeBox.delegate = self
-
-//        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
-//        self.playbackButton.layer.borderWidth = 2.0
+        
+        //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
+        //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
         self.playbackButton.duration = 0.3 // animation duration default 0.24
-
         
-
-      songTimer.delegate = self
+        
+        
+        songTimer.delegate = self
     }
-
+    
     
     //need to queue all songs (can be done through play with an optional array of URIs
     //PUT https://api.spotify.com/v1/me/player/pause to pause
     //PUT https://api.spotify.com/v1/me/player/play to resume play
     //get info about current playback GET https://api.spotify.com/v1/me/player to check if is active
-   
+    
     @IBAction func didTapPlaybackButton(_ sender: Any) {
         
         if self.playbackButton.buttonState == .playing {
@@ -91,9 +86,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
             if !playerIsActive {
                 self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
-               
+                
                 songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
-            
+                
                 songTimer.startTimer()
                 playerIsActive = true
             } else {
@@ -107,21 +102,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         }
     }
     
-//            self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
-//                if (error != nil) {
-//                    print("playing!")
-//                }
-//                
-//                print(error ?? "no error")
-//            })
-           
-        
-
- 
-
-
-     // MARK: - Navigation
-     
+    // MARK: - Navigation
+    
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
         if segue.identifier == "first" {
@@ -133,7 +115,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             trackArray.append(newSong)
             let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
             jukeBox.send(song: savedSong as NSData)
-
+            
             
         } else if segue.identifier == "newSearchSong" {
             let initialVC = segue.source as! AddMusicViewController
@@ -144,18 +126,18 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             trackArray.append(newSong)
             let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
             jukeBox.send(song: savedSong as NSData)
-
+            
         }
     }
     
-
-
+    
+    
     func updateProgressBar(){
         songProgressBar.progressTintColor = UIColor.blue
         songProgressBar.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         songProgressBar.layoutIfNeeded()
     }
-
+    
     
     
     //MARK: TableView Data Source
@@ -168,30 +150,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         cell.textLabel?.text = trackArray[indexPath.row].title
         
         return cell
-         
-    }
-    
-    func updateAfterFirstLogin () {
-        if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            self.session = firstTimeSession
-            initializePlayer(authSession: session)
-        }
-    }
-    func initializePlayer(authSession:SPTSession){
-        if self.player == nil {
-            self.player = SPTAudioStreamingController.sharedInstance()
-            self.player!.playbackDelegate = self
-            self.player!.delegate = self
-            try! player!.start(withClientId: auth.clientID)
-            self.player!.login(withAccessToken: authSession.accessToken!)
-            
-        }
-    }
-    func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didReceive event: SpPlaybackEvent) {
         
     }
+    
+    //MARK: Spotify Authentication
     
     func setup() {
         auth.clientID = ConfigCreds.clientID
@@ -203,13 +165,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         loginUrl = auth.spotifyWebAuthenticationURL()
         
-        //loginUrl = auth.spotifyAppAuthenticationURL()
-        
-        
-        
     }
-    
-    
     @IBAction func loginPressed(_ sender: UIButton) {
         
         if UIApplication.shared.openURL(loginUrl!) {
@@ -217,54 +173,33 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 // To do - build in error handling
             }
         }
-        
-        //        UIApplication.shared.open(loginUrl!, options: [:]) { (bool) in
-        //
-        //        }
-        
     }
     
-    func updateLabels(song: Song) {
-//        titleLabel.text = song.title
-//        artistLabel.text = song.artist
-        //        durationLabel.text = "\(song.duration)"
-        
+    func updateAfterFirstLogin () {
+        if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
+            let sessionDataObj = sessionObj as! Data
+            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+            self.session = firstTimeSession
+            initializePlayer(authSession: session)
+        }
     }
     
-//    @IBAction func sendSong1Tapped(_ sender: UIButton) {
-//        let savedSong = NSKeyedArchiver.archivedData(withRootObject: trackArray[0])
-//        jukeBox.send(song: savedSong as NSData)
-//        updateLabels(song: trackArray[0])
-//        
-//    }
-//    
-//    @IBAction func sendSong2Tapped(_ sender: UIButton) {
-//        let savedSong = NSKeyedArchiver.archivedData(withRootObject: trackArray[1])
-//        jukeBox.send(song: savedSong as NSData)
-//        updateLabels(song: trackArray[1])
-//        
-//    }
+    //MARK: Audio Player Methods
     
-    
-    
-    
-    @IBAction func getSong(_ sender: UIButton) {
-        
-        //        manager.spotifyCurrentUserPlaylists()
-        //
-        //        manager.spotifyPlaylistTracks(ownerID: "jmperezperez", playlistID: "3cEYpjA9oz9GiPac4AsH4n")
-        
-//        manager.spotifySearch(searchString: "perez") {(array) in
-//            print("YAAAAAAAA")
-//            print("Array deets, # of songs: \(array.count) array deets: \(array)")
-//
-//            self.trackArray = array
-//        }
-        
-        
-        
+    func initializePlayer(authSession:SPTSession){
+        if self.player == nil {
+            self.player = SPTAudioStreamingController.sharedInstance()
+            self.player!.playbackDelegate = self
+            self.player!.delegate = self
+            try! player!.start(withClientId: auth.clientID)
+            self.player!.login(withAccessToken: authSession.accessToken!)
+            
+        }
     }
     
+    func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didReceive event: SpPlaybackEvent) {
+        
+    }
     
     @IBAction func playSong(_ sender: UIButton) {
         self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
@@ -285,7 +220,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         print("\(session.encryptedRefreshToken)")
         print("\(auth.clientID)")
     }
-
+    
 }
 
 extension TableViewController : JukeBoxManagerDelegate {
@@ -300,18 +235,18 @@ extension TableViewController : JukeBoxManagerDelegate {
     func newSong(manager: JukeBoxManager, song: Song) {
         OperationQueue.main.addOperation {
             self.trackArray.append(song)
-//            self.player!.queueSpotifyURI(song.songURI, callback: nil)
-//            self.player!.playSpotifyURI(song.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
-            
+            //            self.player!.queueSpotifyURI(song.songURI, callback: nil)
             
         }
     }
 }
 
 extension TableViewController: SongTimerProgressBarDelegate {
+    
     func progressBarNeedsUpdate() {
         self.updateProgressBar()
     }
+    
     func songDidEnd() {
         playerIsActive = false
         playbackButton.setButtonState(.pausing, animated: true)
@@ -320,6 +255,7 @@ extension TableViewController: SongTimerProgressBarDelegate {
         artistNameLabel.text = trackArray[0].artist
         didTapPlaybackButton(self)
     }
+    
     func labelsNeedUpdate() {
         durationLabel?.text = songTimer.timeString(time: TimeInterval(songTimer.timeRemaining))
         timeElapsedLabel.text = songTimer.timeString(time: TimeInterval(songTimer.timeElapsed))

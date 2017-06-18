@@ -346,7 +346,7 @@
                         <outlet property="ArtistNameLabel" destination="9ec-Ns-ICe" id="nhm-f1-oyo"/>
                         <outlet property="albumArtImageView" destination="506-MA-96X" id="jqn-oH-sph"/>
                         <outlet property="durationLabel" destination="kMg-R7-hWA" id="qDP-w7-pJR"/>
-                        <outlet property="playbackButton" destination="GfT-NL-5SA" id="UOI-Os-tiV"/>
+                        <outlet property="playbackButton" destination="GfT-NL-5SA" id="9Eb-Ek-i1Z"/>
                         <outlet property="songProgressBar" destination="9LF-f8-M4k" id="DEm-Tp-5r1"/>
                         <outlet property="songTitleLabel" destination="S4d-CI-Kgf" id="APQ-wZ-Tsl"/>
                         <outlet property="tableView" destination="gqP-ZU-REz" id="XC7-1w-PaT"/>
