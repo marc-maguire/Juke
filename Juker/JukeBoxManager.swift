@@ -107,8 +107,8 @@ extension JukeBoxManager : MCSessionDelegate {
         NSLog("%@", "didReceiveData: \(data)")
 
         //want to check if it is a new song or a timer object
-        if let newSong = NSKeyedUnarchiver.unarchiveObject(with: data) as? Song {
-            self.delegate?.newSong(manager: self, song: newSong)
+        if let newEvent = NSKeyedUnarchiver.unarchiveObject(with: data) as? Event {
+            self.delegate?.newEvent(manager: self, event: newEvent)
         }
         
 
@@ -137,7 +137,7 @@ protocol JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager : JukeBoxManager, connectedDevices: [String])
     //MARK: NEW-----------
-    func newSong(manager: JukeBoxManager, song: Song)
+    func newEvent(manager: JukeBoxManager, event: Event)
     
     
 }

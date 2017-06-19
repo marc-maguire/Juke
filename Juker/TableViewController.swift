@@ -109,8 +109,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
-            jukeBox.send(song: savedSong as NSData)
+//            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
+//            jukeBox.send(song: savedSong as NSData)
+            
+            let event = Event(songAction: .addSong, song: newSong, totalSongTime: songTimer.totalSongTime, timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox.send(song: newEvent as NSData)
+            
             
             
         } else if segue.identifier == "newSearchSong" {
@@ -120,8 +125,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
-            jukeBox.send(song: savedSong as NSData)
+//            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
+//            jukeBox.send(song: savedSong as NSData)
+            
+            let event = Event(songAction: .addSong, song: newSong, totalSongTime: songTimer.totalSongTime, timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox.send(song: newEvent as NSData)
+
             
         }
     }
@@ -238,9 +248,20 @@ extension TableViewController : JukeBoxManagerDelegate {
     }
     
     //MARK: NEW-----------
-    func newSong(manager: JukeBoxManager, song: Song) {
+    func newEvent(manager: JukeBoxManager, event: Event) {
         OperationQueue.main.addOperation {
-            self.trackArray.append(song)
+            switch event.songAction {
+            case .addSong:
+                print("add song")
+                self.trackArray.append(event.song)
+            case .removeSong:
+                print("remove Song")
+            case .togglePlay:
+                print("toggle play")
+            
+            }
+            
+            
             //            self.player!.queueSpotifyURI(song.songURI, callback: nil)
             
         }

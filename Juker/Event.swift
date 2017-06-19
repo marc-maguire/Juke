@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Event: NSCoding {
+class Event: NSObject, NSCoding {
     
     enum SongAction: String {
         case addSong = "addSong"
