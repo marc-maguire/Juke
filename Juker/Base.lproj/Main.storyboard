@@ -119,7 +119,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kaytra" translatesAutoresizingMaskIntoConstraints="NO" id="ZQW-Of-urC" customClass="DraggableView" customModule="Juker" customModuleProvider="target">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tame" translatesAutoresizingMaskIntoConstraints="NO" id="ZQW-Of-urC" customClass="DraggableView" customModule="Juker" customModuleProvider="target">
                                 <rect key="frame" x="61" y="141" width="253" height="305"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -556,7 +556,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="kaytra" width="1893" height="2006"/>
         <image name="mac" width="1280" height="824"/>
+        <image name="tame" width="1000" height="1000"/>
     </resources>
 </document>

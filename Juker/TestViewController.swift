@@ -38,18 +38,7 @@ class TestViewController: UIViewController {
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP, color: UIColor.blue)
         
         originalHeight = jukeHeight.constant
-        
-        
-        
-        // SwipeForTableSetup
-        
-//        let tableSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeForTable(gesture:)))
-        //var tableHeight = jukeView.heightAnchor
-        
-        //self.view.bringSubview(toFront: jukeView)
-        
-//        jukeView.addGestureRecognizer(tableSwipe)
-//        jukeView.isUserInteractionEnabled = true
+
         
         albumImage.layer.cornerRadius = 10
         
