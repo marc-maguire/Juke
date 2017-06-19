@@ -37,6 +37,7 @@ class SongTimer {
     @objc  func updateCounter() {
         if timeRemaining == 0 {
             countDownTimer.invalidate()
+            //potential for one user to get here first? then not everyone invalidates their timer?
             self.delegate?.songDidEnd()
         } else {
             timeRemaining -= 1 //count up by 1 second at a time

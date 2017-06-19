@@ -41,6 +41,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             tableView.reloadData()
             songTitleLabel.text = trackArray[0].title
             artistNameLabel.text = trackArray[0].artist
+            print("\(trackArray[0].isExplicit)")
             //need to fetch album art
         }
     }
@@ -101,6 +102,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                     songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
                     
                     //wrap up in function
+                    //might be causing second timer
                     let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
                     let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                     jukeBox.send(event: newEvent as NSData)
@@ -122,6 +124,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.playbackButton.setButtonState(.playing, animated: true)
             }
             
+        } else {
+            //if not host, do something here
         }
     }
     
@@ -326,6 +330,7 @@ extension TableViewController: SongTimerProgressBarDelegate {
             playerIsActive = false
 //            didTapPlaybackButton(self)
         }
+        songTimer.countDownTimer.invalidate()
 //        playerIsActive = false
         playbackButton.setButtonState(.pausing, animated: true)
         trackArray.remove(at: 0)
