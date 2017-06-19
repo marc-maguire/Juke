@@ -303,6 +303,7 @@ extension TableViewController : JukeBoxManagerDelegate {
                 self.songTimer.pauseTimer()
             case .startNewSong:
                 
+                self.songTimer.countDownTimer.invalidate()
                 self.songTimer.totalSongTime = Float(event.totalSongTime)
                 self.songTimer.timeRemaining = event.timeRemaining
                 self.songTimer.timeElapsed = event.timeElapsed
