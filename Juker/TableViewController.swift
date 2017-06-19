@@ -76,6 +76,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.player?.setIsPlaying(false, callback: nil)
             self.playbackButton.setButtonState(.pausing, animated: true)
             
+            let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox.send(event: newEvent as NSData)
+
+            
+            
             songTimer.pauseTimer()
             
         } else if self.playbackButton.buttonState == .pausing {
@@ -85,10 +91,22 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 
                 songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
                 
+                //wrap up in function
+                let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+                let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                jukeBox.send(event: newEvent as NSData)
+
+                //this is causing issues
                 songTimer.startTimer()
                 playerIsActive = true
             } else {
                 self.player?.setIsPlaying(true, callback: nil)
+                //wrap up in function
+                let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+                let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                jukeBox.send(event: newEvent as NSData)
+
+                
                 songTimer.pauseTimer()
             }
             
@@ -112,9 +130,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 //            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
 //            jukeBox.send(song: savedSong as NSData)
             
-            let event = Event(songAction: .addSong, song: newSong, totalSongTime: songTimer.totalSongTime, timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .addSong, song: newSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox.send(song: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
+            
+            //Int(songTimer.totalSongTime)
             
             
             
@@ -128,9 +148,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 //            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
 //            jukeBox.send(song: savedSong as NSData)
             
-            let event = Event(songAction: .addSong, song: newSong, totalSongTime: songTimer.totalSongTime, timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .addSong, song: newSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox.send(song: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
 
             
         }
@@ -258,6 +278,16 @@ extension TableViewController : JukeBoxManagerDelegate {
                 print("remove Song")
             case .togglePlay:
                 print("toggle play")
+                
+                self.songTimer.totalSongTime = Float(event.totalSongTime)
+                self.songTimer.timeRemaining = event.timeRemaining
+                self.songTimer.timeElapsed = event.timeElapsed
+//                if self.songTimer.resumeTapped == false {
+//                    self.songTimer.resumeTapped = true
+//                } else {
+//                    self.songTimer.resumeTapped = false
+//                }
+                self.songTimer.pauseTimer()
             
             }
             
@@ -275,7 +305,7 @@ extension TableViewController: SongTimerProgressBarDelegate {
     }
     
     func songDidEnd() {
-        playerIsActive = false
+//        playerIsActive = false
         playbackButton.setButtonState(.pausing, animated: true)
         trackArray.remove(at: 0)
         songTitleLabel.text = trackArray[0].title

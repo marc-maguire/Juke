@@ -23,12 +23,12 @@ class JukeBoxManager: NSObject {
     var delegate : JukeBoxManagerDelegate?
     
     //MARK: NEW-----------
-    func send(song : NSData) {
-        NSLog("%@", "sendSong: \(song) to \(session.connectedPeers.count) peers")
+    func send(event : NSData) {
+        NSLog("%@", "sendSong: \(event) to \(session.connectedPeers.count) peers")
         
         if session.connectedPeers.count > 0 {
             do {
-                try self.session.send(song as Data, toPeers: session.connectedPeers, with: .reliable)
+                try self.session.send(event as Data, toPeers: session.connectedPeers, with: .reliable)
             }
             catch let error {
                 NSLog("%@", "Error for sending: \(error)")
