@@ -15,10 +15,15 @@ class JukeBoxManager: NSObject {
     // and can contain only ASCII lowercase letters, numbers and hyphens.
     private let JukeBoxServiceType = "Juker-mc-Juker"
     
+    //user could choose unique name and have it displayed here
+    //can archive so the user doesn't need to type it every time
+    
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
     private let serviceBrowser : MCNearbyServiceBrowser
+    
+    var isHost:Bool = false
     
     var delegate : JukeBoxManagerDelegate?
     
@@ -85,8 +90,13 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
-        NSLog("%@", "invitePeer: \(peerID)")
-        browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+        if isHost {
+            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+            NSLog("%@", "invitePeer: \(peerID)")
+            
+            //need to handle enable / disable based on host
+        }
+        
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -111,11 +121,6 @@ extension JukeBoxManager : MCSessionDelegate {
             self.delegate?.newEvent(manager: self, event: newEvent)
         }
         
-
-        //self.delegate?.colorChanged(manager: self, colorString: str)
-        
-        
-        //if timer object, sendStartTimer or stopTimer method (closure?)
         
     }
     
