@@ -92,7 +92,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
                 
                 //wrap up in function
-                let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+                let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
                 let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                 jukeBox.send(event: newEvent as NSData)
 
@@ -288,13 +288,20 @@ extension TableViewController : JukeBoxManagerDelegate {
 //                    self.songTimer.resumeTapped = false
 //                }
                 self.songTimer.pauseTimer()
-            
-            }
+            case .startNewSong:
+                
+                self.songTimer.totalSongTime = Float(event.totalSongTime)
+                self.songTimer.timeRemaining = event.timeRemaining
+                self.songTimer.timeElapsed = event.timeElapsed
+                self.songTimer.startTimer()
+                
+                
             
             
             //            self.player!.queueSpotifyURI(song.songURI, callback: nil)
             
         }
+    }
     }
 }
 
@@ -305,7 +312,7 @@ extension TableViewController: SongTimerProgressBarDelegate {
     }
     
     func songDidEnd() {
-//        playerIsActive = false
+        playerIsActive = false
         playbackButton.setButtonState(.pausing, animated: true)
         trackArray.remove(at: 0)
         songTitleLabel.text = trackArray[0].title
@@ -316,6 +323,9 @@ extension TableViewController: SongTimerProgressBarDelegate {
     func labelsNeedUpdate() {
         durationLabel?.text = songTimer.timeString(time: TimeInterval(songTimer.timeRemaining))
         timeElapsedLabel.text = songTimer.timeString(time: TimeInterval(songTimer.timeElapsed))
+    }
+    func syncResumeTapped(resumeTapped: Bool) {
+        self.songTimer.resumeTapped = resumeTapped
     }
 }
 

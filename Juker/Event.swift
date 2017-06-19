@@ -14,6 +14,7 @@ class Event: NSObject, NSCoding {
         case addSong = "addSong"
         case removeSong = "removeSong"
         case togglePlay = "togglePlay"
+        case startNewSong = "startNewSong"
     }
 
     

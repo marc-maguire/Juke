@@ -47,6 +47,7 @@ class SongTimer {
     }
     
     func pauseTimer() {
+        self.delegate?.syncResumeTapped(resumeTapped: resumeTapped)
         if self.resumeTapped == false {
             countDownTimer.invalidate()
             self.resumeTapped = true
@@ -77,4 +78,5 @@ protocol SongTimerProgressBarDelegate {
     func progressBarNeedsUpdate()
     func songDidEnd()
     func labelsNeedUpdate()
+    func syncResumeTapped(resumeTapped: Bool)
 }
