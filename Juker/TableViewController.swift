@@ -124,11 +124,16 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.playbackButton.setButtonState(.playing, animated: true)
             }
             
-        } else {
-            //if not host, do something here
         }
     }
     
+    func togglePlayButtonState() {
+        if self.playbackButton.buttonState == .pausing {
+            self.playbackButton.setButtonState(.playing, animated: true)
+        } else {
+            self.playbackButton.setButtonState(.pausing, animated: true)
+        }
+    }
     // MARK: - Navigation
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
@@ -301,6 +306,8 @@ extension TableViewController : JukeBoxManagerDelegate {
 //                    self.songTimer.resumeTapped = false
 //                }
                 self.songTimer.pauseTimer()
+                self.togglePlayButtonState()
+                
             case .startNewSong:
                 
                 self.songTimer.countDownTimer.invalidate()
@@ -308,6 +315,7 @@ extension TableViewController : JukeBoxManagerDelegate {
                 self.songTimer.timeRemaining = event.timeRemaining
                 self.songTimer.timeElapsed = event.timeElapsed
                 self.songTimer.startTimer()
+                 self.togglePlayButtonState()
                 
                 
             
