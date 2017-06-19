@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class TestViewController: UIViewController {
     
     //w: 253 h: 305
@@ -16,13 +17,17 @@ class TestViewController: UIViewController {
     
 
     @IBOutlet weak var albumImage: DraggableView!
-    
-    
+
     @IBOutlet weak var upNextImage: UIImageView!
+
+    @IBOutlet weak var jukeHeight: NSLayoutConstraint!
+    var originalHeight: CGFloat!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Initial Quadcurve setup
 
         let p1 = CGPoint(x: jukeView.bounds.origin.x, y: jukeView.bounds.origin.y)
         
@@ -32,7 +37,8 @@ class TestViewController: UIViewController {
 
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP, color: UIColor.blue)
         
-        //albumImage.sendSubview(toBack: jukeView)
+        originalHeight = jukeHeight.constant
+
         
         albumImage.layer.cornerRadius = 10
         
@@ -40,46 +46,62 @@ class TestViewController: UIViewController {
 
         
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     func addCurve(startPoint: CGPoint, endPoint: CGPoint, controlPoint: CGPoint, color: UIColor) {
         
         let layer = CAShapeLayer()
+        
         jukeView.layer.addSublayer(layer)
-        
-        
         layer.strokeColor = jukeView.layer.backgroundColor
-        
-        //slightly darker stroke color
-        
-            //UIColor(red: 220.0/255, green: 220.0/255, blue: 220.0/255, alpha: 1.0).cgColor
-        
         layer.fillColor = jukeView.layer.backgroundColor
-        
-        
-           // UIColor(red: 237.0/255, green: 237.0/255, blue: 237.0/255, alpha: 1.0).cgColor
-        
-        //layer.fillColor = UIColor(red: 237.0/255, green: 237.0/255, blue: 237.0/255, alpha: 1.0).cgColor
         layer.lineWidth = 1
-        
-        
-        
-        
+
         let path = UIBezierPath()
+        
         path.move(to: startPoint)
         path.addQuadCurve(to: endPoint, controlPoint: controlPoint)
-        
         layer.path = path.cgPath
-        
-        
-        
         path.stroke()
    
     }
+    
+    
+    @IBAction func swipeForTable(_ sender: UIPanGestureRecognizer) {
+        
+        let direction = CGFloat(sender.velocity(in: self.view.window).y)
+        
+        let yChange = CGFloat(sender.translation(in: self.view.window).y)
+        
+        
+        if direction <= 0 && yChange < 0 {
+            jukeHeight.constant = originalHeight + (-yChange)
+            
+            
+            sender.view?.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            
+        }
+        
+        if direction >= 0 && yChange > 0 {
+            jukeHeight.constant = originalHeight - yChange
+            
+            sender.view?.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            
+        }
+        
+        originalHeight = jukeHeight.constant
+        sender.setTranslation(CGPoint.zero, in: self.view)
+        
+        
+        
 
+    }
+    
+    
+        
+        
+    
+    
 }
 
