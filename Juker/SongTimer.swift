@@ -12,7 +12,7 @@ import Foundation
 
 class SongTimer {
     
-    var delegate: SongTimerProgressBarDelegate?
+    var delegate: SongTimerDelegate?
     var countDownTimer = Timer()
     var totalSongTime: Float = 0.0
     var timeRemaining = 0
@@ -74,7 +74,7 @@ class SongTimer {
     }
     
 }
-protocol SongTimerProgressBarDelegate {
+protocol SongTimerDelegate {
     
     func progressBarNeedsUpdate()
     func songDidEnd()

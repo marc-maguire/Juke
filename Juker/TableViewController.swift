@@ -11,7 +11,7 @@ import PlaybackButton
 
 class TableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate {
     
-   //MARK: IBOutlets
+    //MARK: IBOutlets
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -49,56 +49,46 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             //need to fetch album art
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
         jukeBox.delegate = self
-//        jukeBox.isHost = true //this needs to be set in a login
         songTimer.delegate = self
         labelsNeedUpdate()
         setup()
-    
+        
         NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-    
+        
         //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
         //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
         self.playbackButton.duration = 0.3 // animation duration default 0.24
-    
+        
     }
     
-//    func playNewSong() {
-//        
-//        if jukeBox.isHost {
-//            
-//           hostPlayNextSong()
-//            
-//        } else {
-//            
-//            nonHostPlayNextSong()
-//        }
-//    }
+    //MARK: Song changing logic
     
     func hostPlayNextSong() {
         
+        //on first play, we do not want to remove the first song from the array
         if playerIsActive {
             trackArray.removeFirst()
         }
-    
+        
         guard let firstSong = trackArray.first else {
             print("No Song")
             //can handle no song in here
             return
         }
         
-        //play new song and adjust timers
+        //play new song and adjust timers / button state
         self.player?.playSpotifyURI(firstSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
         songTimer.setMaxSongtime(milliseconds: Int(firstSong.duration))
-        
         playbackButton.setButtonState(.playing, animated: false)
-        view.layoutIfNeeded()
+        //        view.layoutIfNeeded()
+        
         //send new song event to connected peers
         let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
@@ -107,24 +97,26 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         songTimer.startTimer()
         //won't update - is this getting called before the button is instantiated?
   
-
-
     }
     
     func nonHostPlayNextSongFrom(_ event: Event) {
         
+        //on first play, we do not want to remove the first song from the array
         if playerIsActive {
             trackArray.removeFirst()
         }
-
-
         
         songTimer.countDownTimer.invalidate()
         playbackButton.setButtonState(.playing, animated: true)
         updateTimersFrom(event)
         songTimer.startTimer()
         playerIsActive = true
-
+        
+        
+    }
+    @IBAction func didTapPlaybackButton(_ sender: Any) {
+        
+        toggleHostPlayState()
         
     }
     
@@ -141,9 +133,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 resumePlayback()
                 
             }
-            
+            //regardless of host state, we send a toggle event to all users to have them change state
             sendTogglePlayEvent()
-            
+
         }
     }
     
@@ -175,71 +167,31 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
+    func sendAddNewSongEvent(song: Song) {
+        
+        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox.send(event: newEvent as NSData)
+    }
+    
     func updateCurrentTrackInfo() {
         songTitleLabel.text = trackArray[0].title
         artistNameLabel.text = trackArray[0].artist
-        //album art = 
+        //album art =
         //isExplicit =
-
+        
     }
-   
+    
+    func updateTimersFrom(_ event: Event) {
+        self.songTimer.totalSongTime = Float(event.totalSongTime)
+        self.songTimer.timeRemaining = event.timeRemaining
+        self.songTimer.timeElapsed = event.timeElapsed
+    }
+    
     @IBAction func becomeHostButtonTapped(_ sender: Any) {
         self.jukeBox.isHost = true
         print("I have become the host")
     }
-    
-    @IBAction func didTapPlaybackButton(_ sender: Any) {
-        
-        toggleHostPlayState()
-    
-    }
-    
-//        if jukeBox.isHost {
-//        
-//            if self.playbackButton.buttonState == .playing {
-//                self.player?.setIsPlaying(false, callback: nil)
-//                self.playbackButton.setButtonState(.pausing, animated: true)
-//                
-//                let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
-//                let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-//                jukeBox.send(event: newEvent as NSData)
-//                
-//                
-//                
-//                songTimer.pauseTimer()
-//                
-//            } else if self.playbackButton.buttonState == .pausing {
-//                //need to check if player is active - if active then set isPlaying to true if not, call the playwithURI
-//                if !playerIsActive {
-//                    self.player?.playSpotifyURI(trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
-//                    
-//                    songTimer.setMaxSongtime(milliseconds: Int(trackArray[0].duration))
-//                    
-//                    //wrap up in function
-//                    //might be causing second timer
-//                    let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
-//                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-//                    jukeBox.send(event: newEvent as NSData)
-//                    
-//                    //this is causing issues
-//                    songTimer.startTimer()
-//                    playerIsActive = true
-//                } else {
-//                    self.player?.setIsPlaying(true, callback: nil)
-//                    //wrap up in function
-//                    let event = Event(songAction: .togglePlay, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
-//                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-//                    jukeBox.send(event: newEvent as NSData)
-//                    
-//                    
-//                    songTimer.pauseTimer()
-//                }
-//                
-//                self.playbackButton.setButtonState(.playing, animated: true)
-//            }
-//            
-//        }
-//    }
     
     func togglePlayButtonState() {
         if self.playbackButton.buttonState == .pausing {
@@ -248,55 +200,40 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             self.playbackButton.setButtonState(.pausing, animated: true)
         }
     }
+    
     // MARK: - Navigation
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
         if segue.identifier == "first" {
+            
             let initialVC = segue.source as! SongViewController
             guard let newSong = initialVC.selectedSong else {
                 print("no song returned")
                 return
             }
             trackArray.append(newSong)
-//            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
-//            jukeBox.send(song: savedSong as NSData)
             
-            let event = Event(songAction: .addSong, song: newSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
-            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox.send(event: newEvent as NSData)
-            
-            //Int(songTimer.totalSongTime)
-            
-            
+            sendAddNewSongEvent(song: newSong)
             
         } else if segue.identifier == "newSearchSong" {
+            
             let initialVC = segue.source as! AddMusicViewController
             guard let newSong = initialVC.selectedSong else {
                 print("no song returned")
                 return
             }
             trackArray.append(newSong)
-//            let savedSong = NSKeyedArchiver.archivedData(withRootObject: newSong)
-//            jukeBox.send(song: savedSong as NSData)
             
-            let event = Event(songAction: .addSong, song: newSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
-            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox.send(event: newEvent as NSData)
-
-            
+            sendAddNewSongEvent(song: newSong)
         }
     }
-    
-    
     
     func updateProgressBar(){
         songProgressBar.progressTintColor = UIColor.blue
         songProgressBar.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         songProgressBar.layoutIfNeeded()
     }
-    
-    
     
     //MARK: TableView Data Source
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -326,12 +263,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     @IBAction func loginPressed(_ sender: UIButton) {
         
-//        if UIApplication.shared.openURL(loginUrl!) {
-//            if auth.canHandle(auth.redirectURL) {
-//                // To do - build in error handling
-//            }
-//
-//        }
         UIApplication.shared.open(loginUrl!, options: [:]) { (didFinish) in
             if didFinish {
                 if self.auth.canHandle(self.auth.redirectURL) {
@@ -341,7 +272,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
         }
     }
-    
     
     func updateAfterFirstLogin () {
         if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
@@ -391,6 +321,8 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
 }
 
+//MARK: JukeboxManagerDelegate Methods
+
 extension TableViewController : JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
@@ -399,7 +331,6 @@ extension TableViewController : JukeBoxManagerDelegate {
         }
     }
     
-    //MARK: NEW-----------
     func newEvent(manager: JukeBoxManager, event: Event) {
         OperationQueue.main.addOperation {
             switch event.songAction {
@@ -418,27 +349,16 @@ extension TableViewController : JukeBoxManagerDelegate {
             case .startNewSong:
                 
                 self.nonHostPlayNextSongFrom(event)
-
                 
-                
-            
-            
-            //            self.player!.queueSpotifyURI(song.songURI, callback: nil)
-            
+            }
         }
     }
-    }
     
-    func updateTimersFrom(_ event: Event) {
-        self.songTimer.totalSongTime = Float(event.totalSongTime)
-        self.songTimer.timeRemaining = event.timeRemaining
-        self.songTimer.timeElapsed = event.timeElapsed
-
-
-    }
 }
 
-extension TableViewController: SongTimerProgressBarDelegate {
+//MARK: SongtimerProgressBarDelegate Methods
+
+extension TableViewController: SongTimerDelegate {
     
     func progressBarNeedsUpdate() {
         self.updateProgressBar()
@@ -449,10 +369,6 @@ extension TableViewController: SongTimerProgressBarDelegate {
         if jukeBox.isHost {
             hostPlayNextSong()
         }
-//        playbackButton.setButtonState(.pausing, animated: true)
-//        trackArray.remove(at: 0)
-//        updateCurrentTrackInfo()
-
     }
     
     func labelsNeedUpdate() {
