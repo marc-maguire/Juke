@@ -18,6 +18,8 @@
 		D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D0681EF45E9900A2E525 /* TestViewController.swift */; };
 		D014D06B1EF49CFD00A2E525 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06A1EF49CFD00A2E525 /* DraggableView.swift */; };
 		D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06C1EF4A17900A2E525 /* OverlayView.swift */; };
+		D0709D9E1EF875B8003ED610 /* PlaylistTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */; };
+		D0709D9F1EF875B8003ED610 /* PlaylistTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */; };
 		D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F71EEF5D5800AD29BB /* DataManager.swift */; };
 		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
 		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
@@ -46,6 +48,8 @@
 		D014D0681EF45E9900A2E525 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		D014D06A1EF49CFD00A2E525 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		D014D06C1EF4A17900A2E525 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableCell.swift; sourceTree = "<group>"; };
+		D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistTableCell.xib; sourceTree = "<group>"; };
 		D09105F71EEF5D5800AD29BB /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeBoxManager.swift; sourceTree = "<group>"; };
 		D09105FB1EEF5F4E00AD29BB /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				D014D06A1EF49CFD00A2E525 /* DraggableView.swift */,
 				D014D06C1EF4A17900A2E525 /* OverlayView.swift */,
 				D014D0681EF45E9900A2E525 /* TestViewController.swift */,
+				D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */,
+				D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
 				D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */,
 				D0C8A6E41EEC45A50058031D /* Info.plist */,
@@ -208,6 +214,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0709D9F1EF875B8003ED610 /* PlaylistTableCell.xib in Resources */,
 				D0C8A6E31EEC45A50058031D /* LaunchScreen.storyboard in Resources */,
 				D0C8A6E01EEC45A50058031D /* Assets.xcassets in Resources */,
 				D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */,
@@ -271,6 +278,7 @@
 			files = (
 				D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */,
 				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
+				D0709D9E1EF875B8003ED610 /* PlaylistTableCell.swift in Sources */,
 				D014D06B1EF49CFD00A2E525 /* DraggableView.swift in Sources */,
 				9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */,
 				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
@@ -313,6 +321,7 @@
 		D0C8A6E51EEC45A50058031D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -363,6 +372,7 @@
 		D0C8A6E61EEC45A50058031D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";

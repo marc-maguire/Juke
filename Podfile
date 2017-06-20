@@ -4,5 +4,6 @@ target 'Juker' do
 
   pod 'Alamofire'
   pod 'PlaybackButton'
+	pod 'MGSwipeTableCell'
 
 end
