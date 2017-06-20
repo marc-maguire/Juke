@@ -66,6 +66,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.playbackButton.adjustMargin = 1
         self.playbackButton.duration = 0.3 // animation duration default 0.24
         
+        
     }
     
     //MARK: Song changing logic
