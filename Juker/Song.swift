@@ -18,17 +18,6 @@ class Song: NSObject, NSCoding {
     var duration: TimeInterval
     var isExplicit: Bool
     
-//    init(title: String, artist: String, songURI: String, album: String, albumURI: String, duration: TimeInterval) {
-//        
-//        self.title = title
-//        self.artist = artist
-//        self.songURI = songURI
-//        self.album = album
-//        self.albumURI = albumURI
-//        self.duration = duration
-//        
-//    }
-    
     init?(trackDict: [String:AnyObject]) {
         
         
@@ -36,14 +25,12 @@ class Song: NSObject, NSCoding {
             return nil
         }
         
-        
-        
         self.title = trackDict["name"] as! String
         //sometimes we are getting nil here
         if let artist = artists.first?["name"] {
         self.artist = artist as! String
         } else {
-            self.artist = ""
+            self.artist = "DJ No Name"
         }
         self.songURI = trackDict["uri"] as! String
         self.album = album["name"] as! String
@@ -73,9 +60,5 @@ class Song: NSObject, NSCoding {
         aCoder.encode(duration, forKey: "duration")
         aCoder.encode(isExplicit, forKey: "explicit")
     }
-    
-    //let savedData = NSKeyedArchiver.archivedData(withRootObject: data)
-    //let obj = NSKeyedUnarchiver.unarchiveObject(with: savedData) as? PacketHeader
-    
     
 }

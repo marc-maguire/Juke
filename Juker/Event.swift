@@ -17,14 +17,11 @@ class Event: NSObject, NSCoding {
         case startNewSong = "startNewSong"
     }
 
-    
     var songAction: SongAction
     var song: Song
     var totalSongTime: Int
     var timeRemaining: Int
     var timeElapsed: Int
-    
-    
     
     init(songAction: SongAction, song: Song, totalSongTime: Int, timeRemaining: Int, timeElapsed: Int) {
         
@@ -43,9 +40,6 @@ class Event: NSObject, NSCoding {
         self.totalSongTime = Int(aDecoder.decodeInt32(forKey: "totalSongTime"))
         self.timeRemaining = Int(aDecoder.decodeInt32(forKey: "timeRemaining"))
         self.timeElapsed = Int(aDecoder.decodeInt32(forKey: "timeElapsed"))
-    
-        
-        
     }
     
     func encode(with aCoder: NSCoder) {

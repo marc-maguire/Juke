@@ -72,7 +72,7 @@ class SongTimer {
         
         self.delegate?.progressBarNeedsUpdate()
     }
-
+    
 }
 protocol SongTimerProgressBarDelegate {
     
