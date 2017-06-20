@@ -12,7 +12,7 @@ import Foundation
 
 class SongTimer {
     
-    var delegate: SongTimerProgressBarDelegate?
+    var delegate: SongTimerDelegate?
     var countDownTimer = Timer()
     var totalSongTime: Float = 0.0
     var timeRemaining = 0
@@ -37,6 +37,7 @@ class SongTimer {
     @objc  func updateCounter() {
         if timeRemaining == 0 {
             countDownTimer.invalidate()
+            //potential for one user to get here first? then not everyone invalidates their timer?
             self.delegate?.songDidEnd()
         } else {
             timeRemaining -= 1 //count up by 1 second at a time
@@ -47,6 +48,7 @@ class SongTimer {
     }
     
     func pauseTimer() {
+        self.delegate?.syncResumeTapped(resumeTapped: resumeTapped)
         if self.resumeTapped == false {
             countDownTimer.invalidate()
             self.resumeTapped = true
@@ -70,11 +72,12 @@ class SongTimer {
         
         self.delegate?.progressBarNeedsUpdate()
     }
-
+    
 }
-protocol SongTimerProgressBarDelegate {
+protocol SongTimerDelegate {
     
     func progressBarNeedsUpdate()
     func songDidEnd()
     func labelsNeedUpdate()
+    func syncResumeTapped(resumeTapped: Bool)
 }

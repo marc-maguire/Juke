@@ -15,20 +15,25 @@ class JukeBoxManager: NSObject {
     // and can contain only ASCII lowercase letters, numbers and hyphens.
     private let JukeBoxServiceType = "Juker-mc-Juker"
     
+    //user could choose unique name and have it displayed here
+    //can archive so the user doesn't need to type it every time
+    
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
     private let serviceBrowser : MCNearbyServiceBrowser
     
+    var isHost:Bool = false
+    
     var delegate : JukeBoxManagerDelegate?
     
     //MARK: NEW-----------
-    func send(song : NSData) {
-        NSLog("%@", "sendSong: \(song) to \(session.connectedPeers.count) peers")
+    func send(event : NSData) {
+        NSLog("%@", "sendSong: \(event) to \(session.connectedPeers.count) peers")
         
         if session.connectedPeers.count > 0 {
             do {
-                try self.session.send(song as Data, toPeers: session.connectedPeers, with: .reliable)
+                try self.session.send(event as Data, toPeers: session.connectedPeers, with: .reliable)
             }
             catch let error {
                 NSLog("%@", "Error for sending: \(error)")
@@ -85,8 +90,13 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
     
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
-        NSLog("%@", "invitePeer: \(peerID)")
-        browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+        if isHost {
+            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+            NSLog("%@", "invitePeer: \(peerID)")
+            
+            //need to handle enable / disable based on host
+        }
+        
     }
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
@@ -107,15 +117,10 @@ extension JukeBoxManager : MCSessionDelegate {
         NSLog("%@", "didReceiveData: \(data)")
 
         //want to check if it is a new song or a timer object
-        if let newSong = NSKeyedUnarchiver.unarchiveObject(with: data) as? Song {
-            self.delegate?.newSong(manager: self, song: newSong)
+        if let newEvent = NSKeyedUnarchiver.unarchiveObject(with: data) as? Event {
+            self.delegate?.newEvent(manager: self, event: newEvent)
         }
         
-
-        //self.delegate?.colorChanged(manager: self, colorString: str)
-        
-        
-        //if timer object, sendStartTimer or stopTimer method (closure?)
         
     }
     
@@ -137,7 +142,7 @@ protocol JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager : JukeBoxManager, connectedDevices: [String])
     //MARK: NEW-----------
-    func newSong(manager: JukeBoxManager, song: Song)
+    func newEvent(manager: JukeBoxManager, event: Event)
     
     
 }

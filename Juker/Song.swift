@@ -16,17 +16,7 @@ class Song: NSObject, NSCoding {
     var album: String
     var albumURI: String
     var duration: TimeInterval
-    
-//    init(title: String, artist: String, songURI: String, album: String, albumURI: String, duration: TimeInterval) {
-//        
-//        self.title = title
-//        self.artist = artist
-//        self.songURI = songURI
-//        self.album = album
-//        self.albumURI = albumURI
-//        self.duration = duration
-//        
-//    }
+    var isExplicit: Bool
     
     init?(trackDict: [String:AnyObject]) {
         
@@ -35,19 +25,18 @@ class Song: NSObject, NSCoding {
             return nil
         }
         
-        
-        
         self.title = trackDict["name"] as! String
         //sometimes we are getting nil here
         if let artist = artists.first?["name"] {
         self.artist = artist as! String
         } else {
-            self.artist = ""
+            self.artist = "DJ No Name"
         }
         self.songURI = trackDict["uri"] as! String
         self.album = album["name"] as! String
         self.albumURI = album["uri"] as! String
         self.duration = trackDict["duration_ms"] as! TimeInterval
+        self.isExplicit = trackDict["explicit"] as! Bool
         super.init()
         
     }
@@ -58,7 +47,8 @@ class Song: NSObject, NSCoding {
         self.songURI = aDecoder.decodeObject(forKey: "songURI") as! String
         self.album = aDecoder.decodeObject(forKey: "album") as! String
         self.albumURI = aDecoder.decodeObject(forKey: "albumURI") as! String
-        self.duration = aDecoder.decodeDouble(forKey: "duration")        
+        self.duration = aDecoder.decodeDouble(forKey: "duration")
+        self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
     }
     
     func encode(with aCoder: NSCoder) {
@@ -68,10 +58,7 @@ class Song: NSObject, NSCoding {
         aCoder.encode(album, forKey: "album")
         aCoder.encode(albumURI, forKey: "albumURI")
         aCoder.encode(duration, forKey: "duration")
+        aCoder.encode(isExplicit, forKey: "explicit")
     }
-    
-    //let savedData = NSKeyedArchiver.archivedData(withRootObject: data)
-    //let obj = NSKeyedUnarchiver.unarchiveObject(with: savedData) as? PacketHeader
-    
     
 }
