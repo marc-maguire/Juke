@@ -143,7 +143,7 @@
         <!--Table View Controller-->
         <scene sceneID="YjX-rb-gZ7">
             <objects>
-                <viewController id="HKH-W9-CBT" customClass="TableViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="main" id="HKH-W9-CBT" customClass="TableViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="InI-7N-gqq"/>
                         <viewControllerLayoutGuide type="bottom" id="Ebq-ry-lF5"/>
