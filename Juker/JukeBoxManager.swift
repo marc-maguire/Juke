@@ -21,10 +21,11 @@ class JukeBoxManager: NSObject {
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
-    private let serviceBrowser : MCNearbyServiceBrowser
+    let serviceBrowser : MCNearbyServiceBrowser
     
     var isPendingHost: Bool = false
     var isHost:Bool = false
+    var isAcceptingInvites: Bool = false
     
     var delegate : JukeBoxManagerDelegate?
     
@@ -61,7 +62,7 @@ class JukeBoxManager: NSObject {
         self.serviceAdvertiser.startAdvertisingPeer()
         
         self.serviceBrowser.delegate = self
-        self.serviceBrowser.startBrowsingForPeers()
+        //self.serviceBrowser.startBrowsingForPeers()
     }
     
     deinit {
@@ -78,7 +79,12 @@ extension JukeBoxManager : MCNearbyServiceAdvertiserDelegate {
     
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
+        //can we notify the userType Vc at this point which would make the button visible?
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID)"])
+        if isAcceptingInvites == true {
         invitationHandler(true, self.session)
+            print("Accepted invite from host")
+        }
     }
     
 }
@@ -99,6 +105,7 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
         }
         
     }
+    
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         NSLog("%@", "lostPeer: \(peerID)")

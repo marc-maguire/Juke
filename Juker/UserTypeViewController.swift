@@ -9,12 +9,21 @@
 import UIKit
 
 class UserTypeViewController: UIViewController {
+    
+    
+    @IBOutlet weak var inviteButton: UIButton!
+    //when we load, if there are no invites, this should be invisible by default
+    
 
     var session:SPTSession!
     var jukeBox: JukeBoxManager = JukeBoxManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.updateInviteButtonWith(notification:)), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
+       
+        //how to get the value out of the dictionary?
 
         // Do any additional setup after loading the view.
     }
@@ -22,6 +31,24 @@ class UserTypeViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @objc func updateInviteButtonWith(notification: NSNotification) {
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            // Check if value present before using it
+            if let hostName = info["hostName"] {
+                print(hostName)
+                inviteButton.isHidden = false
+                inviteButton.titleLabel?.text = hostName
+                //update button state here with name of host, make it visible
+            }
+            else {
+                print("no value for key\n")
+            }
+        }
+        else {
+            print("wrong userInfo type")
+        }
+        
     }
     
     @IBAction func hostButtonTapped(_ sender: Any) {
@@ -34,6 +61,9 @@ class UserTypeViewController: UIViewController {
     }
 
 
+    @IBAction func acceptInviteButtonTapped(_ sender: Any) {
+        jukeBox.isAcceptingInvites = true
+    }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "host" {

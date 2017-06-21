@@ -216,6 +216,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
         if segue.identifier == "first" {
+            //wrap both viewcontrollers in a protocol, add the object to a protocol and then cast the segue source to the protocol type. Figure out how ot make it a computed property, make a second selectedSong that reaches into this
             
             let initialVC = segue.source as! SongViewController
             guard let newSong = initialVC.selectedSong else {
@@ -226,6 +227,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             if (jukeBox?.isPendingHost)! {
                 jukeBox?.isHost = true
                 jukeBox?.isPendingHost = false
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
             }
             
             sendAddNewSongEvent(song: newSong)
@@ -241,6 +243,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             if (jukeBox?.isPendingHost)! {
                 jukeBox?.isHost = true
                 jukeBox?.isPendingHost = false
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
             }
             sendAddNewSongEvent(song: newSong)
         }

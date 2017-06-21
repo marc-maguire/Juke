@@ -57,7 +57,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="host"/>
                                 <connections>
-                                    <action selector="hostButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="BwA-02-WKg"/>
+                                    <action selector="hostButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="amj-SU-6gD"/>
                                     <segue destination="jU1-9O-B9Q" kind="show" identifier="host" id="4Pg-RD-pGz"/>
                                 </connections>
                             </button>
@@ -65,10 +65,16 @@
                                 <rect key="frame" x="164" y="415" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="acceptInviteButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="IVB-lH-dso"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="inviteButton" destination="CDa-78-qtL" id="4mP-Hb-csm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
