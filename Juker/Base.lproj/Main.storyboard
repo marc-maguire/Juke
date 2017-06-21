@@ -231,20 +231,6 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IYE-Ae-ogm">
-                                <rect key="frame" x="35" y="87" width="80" height="30"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="0.63664317520000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="5oa-ES-ZZY"/>
-                                    <constraint firstAttribute="width" constant="80" id="r6a-Qo-v42"/>
-                                </constraints>
-                                <state key="normal" title="Login">
-                                    <color key="titleColor" red="0.97021440209999998" green="1" blue="0.98821949109999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="loginPressed:" destination="HKH-W9-CBT" eventType="touchUpInside" id="T2A-iw-OvW"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZ4-0L-6V7">
                                 <rect key="frame" x="131" y="87" width="152" height="30"/>
                                 <state key="normal" title="Get Playlist"/>
@@ -256,7 +242,7 @@
                                 <rect key="frame" x="291" y="87" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REM-6h-xtB">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REM-6h-xtB">
                                 <rect key="frame" x="123" y="107" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
@@ -271,13 +257,11 @@
                             <constraint firstItem="REM-6h-xtB" firstAttribute="top" secondItem="DYP-El-9wk" secondAttribute="bottom" constant="43" id="9fU-6k-sC1"/>
                             <constraint firstAttribute="trailing" secondItem="gqP-ZU-REz" secondAttribute="trailing" constant="22" id="AEF-ep-foO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ATU-wD-Tps" secondAttribute="trailing" constant="6" id="HkZ-Gn-DtA"/>
-                            <constraint firstItem="IYE-Ae-ogm" firstAttribute="leading" secondItem="kl3-wW-cEc" secondAttribute="leadingMargin" constant="19" id="I0e-Od-Aan"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="eZ4-0L-6V7" secondAttribute="bottom" constant="28" id="NGp-jx-01W"/>
                             <constraint firstItem="Ebq-ry-lF5" firstAttribute="top" secondItem="gqP-ZU-REz" secondAttribute="bottom" constant="22" id="SfS-pL-uqi"/>
                             <constraint firstItem="cl6-vG-YUS" firstAttribute="leading" secondItem="REM-6h-xtB" secondAttribute="trailing" constant="122" id="Vwm-lC-4mi"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="REM-6h-xtB" secondAttribute="bottom" constant="8" id="WRR-Vj-Wta"/>
-                            <constraint firstItem="REM-6h-xtB" firstAttribute="leading" secondItem="IYE-Ae-ogm" secondAttribute="trailing" constant="8" id="aqM-VM-FKn"/>
-                            <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="IYE-Ae-ogm" secondAttribute="bottom" constant="28" id="lGo-qV-jqy"/>
+                            <constraint firstItem="506-MA-96X" firstAttribute="top" secondItem="cl6-vG-YUS" secondAttribute="bottom" constant="28" id="cc0-Uk-lVV"/>
                         </constraints>
                     </view>
                     <connections>
@@ -298,7 +282,7 @@
         <!--Add Music View Controller-->
         <scene sceneID="XB4-8b-iF0">
             <objects>
-                <viewController id="wqI-Es-HUN" customClass="AddMusicViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="addMusicViewController" id="wqI-Es-HUN" customClass="AddMusicViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bJN-MS-LMb"/>
                         <viewControllerLayoutGuide type="bottom" id="eQj-yZ-Ync"/>
@@ -477,7 +461,7 @@
         <!--Navigation Controller-->
         <scene sceneID="OGu-4M-4Jz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="T81-ih-dJ1" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="addMusicViewController1" automaticallyAdjustsScrollViewInsets="NO" id="T81-ih-dJ1" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CZW-Ar-XTZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

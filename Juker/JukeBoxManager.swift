@@ -23,6 +23,7 @@ class JukeBoxManager: NSObject {
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
     private let serviceBrowser : MCNearbyServiceBrowser
     
+    var isPendingHost: Bool = false
     var isHost:Bool = false
     
     var delegate : JukeBoxManagerDelegate?

@@ -21,15 +21,21 @@ class UserTypeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func hostButtonTapped(_ sender: Any) {
+        
+//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+////        _ = storyboard.instantiateInitialViewController()
+//        let vc = storyboard.instantiateViewController(withIdentifier: "addMusicViewController1") as! UINavigationController
+//        self.show(vc, sender: self)
     }
-    */
+
+
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "host" {
+            let dvc = segue.destination as! TableViewController
+            dvc.jukeBox.isPendingHost = true
+        }
+    }
 
 }

@@ -31,7 +31,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     var session:SPTSession!
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
-    var manager = DataManager.shared()
+    //var manager = DataManager.shared()
     let jukeBox = JukeBoxManager()
     var playerIsActive: Bool = false
     
@@ -67,6 +67,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.playbackButton.duration = 0.3 // animation duration default 0.24
         
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if jukeBox.isPendingHost == true {
+            performSegue(withIdentifier: "addMusicSegue", sender: self)
+        }
     }
     
     //MARK: Song changing logic
@@ -214,6 +221,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
+            if jukeBox.isPendingHost {
+                jukeBox.isHost = true
+                jukeBox.isPendingHost = false
+            }
             
             sendAddNewSongEvent(song: newSong)
             
@@ -225,7 +236,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            
+            if jukeBox.isPendingHost {
+                jukeBox.isHost = true
+                jukeBox.isPendingHost = false
+            }
             sendAddNewSongEvent(song: newSong)
         }
     }
@@ -300,16 +314,16 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    @IBAction func playSong(_ sender: UIButton) {
-        self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
-            if (error != nil) {
-                print("playing!")
-            }
-            
-            print(error ?? "no error")
-        })
-        
-    }
+//    @IBAction func playSong(_ sender: UIButton) {
+//        self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
+//            if (error != nil) {
+//                print("playing!")
+//            }
+//            
+//            print(error ?? "no error")
+//        })
+//        
+//    }
     
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called

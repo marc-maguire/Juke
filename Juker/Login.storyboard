@@ -57,16 +57,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="host"/>
                                 <connections>
-                                    <segue destination="jU1-9O-B9Q" kind="show" identifier="hostSegue" id="nFL-0t-Mqu"/>
+                                    <action selector="hostButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="BwA-02-WKg"/>
+                                    <segue destination="jU1-9O-B9Q" kind="show" identifier="host" id="4Pg-RD-pGz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDa-78-qtL">
                                 <rect key="frame" x="164" y="415" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="jU1-9O-B9Q" kind="show" id="WvI-Kp-55g"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -76,16 +74,13 @@
             </objects>
             <point key="canvasLocation" x="-671" y="216"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">
             <objects>
-                <viewControllerPlaceholder storyboardIdentifier="main" id="jU1-9O-B9Q" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardIdentifier="Main" storyboardName="Main" id="jU1-9O-B9Q" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j95-g0-S9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="135" y="164"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="WvI-Kp-55g"/>
-    </inferredMetricsTieBreakers>
 </document>
