@@ -36,7 +36,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     //var manager = DataManager.shared()
-    let jukeBox = JukeBoxManager()
+    var jukeBox: JukeBoxManager?
     var playerIsActive: Bool = false
     
     var songTimer = SongTimer()
@@ -58,7 +58,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        jukeBox.delegate = self
+        jukeBox?.delegate = self
         songTimer.delegate = self
         labelsNeedUpdate()
 //        setup()
@@ -75,7 +75,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        if jukeBox.isPendingHost == true {
+        if jukeBox?.isPendingHost == true {
             performSegue(withIdentifier: "addMusicSegue", sender: self)
     }
     }
@@ -106,7 +106,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         //send new song event to connected peers
         let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
         
         songTimer.startTimer()
         //won't update - is this getting called before the button is instantiated?
@@ -136,7 +136,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func toggleHostPlayState() {
         
-        if jukeBox.isHost {
+        if (jukeBox?.isHost)! {
             
             if self.playbackButton.buttonState == .playing {
                 
@@ -177,7 +177,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
         
     }
     
@@ -185,7 +185,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
     }
     
     func updateCurrentTrackInfo() {
@@ -223,9 +223,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            if jukeBox.isPendingHost {
-                jukeBox.isHost = true
-                jukeBox.isPendingHost = false
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isHost = true
+                jukeBox?.isPendingHost = false
             }
             
             sendAddNewSongEvent(song: newSong)
@@ -238,9 +238,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            if jukeBox.isPendingHost {
-                jukeBox.isHost = true
-                jukeBox.isPendingHost = false
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isHost = true
+                jukeBox?.isPendingHost = false
             }
             sendAddNewSongEvent(song: newSong)
         }
@@ -383,7 +383,7 @@ extension TableViewController: SongTimerDelegate {
     
     func songDidEnd() {
         
-        if jukeBox.isHost {
+        if (jukeBox?.isHost)! {
             hostPlayNextSong()
         }
     }
