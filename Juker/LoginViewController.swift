@@ -12,7 +12,7 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
 
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession!
-    var player: SPTAudioStreamingController?
+//    var player: SPTAudioStreamingController?
     var loginUrl: URL?
 
     
@@ -52,23 +52,29 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
             let sessionDataObj = sessionObj as! Data
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
-            initializePlayer(authSession: session)
+//            initializePlayer(authSession: session)
             performSegue(withIdentifier: "userType", sender: self)
         }
     }
     
-    //MARK: Audio Player Methods
-    
-    func initializePlayer(authSession:SPTSession){
-        if self.player == nil {
-            self.player = SPTAudioStreamingController.sharedInstance()
-            self.player!.playbackDelegate = self
-            self.player!.delegate = self
-            try! player!.start(withClientId: auth.clientID)
-            self.player!.login(withAccessToken: authSession.accessToken!)
-            
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "userType" {
+            let dvc = segue.destination as! UserTypeViewController
+            dvc.session = session
         }
     }
+    //MARK: Audio Player Methods
+    
+//    func initializePlayer(authSession:SPTSession){
+//        if self.player == nil {
+//            self.player = SPTAudioStreamingController.sharedInstance()
+//            self.player!.playbackDelegate = self
+//            self.player!.delegate = self
+//            try! player!.start(withClientId: auth.clientID)
+//            self.player!.login(withAccessToken: authSession.accessToken!)
+//            
+//        }
+//    }
     
     func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didReceive event: SpPlaybackEvent) {
         

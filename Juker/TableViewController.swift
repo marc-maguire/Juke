@@ -28,7 +28,11 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: Properties
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
+    var session:SPTSession! {
+        didSet {
+            initializePlayer(authSession: session) 
+        }
+    }
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     //var manager = DataManager.shared()
@@ -69,12 +73,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         if jukeBox.isPendingHost == true {
             performSegue(withIdentifier: "addMusicSegue", sender: self)
-        }
     }
+    }
+    
+
     
     //MARK: Song changing logic
     
@@ -195,11 +201,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.songTimer.timeRemaining = event.timeRemaining
         self.songTimer.timeElapsed = event.timeElapsed
     }
-    
-    @IBAction func becomeHostButtonTapped(_ sender: Any) {
-        self.jukeBox.isHost = true
-        print("I have become the host")
-    }
+
     
     func togglePlayButtonState() {
         if self.playbackButton.buttonState == .pausing {

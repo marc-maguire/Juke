@@ -10,6 +10,8 @@ import UIKit
 
 class UserTypeViewController: UIViewController {
 
+    var session:SPTSession!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -35,7 +37,13 @@ class UserTypeViewController: UIViewController {
         if segue.identifier == "host" {
             let dvc = segue.destination as! TableViewController
             dvc.jukeBox.isPendingHost = true
+            dvc.session = session
         }
+        if segue.identifier == "notHost" {
+            //dont set session
+            
+        }
+
     }
 
 }

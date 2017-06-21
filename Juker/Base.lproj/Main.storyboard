@@ -227,26 +227,23 @@
                                     <constraint firstAttribute="height" constant="128" id="yO3-wD-Vjb"/>
                                 </constraints>
                             </view>
-                            <searchBar contentMode="redraw" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYP-El-9wk">
+                            <searchBar contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DYP-El-9wk">
                                 <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZ4-0L-6V7">
-                                <rect key="frame" x="131" y="87" width="152" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eZ4-0L-6V7">
+                                <rect key="frame" x="131" y="87" width="77" height="30"/>
                                 <state key="normal" title="Get Playlist"/>
                                 <connections>
                                     <segue destination="T81-ih-dJ1" kind="show" identifier="addMusicSegue" id="9tL-DA-aOY"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cl6-vG-YUS" customClass="PlaybackButton" customModule="PlaybackButton">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cl6-vG-YUS" customClass="PlaybackButton" customModule="PlaybackButton">
                                 <rect key="frame" x="291" y="87" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REM-6h-xtB">
-                                <rect key="frame" x="123" y="107" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="becomeHostButtonTapped:" destination="HKH-W9-CBT" eventType="touchUpInside" id="kFS-wX-QlT"/>
+                                    <action selector="didTapPlaybackButton:" destination="HKH-W9-CBT" eventType="touchUpInside" id="uCs-1z-16L"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -254,13 +251,12 @@
                         <constraints>
                             <constraint firstItem="gqP-ZU-REz" firstAttribute="leading" secondItem="kl3-wW-cEc" secondAttribute="leading" constant="22" id="94i-zY-YpY"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="InI-7N-gqq" secondAttribute="bottom" constant="125" id="9Vr-cP-ExH"/>
-                            <constraint firstItem="REM-6h-xtB" firstAttribute="top" secondItem="DYP-El-9wk" secondAttribute="bottom" constant="43" id="9fU-6k-sC1"/>
                             <constraint firstAttribute="trailing" secondItem="gqP-ZU-REz" secondAttribute="trailing" constant="22" id="AEF-ep-foO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ATU-wD-Tps" secondAttribute="trailing" constant="6" id="HkZ-Gn-DtA"/>
                             <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="eZ4-0L-6V7" secondAttribute="bottom" constant="28" id="NGp-jx-01W"/>
                             <constraint firstItem="Ebq-ry-lF5" firstAttribute="top" secondItem="gqP-ZU-REz" secondAttribute="bottom" constant="22" id="SfS-pL-uqi"/>
-                            <constraint firstItem="cl6-vG-YUS" firstAttribute="leading" secondItem="REM-6h-xtB" secondAttribute="trailing" constant="122" id="Vwm-lC-4mi"/>
-                            <constraint firstItem="ATU-wD-Tps" firstAttribute="top" secondItem="REM-6h-xtB" secondAttribute="bottom" constant="8" id="WRR-Vj-Wta"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cl6-vG-YUS" secondAttribute="trailing" constant="22" id="VBG-y0-iWn"/>
+                            <constraint firstItem="eZ4-0L-6V7" firstAttribute="leading" secondItem="kl3-wW-cEc" secondAttribute="leadingMargin" constant="115" id="XL5-bU-RS2"/>
                             <constraint firstItem="506-MA-96X" firstAttribute="top" secondItem="cl6-vG-YUS" secondAttribute="bottom" constant="28" id="cc0-Uk-lVV"/>
                         </constraints>
                     </view>
