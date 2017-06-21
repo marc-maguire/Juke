@@ -57,9 +57,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         jukeBox.delegate = self
         songTimer.delegate = self
         labelsNeedUpdate()
-        setup()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
+//        setup()
+//        
+//        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
         //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
         //        self.playbackButton.layer.borderWidth = 2.0
