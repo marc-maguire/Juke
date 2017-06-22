@@ -81,12 +81,12 @@ extension JukeBoxManager : MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
         //can we notify the userType Vc at this point which would make the button visible?
-//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID.displayName)"])
+
        //i think that the invite is coming before we are accepting, and then we can't accept it after this point
         //PROBLEM SPOT 3
 //        if isAcceptingInvites == true {
         invitationHandler(true, self.session)
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID.displayName)"])
             
 //        }
         //notify the host that there is a new connection so they will send sync info

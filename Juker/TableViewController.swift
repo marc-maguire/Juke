@@ -51,11 +51,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         didSet {
             tableView.reloadData()
             updateCurrentTrackInfo()
-            if !playerIsActive {
-                hostPlayNextSong()
-                playerIsActive = true
+            if (jukeBox?.isHost)! {
+                if !playerIsActive {
+                    hostPlayNextSong()
+                    playerIsActive = true
+                }
             }
-            
 //            print("\(trackArray[0].isExplicit)")
             //need to fetch album art
         }
@@ -91,7 +92,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             performSegue(withIdentifier: "addMusicSegue", sender: self)
     }
         if isNewUser {
-            sleep(5)
+            sleep(3)
             //send event to host to notify them
             let song = Song(withDefaultString: "empty")
             let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
@@ -108,6 +109,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     func hostPlayNextSong() {
         
         //on first play, we do not want to remove the first song from the array
+        
         if playerIsActive {
             trackArray.removeFirst()
         }
@@ -244,10 +246,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 print("no song returned")
                 return
             }
+            jukeBox?.isHost = true
             trackArray.append(newSong)
             print("adding new song")
             if (jukeBox?.isPendingHost)! {
-                jukeBox?.isHost = true
                 jukeBox?.isPendingHost = false
                 //PROBLEM SPOT 2
                 jukeBox?.serviceBrowser.startBrowsingForPeers()
@@ -430,8 +432,8 @@ extension TableViewController : JukeBoxManagerDelegate {
                 self.updateTimersFrom(event)
                 self.songTimer.pauseTimer()
                 self.togglePlayButtonState()
-                self.isNewUser = false
-                    self.tableView.reloadData()
+//                self.isNewUser = false
+//                    self.tableView.reloadData()
                 }
             case .newUserSyncRequest:
                 if (self.jukeBox?.isHost)! {

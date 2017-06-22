@@ -22,7 +22,7 @@ class UserTypeViewController: UIViewController {
         super.viewDidLoad()
         
 //       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.updateInviteButtonWith(notification:)), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
-//       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.beginSegue), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
+       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.beginSegue), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
         //how to get the value out of the dictionary?
 
         // Do any additional setup after loading the view.
