@@ -28,24 +28,36 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     //MARK: Properties
     var auth = SPTAuth.defaultInstance()!
-    var session:SPTSession!
+    var session:SPTSession! {
+        didSet {
+            if (jukeBox?.isPendingHost)! {
+            initializePlayer(authSession: session)
+            }
+        }
+    }
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
-    var manager = DataManager.shared()
-    let jukeBox = JukeBoxManager()
+    //var manager = DataManager.shared()
+    var jukeBox: JukeBoxManager? {
+        didSet{
+            jukeBox?.delegate = self
+        }
+    }
     var playerIsActive: Bool = false
+    var isNewUser: Bool = true
     
     var songTimer = SongTimer()
     var trackArray: [Song] = [] {
         didSet {
             tableView.reloadData()
             updateCurrentTrackInfo()
-            if !playerIsActive {
-                hostPlayNextSong()
-                playerIsActive = true
+            if (jukeBox?.isHost)! {
+                if !playerIsActive {
+                    hostPlayNextSong()
+                    playerIsActive = true
+                }
             }
-            
-            print("\(trackArray[0].isExplicit)")
+//            print("\(trackArray[0].isExplicit)")
             //need to fetch album art
         }
     }
@@ -54,13 +66,10 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        jukeBox.delegate = self
+        
         songTimer.delegate = self
         labelsNeedUpdate()
-        setup()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
-        
+
         //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
         //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
@@ -68,12 +77,23 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         
     }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        if jukeBox?.isPendingHost == true {
+            performSegue(withIdentifier: "addMusicSegue", sender: self)
+    }
+            }
+    
+
     
     //MARK: Song changing logic
     
     func hostPlayNextSong() {
         
         //on first play, we do not want to remove the first song from the array
+        
         if playerIsActive {
             trackArray.removeFirst()
         }
@@ -93,7 +113,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         //send new song event to connected peers
         let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
         
         songTimer.startTimer()
         //won't update - is this getting called before the button is instantiated?
@@ -123,7 +143,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     
     func toggleHostPlayState() {
         
-        if jukeBox.isHost {
+        if (jukeBox?.isHost)! {
             
             if self.playbackButton.buttonState == .playing {
                 
@@ -164,7 +184,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
         
     }
     
@@ -172,7 +192,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox.send(event: newEvent as NSData)
+        jukeBox?.send(event: newEvent as NSData)
     }
     
     func updateCurrentTrackInfo() {
@@ -188,11 +208,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         self.songTimer.timeRemaining = event.timeRemaining
         self.songTimer.timeElapsed = event.timeElapsed
     }
-    
-    @IBAction func becomeHostButtonTapped(_ sender: Any) {
-        self.jukeBox.isHost = true
-        print("I have become the host")
-    }
+
     
     func togglePlayButtonState() {
         if self.playbackButton.buttonState == .pausing {
@@ -207,13 +223,23 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
         if segue.identifier == "first" {
+            //wrap both viewcontrollers in a protocol, add the object to a protocol and then cast the segue source to the protocol type. Figure out how ot make it a computed property, make a second selectedSong that reaches into this
             
             let initialVC = segue.source as! SongViewController
             guard let newSong = initialVC.selectedSong else {
                 print("no song returned")
                 return
             }
+            
             trackArray.append(newSong)
+            print("adding new song")
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isPendingHost = false
+                jukeBox?.isHost = true
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
+                print("browsing for peers")
+                return
+            }
             
             sendAddNewSongEvent(song: newSong)
             
@@ -225,7 +251,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 return
             }
             trackArray.append(newSong)
-            
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isPendingHost = false
+                jukeBox?.isHost = true
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
+                return
+            }
             sendAddNewSongEvent(song: newSong)
         }
     }
@@ -249,41 +280,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    //MARK: Spotify Authentication
-    
-    func setup() {
-        auth.clientID = ConfigCreds.clientID
-        auth.redirectURL = URL(string: ConfigCreds.redirectURLString)
-        
-        
-        //REMEMBER TO ADD BACK SCOPES
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope,SPTAuthUserFollowReadScope,SPTAuthUserLibraryReadScope,SPTAuthUserReadPrivateScope,SPTAuthUserReadTopScope,SPTAuthUserReadBirthDateScope,SPTAuthUserReadEmailScope]
-        
-        loginUrl = auth.spotifyWebAuthenticationURL()
-        
-    }
-    @IBAction func loginPressed(_ sender: UIButton) {
-        
-        UIApplication.shared.open(loginUrl!, options: [:]) { (didFinish) in
-            if didFinish {
-                if self.auth.canHandle(self.auth.redirectURL) {
-                    //build in error handling
-                }
-                
-            }
-        }
-    }
-    
-    func updateAfterFirstLogin () {
-        if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            self.session = firstTimeSession
-            initializePlayer(authSession: session)
-            //self.performSegue(withIdentifier: "addMusicSegue", sender: self)
-        }
-    }
-    
     //MARK: Audio Player Methods
     
     func initializePlayer(authSession:SPTSession){
@@ -301,17 +297,6 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
     }
     
-    @IBAction func playSong(_ sender: UIButton) {
-        self.player!.playSpotifyURI(self.trackArray.first?.songURI, startingWith: 0, startingWithPosition: 0, callback: { (error) in
-            if (error != nil) {
-                print("playing!")
-            }
-            
-            print(error ?? "no error")
-        })
-        
-    }
-    
     func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
         print("logged in")
@@ -319,6 +304,29 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         print("\(session.encryptedRefreshToken)")
         print("\(auth.clientID)")
+    }
+    
+    func hostSendAllSongs() {
+        //send all songs to new users
+        for song in trackArray {
+            let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox?.send(event: newEvent as NSData)
+        }
+    }
+    
+    func syncTimersForNewUser() {
+        let event = Event(songAction: .newUserFinishedSyncing, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+    }
+    
+    func hostSendNewConnectionEvent() {
+        
+        let event = Event(songAction: .newConnectionDetected, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+        
     }
     
 }
@@ -329,30 +337,73 @@ extension TableViewController : JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
-            //self.connectionsLabel.text = "Connections: \(connectedDevices)"
+            //this is called once a new connection has been established
+            //now we should send the event
+            if (self.jukeBox?.isHost)!{
+                self.hostSendNewConnectionEvent()
+                print("connect to \(connectedDevices)")
+            }
+            
         }
     }
     
     func newEvent(manager: JukeBoxManager, event: Event) {
         OperationQueue.main.addOperation {
+            
             switch event.songAction {
+                
             case .addSong:
                 print("add song")
                 self.trackArray.append(event.song)
+                
             case .removeSong:
                 print("remove Song")
+                
             case .togglePlay:
                 print("toggle play")
-                
                 self.updateTimersFrom(event)
                 self.songTimer.pauseTimer()
                 self.togglePlayButtonState()
                 
             case .startNewSong:
-                
                 self.nonHostPlayNextSongFrom(event)
                 
+            case .newUserSyncResponse:
+                if self.isNewUser {
+                    self.trackArray.append(event.song)
+                    
+                }
+                print("sync data sent by host to new user")
+                
+            case .newUserFinishedSyncing:
+                if self.isNewUser {
+                    self.updateTimersFrom(event)
+                    self.songTimer.startTimer()
+                    self.togglePlayButtonState()
+                    self.playerIsActive = true
+                    print("sync request sync should finish")
+                    self.isNewUser = false
+                }
+                
+            case .newUserSyncRequest:
+                if (self.jukeBox?.isHost)! {
+                    self.hostSendAllSongs()
+                    self.syncTimersForNewUser()
+                    print("sync request received")
+                }
+                
+            case .newConnectionDetected:
+                if self.isNewUser {
+                    let song = Song(withDefaultString: "empty")
+                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
+                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                    self.jukeBox?.send(event: newEvent as NSData)
+                    print("sync request sent")
+                    
+                }
+                
             }
+            
         }
     }
     
@@ -367,8 +418,7 @@ extension TableViewController: SongTimerDelegate {
     }
     
     func songDidEnd() {
-        
-        if jukeBox.isHost {
+        if (jukeBox?.isHost)! {
             hostPlayNextSong()
         }
     }

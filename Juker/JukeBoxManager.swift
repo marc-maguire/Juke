@@ -21,9 +21,11 @@ class JukeBoxManager: NSObject {
     private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
-    private let serviceBrowser : MCNearbyServiceBrowser
+    let serviceBrowser : MCNearbyServiceBrowser
     
+    var isPendingHost: Bool = false
     var isHost:Bool = false
+//    var isAcceptingInvites: Bool = false
     
     var delegate : JukeBoxManagerDelegate?
     
@@ -43,7 +45,8 @@ class JukeBoxManager: NSObject {
     }
     
     lazy var session : MCSession = {
-        let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .required)
+        let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .none)
+        //changed encryption from .required to .none for test
         session.delegate = self
         return session
     }()
@@ -60,7 +63,7 @@ class JukeBoxManager: NSObject {
         self.serviceAdvertiser.startAdvertisingPeer()
         
         self.serviceBrowser.delegate = self
-        self.serviceBrowser.startBrowsingForPeers()
+
     }
     
     deinit {
@@ -78,6 +81,8 @@ extension JukeBoxManager : MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
         invitationHandler(true, self.session)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID.displayName)"])
+        
     }
     
 }
@@ -91,13 +96,14 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
         if isHost {
-            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 60)
             NSLog("%@", "invitePeer: \(peerID)")
             
             //need to handle enable / disable based on host
         }
         
     }
+    
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
         NSLog("%@", "lostPeer: \(peerID)")
@@ -109,8 +115,13 @@ extension JukeBoxManager : MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state)")
-        self.delegate?.connectedDevicesChanged(manager: self, connectedDevices:
+        if state == .connected {
+            print("we've got a new successful connection")
+            //host sends connection object
+            self.delegate?.connectedDevicesChanged(manager: self, connectedDevices:
             session.connectedPeers.map{$0.displayName})
+        }
+        
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
@@ -141,7 +152,7 @@ extension JukeBoxManager : MCSessionDelegate {
 protocol JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager : JukeBoxManager, connectedDevices: [String])
-    //MARK: NEW-----------
+    
     func newEvent(manager: JukeBoxManager, event: Event)
     
     
