@@ -18,6 +18,7 @@ class Event: NSObject, NSCoding {
         case newUserSyncResponse = "newUserSyncResponse"
         case newUserFinishedSyncing = "newUserFinishedSyncing"
         case newUserSyncRequest = "newUserSyncRequest"
+        case newConnectionDetected = "newConnectionDetected"
         
     }
 

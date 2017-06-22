@@ -123,8 +123,13 @@ extension JukeBoxManager : MCSessionDelegate {
     
     func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
         NSLog("%@", "peer \(peerID) didChangeState: \(state)")
-        self.delegate?.connectedDevicesChanged(manager: self, connectedDevices:
+        if state == .connected {
+            print("we've got a new successful connection")
+            //host sends connection object
+            self.delegate?.connectedDevicesChanged(manager: self, connectedDevices:
             session.connectedPeers.map{$0.displayName})
+        }
+        
     }
     
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {

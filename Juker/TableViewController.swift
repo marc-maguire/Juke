@@ -92,19 +92,19 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if jukeBox?.isPendingHost == true {
             performSegue(withIdentifier: "addMusicSegue", sender: self)
     }
-        if self.isNewUser {
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
-            
-            //this is where the connection issue is, if we sleep, it pauses the app and doesn't connect
-            //send event to host to notify them
-            let song = Song(withDefaultString: "empty")
-            let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
-            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            self.jukeBox?.send(event: newEvent as NSData)
-            print("sync request sent")
-        
-        })
-        }
+//        if self.isNewUser {
+//        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
+//            
+//            //this is where the connection issue is, if we sleep, it pauses the app and doesn't connect
+//            //send event to host to notify them
+//            let song = Song(withDefaultString: "empty")
+//            let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
+//            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+//            self.jukeBox?.send(event: newEvent as NSData)
+//            print("sync request sent")
+//        
+//        })
+//        }
 
             }
     
@@ -390,6 +390,14 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         jukeBox?.send(event: newEvent as NSData)
     }
     
+    func hostSendNewConnectionEvent() {
+        
+        let event = Event(songAction: .newConnectionDetected, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+        
+    }
+    
 }
 
 //MARK: JukeboxManagerDelegate Methods
@@ -398,16 +406,13 @@ extension TableViewController : JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
+            //this is called once a new connection has been established
+            //now we should send the event
+            if (self.jukeBox?.isHost)!{
+            self.hostSendNewConnectionEvent()
             print("connect to \(connectedDevices)")
-            
-            //PROBLEM SPOT ONE
-            //if host, send all songs
-//            if (self.jukeBox?.isHost)! {
-//               self.hostSendAllSongs()
-//                self.syncTimersForNewUser()
-//                
-//            }
-            //self.connectionsLabel.text = "Connections: \(connectedDevices)"
+            }
+           
         }
     }
     
@@ -453,6 +458,16 @@ extension TableViewController : JukeBoxManagerDelegate {
                     print("sync request received")
                     
                 }
+            case .newConnectionDetected:
+                if self.isNewUser {
+                    let song = Song(withDefaultString: "empty")
+                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
+                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                    self.jukeBox?.send(event: newEvent as NSData)
+                    print("sync request sent")
+
+                }
+            
             }
            
         }
