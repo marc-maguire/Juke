@@ -81,9 +81,9 @@
 		D0C8A6DF1EEC45A50058031D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0C8A6E21EEC45A50058031D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D0C8A6E41EEC45A50058031D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
-		D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
-		D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
+		D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyAudioPlayback.framework; path = Juker/SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
+		D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyAuthentication.framework; path = Juker/SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpotifyMetadata.framework; path = Juker/SpotifyMetadata.framework; sourceTree = "<group>"; };
 		D0C8A6F01EEC46C00058031D /* Juker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Juker-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -105,6 +105,9 @@
 		16408986C3B10094554BD423 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */,
+				D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */,
+				D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */,
 				4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */,
 			);
 			name = Frameworks;
@@ -117,6 +120,94 @@
 				AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D0AF20C61EFC3F7100D34E56 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */,
+				928F843D1EF6FB0000614716 /* SongTimer.swift */,
+				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
+				928F843F1EF83C4700614716 /* Event.swift */,
+				9241B52C1EF1E2F40059335C /* Playlist.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		D0AF20C71EFC3FCB00D34E56 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */,
+				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		D0AF20C81EFC3FF000D34E56 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9241B5241EF08C030059335C /* TableViewController.swift */,
+				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
+				9241B52E1EF309430059335C /* PlaylistViewController.swift */,
+				9241B5301EF3094C0059335C /* SongViewController.swift */,
+				92F2D10D1EF9FE0D00C4C434 /* LoginViewController.swift */,
+				92F2D10F1EF9FE1500C4C434 /* UserTypeViewController.swift */,
+				D014D0681EF45E9900A2E525 /* TestViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		D0AF20C91EFC403700D34E56 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D0AF20CC1EFC40B800D34E56 /* Storyboards */,
+				D0AF20CB1EFC40A000D34E56 /* Custom */,
+				D0AF20CA1EFC406300D34E56 /* TableViewCells */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		D0AF20CA1EFC406300D34E56 /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				9241B5261EF08C660059335C /* JukeTableViewCell.swift */,
+				D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */,
+				D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */,
+				D0AF20B81EFB3A5500D34E56 /* SearchTrackCell.swift */,
+				D0AF20B91EFB3A5500D34E56 /* SearchTrackCell.xib */,
+				D0AF20BC1EFB3A9400D34E56 /* SearchPlaylistCell.swift */,
+				D0AF20BD1EFB3A9400D34E56 /* SearchPlaylistCell.xib */,
+				D0AF20C01EFB430F00D34E56 /* SearchCategoryCell.swift */,
+				D0AF20C41EFB4A1A00D34E56 /* SearchCategoryCell.xib */,
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		D0AF20CB1EFC40A000D34E56 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				D014D06A1EF49CFD00A2E525 /* DraggableView.swift */,
+				D014D06C1EF4A17900A2E525 /* OverlayView.swift */,
+			);
+			name = Custom;
+			sourceTree = "<group>";
+		};
+		D0AF20CC1EFC40B800D34E56 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				92F2D1091EF9FDD100C4C434 /* Login.storyboard */,
+				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
+				D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		D0AF20CE1EFC413F00D34E56 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D09105FF1EF068F000AD29BB /* ConfigCreds.swift */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 		D0C8A6C91EEC45A30058031D = {
@@ -141,41 +232,14 @@
 		D0C8A6D41EEC45A30058031D /* Juker */ = {
 			isa = PBXGroup;
 			children = (
-				D09105FF1EF068F000AD29BB /* ConfigCreds.swift */,
+				D0AF20CE1EFC413F00D34E56 /* Utilities */,
+				D0AF20C91EFC403700D34E56 /* Views */,
+				D0AF20C81EFC3FF000D34E56 /* ViewControllers */,
+				D0AF20C71EFC3FCB00D34E56 /* Managers */,
+				D0AF20C61EFC3F7100D34E56 /* Models */,
 				D0C8A6D51EEC45A30058031D /* AppDelegate.swift */,
-				D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */,
-				D09105F71EEF5D5800AD29BB /* DataManager.swift */,
-				D09105FB1EEF5F4E00AD29BB /* Song.swift */,
-				928F843F1EF83C4700614716 /* Event.swift */,
-				9241B52C1EF1E2F40059335C /* Playlist.swift */,
-				928F843D1EF6FB0000614716 /* SongTimer.swift */,
-				9241B5241EF08C030059335C /* TableViewController.swift */,
-				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
-				9241B52E1EF309430059335C /* PlaylistViewController.swift */,
-				9241B5301EF3094C0059335C /* SongViewController.swift */,
-				92F2D1091EF9FDD100C4C434 /* Login.storyboard */,
-				92F2D10D1EF9FE0D00C4C434 /* LoginViewController.swift */,
-				92F2D10F1EF9FE1500C4C434 /* UserTypeViewController.swift */,
-				9241B5261EF08C660059335C /* JukeTableViewCell.swift */,
-				D0C8A6D91EEC45A40058031D /* Main.storyboard */,
-				D014D06A1EF49CFD00A2E525 /* DraggableView.swift */,
-				D014D06C1EF4A17900A2E525 /* OverlayView.swift */,
-				D014D0681EF45E9900A2E525 /* TestViewController.swift */,
-				D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */,
-				D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */,
-				D0AF20B81EFB3A5500D34E56 /* SearchTrackCell.swift */,
-				D0AF20B91EFB3A5500D34E56 /* SearchTrackCell.xib */,
-				D0AF20BC1EFB3A9400D34E56 /* SearchPlaylistCell.swift */,
-				D0AF20BD1EFB3A9400D34E56 /* SearchPlaylistCell.xib */,
-				D0AF20C01EFB430F00D34E56 /* SearchCategoryCell.swift */,
-				D0AF20C41EFB4A1A00D34E56 /* SearchCategoryCell.xib */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
-				D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */,
 				D0C8A6E41EEC45A50058031D /* Info.plist */,
-				D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */,
-				D0C8A6EA1EEC45E90058031D /* SpotifyAudioPlayback.framework */,
-				D0C8A6EB1EEC45E90058031D /* SpotifyAuthentication.framework */,
-				D0C8A6EC1EEC45E90058031D /* SpotifyMetadata.framework */,
 			);
 			path = Juker;
 			sourceTree = "<group>";
