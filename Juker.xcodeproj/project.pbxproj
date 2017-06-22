@@ -25,6 +25,12 @@
 		D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */; };
 		D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FB1EEF5F4E00AD29BB /* Song.swift */; };
 		D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09105FF1EF068F000AD29BB /* ConfigCreds.swift */; };
+		D0AF20BA1EFB3A5500D34E56 /* SearchTrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF20B81EFB3A5500D34E56 /* SearchTrackCell.swift */; };
+		D0AF20BB1EFB3A5500D34E56 /* SearchTrackCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0AF20B91EFB3A5500D34E56 /* SearchTrackCell.xib */; };
+		D0AF20BE1EFB3A9400D34E56 /* SearchPlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF20BC1EFB3A9400D34E56 /* SearchPlaylistCell.swift */; };
+		D0AF20BF1EFB3A9400D34E56 /* SearchPlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0AF20BD1EFB3A9400D34E56 /* SearchPlaylistCell.xib */; };
+		D0AF20C21EFB430F00D34E56 /* SearchCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0AF20C01EFB430F00D34E56 /* SearchCategoryCell.swift */; };
+		D0AF20C51EFB4A1A00D34E56 /* SearchCategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0AF20C41EFB4A1A00D34E56 /* SearchCategoryCell.xib */; };
 		D0C8A6D61EEC45A30058031D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6D51EEC45A30058031D /* AppDelegate.swift */; };
 		D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8A6D91EEC45A40058031D /* Main.storyboard */; };
 		D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D0C8A6DC1EEC45A40058031D /* Juker.xcdatamodeld */; };
@@ -56,6 +62,12 @@
 		D09105F91EEF5E5300AD29BB /* JukeBoxManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeBoxManager.swift; sourceTree = "<group>"; };
 		D09105FB1EEF5F4E00AD29BB /* Song.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Song.swift; sourceTree = "<group>"; };
 		D09105FF1EF068F000AD29BB /* ConfigCreds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfigCreds.swift; sourceTree = "<group>"; };
+		D0AF20B81EFB3A5500D34E56 /* SearchTrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTrackCell.swift; sourceTree = "<group>"; };
+		D0AF20B91EFB3A5500D34E56 /* SearchTrackCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchTrackCell.xib; sourceTree = "<group>"; };
+		D0AF20BC1EFB3A9400D34E56 /* SearchPlaylistCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchPlaylistCell.swift; sourceTree = "<group>"; };
+		D0AF20BD1EFB3A9400D34E56 /* SearchPlaylistCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchPlaylistCell.xib; sourceTree = "<group>"; };
+		D0AF20C01EFB430F00D34E56 /* SearchCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchCategoryCell.swift; sourceTree = "<group>"; };
+		D0AF20C41EFB4A1A00D34E56 /* SearchCategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SearchCategoryCell.xib; sourceTree = "<group>"; };
 		D0C8A6D21EEC45A30058031D /* Juker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Juker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0C8A6D51EEC45A30058031D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0C8A6DA1EEC45A40058031D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -142,6 +154,12 @@
 				D014D0681EF45E9900A2E525 /* TestViewController.swift */,
 				D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */,
 				D0709D9D1EF875B8003ED610 /* PlaylistTableCell.xib */,
+				D0AF20B81EFB3A5500D34E56 /* SearchTrackCell.swift */,
+				D0AF20B91EFB3A5500D34E56 /* SearchTrackCell.xib */,
+				D0AF20BC1EFB3A9400D34E56 /* SearchPlaylistCell.swift */,
+				D0AF20BD1EFB3A9400D34E56 /* SearchPlaylistCell.xib */,
+				D0AF20C01EFB430F00D34E56 /* SearchCategoryCell.swift */,
+				D0AF20C41EFB4A1A00D34E56 /* SearchCategoryCell.xib */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
 				D0C8A6E11EEC45A50058031D /* LaunchScreen.storyboard */,
 				D0C8A6E41EEC45A50058031D /* Info.plist */,
@@ -218,8 +236,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0709D9F1EF875B8003ED610 /* PlaylistTableCell.xib in Resources */,
+				D0AF20BF1EFB3A9400D34E56 /* SearchPlaylistCell.xib in Resources */,
 				D0C8A6E31EEC45A50058031D /* LaunchScreen.storyboard in Resources */,
 				D0C8A6E01EEC45A50058031D /* Assets.xcassets in Resources */,
+				D0AF20C51EFB4A1A00D34E56 /* SearchCategoryCell.xib in Resources */,
+				D0AF20BB1EFB3A5500D34E56 /* SearchTrackCell.xib in Resources */,
 				D0C8A6DB1EEC45A40058031D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -279,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0AF20BE1EFB3A9400D34E56 /* SearchPlaylistCell.swift in Sources */,
 				D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */,
 				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
 				D0709D9E1EF875B8003ED610 /* PlaylistTableCell.swift in Sources */,
@@ -286,9 +308,11 @@
 				9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */,
 				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
 				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
+				D0AF20C21EFB430F00D34E56 /* SearchCategoryCell.swift in Sources */,
 				D0C8A6DE1EEC45A40058031D /* Juker.xcdatamodeld in Sources */,
 				D09105FA1EEF5E5300AD29BB /* JukeBoxManager.swift in Sources */,
 				928F84401EF83C4800614716 /* Event.swift in Sources */,
+				D0AF20BA1EFB3A5500D34E56 /* SearchTrackCell.swift in Sources */,
 				928F843E1EF6FB0000614716 /* SongTimer.swift in Sources */,
 				D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */,
 				9241B5251EF08C030059335C /* TableViewController.swift in Sources */,
@@ -437,6 +461,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -459,6 +484,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

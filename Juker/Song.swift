@@ -49,6 +49,7 @@ class Song: NSObject, NSCoding {
         self.albumURI = aDecoder.decodeObject(forKey: "albumURI") as! String
         self.duration = aDecoder.decodeDouble(forKey: "duration")
         self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
+
     }
     
     func encode(with aCoder: NSCoder) {

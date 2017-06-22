@@ -280,6 +280,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
             self.session = firstTimeSession
             initializePlayer(authSession: session)
+            //self.performSegue(withIdentifier: "addMusicSegue", sender: self)
         }
     }
     
