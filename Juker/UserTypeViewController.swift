@@ -77,6 +77,7 @@ class UserTypeViewController: UIViewController {
         if segue.identifier == "host" {
             let dvc = segue.destination as! TableViewController
             dvc.isNewUser = false
+            jukeBox.isHost = true
             dvc.jukeBox = jukeBox
             dvc.session = session
             

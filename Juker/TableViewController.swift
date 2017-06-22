@@ -250,11 +250,12 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
                 print("no song returned")
                 return
             }
-            jukeBox?.isHost = true
+            
             trackArray.append(newSong)
             print("adding new song")
             if (jukeBox?.isPendingHost)! {
                 jukeBox?.isPendingHost = false
+                jukeBox?.isHost = true
                 //PROBLEM SPOT 2
                 jukeBox?.serviceBrowser.startBrowsingForPeers()
                 print("browsing for peers")
@@ -272,7 +273,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             }
             trackArray.append(newSong)
             if (jukeBox?.isPendingHost)! {
-                jukeBox?.isHost = true
+//               jukeBox?.isHost = true
                 jukeBox?.isPendingHost = false
                 //PROBLEM SPOT 2.1
                 jukeBox?.serviceBrowser.startBrowsingForPeers()
