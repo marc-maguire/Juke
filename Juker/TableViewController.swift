@@ -73,6 +73,7 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
 //        
 //        NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
         
+    
         //        self.playbackButton.layer.cornerRadius = self.playbackButton.frame.size.height / 2
         //        self.playbackButton.layer.borderWidth = 2.0
         self.playbackButton.adjustMargin = 1
@@ -92,13 +93,13 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             performSegue(withIdentifier: "addMusicSegue", sender: self)
     }
         if isNewUser {
-            sleep(3)
+            //this is where the connection issue is, if we sleep, it pauses the app and doesn't connect
             //send event to host to notify them
             let song = Song(withDefaultString: "empty")
             let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox?.send(event: newEvent as NSData)
-            
+            print("sync request sent")
         }
     }
     
@@ -432,6 +433,7 @@ extension TableViewController : JukeBoxManagerDelegate {
                 self.updateTimersFrom(event)
                 self.songTimer.pauseTimer()
                 self.togglePlayButtonState()
+                    print("sync request sync should finish")
 //                self.isNewUser = false
 //                    self.tableView.reloadData()
                 }
@@ -439,6 +441,7 @@ extension TableViewController : JukeBoxManagerDelegate {
                 if (self.jukeBox?.isHost)! {
                     self.hostSendAllSongs()
                     self.syncTimersForNewUser()
+                    print("sync request received")
                     
                 }
             }
