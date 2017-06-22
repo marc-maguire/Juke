@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="HKH-W9-CBT">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Omk-3F-Lga">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -104,6 +104,15 @@
                                     <outletCollection property="gestureRecognizers" destination="eXU-qp-3Ew" appends="YES" id="IEZ-fq-fXU"/>
                                 </connections>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKE-fl-gxv" customClass="PlaybackButton" customModule="PlaybackButton">
+                                <rect key="frame" x="164" y="278" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="didTapPlaybackButton:" destination="Omk-3F-Lga" eventType="touchUpInside" id="6Qc-yn-N3D"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.99215686274509807" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -120,8 +129,11 @@
                         <outlet property="currentArtistLabel" destination="Lbr-9n-GbT" id="zZn-hm-dYI"/>
                         <outlet property="currentInfoWrapper" destination="gCQ-Rm-K0A" id="AU5-Jr-D9X"/>
                         <outlet property="currentTrackLabel" destination="TCu-qr-YCY" id="KY4-Qq-LDN"/>
+                        <outlet property="durationLabel" destination="g9v-i1-IRc" id="Y44-qR-hb0"/>
                         <outlet property="jukeHeight" destination="IAJ-HI-xvC" id="ok7-lI-h0V"/>
                         <outlet property="jukeView" destination="hSu-bR-tyR" id="4tE-GF-E3G"/>
+                        <outlet property="playbackButton" destination="dKE-fl-gxv" id="UVx-v2-Svw"/>
+                        <outlet property="timeElapsedLabel" destination="R6s-L6-STm" id="uya-Fu-xqT"/>
                         <outlet property="trackProgressView" destination="eJG-7l-Ipq" id="M8z-VP-TbO"/>
                     </connections>
                 </viewController>
@@ -273,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ceV-va-4we" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="928.79999999999995" y="138.98050974512745"/>
+            <point key="canvasLocation" x="513" y="-52"/>
         </scene>
         <!--Add Music View Controller-->
         <scene sceneID="XB4-8b-iF0">

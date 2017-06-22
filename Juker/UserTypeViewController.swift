@@ -75,7 +75,7 @@ class UserTypeViewController: UIViewController {
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "host" {
-            let dvc = segue.destination as! TableViewController
+            let dvc = segue.destination as! TestViewController
             dvc.isNewUser = false
             jukeBox.isHost = true
             dvc.jukeBox = jukeBox
@@ -84,7 +84,7 @@ class UserTypeViewController: UIViewController {
             
         }
         if segue.identifier == "guest" {
-            let dvc = segue.destination as! TableViewController
+            let dvc = segue.destination as! TestViewController
             dvc.jukeBox = jukeBox
             dvc.session = session
             //session is not set because no playing

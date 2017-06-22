@@ -10,11 +10,15 @@ import UIKit
 import MGSwipeTableCell
 
 class PlaylistTableCell: MGSwipeTableCell {
+
     
+    @IBOutlet weak var trackArtistLabel: UILabel!
+
+    @IBOutlet weak var trackAlbumImage: UIImageView!
     
-    @IBOutlet weak var trackImageView: UIImageView!
+    @IBOutlet weak var trackNameLabel: UILabel!
     
-    
+    @IBOutlet weak var explicitMarkerImage: UIImageView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,7 +26,7 @@ class PlaylistTableCell: MGSwipeTableCell {
         
         self.backgroundColor = UIColor(red: 244.0/255, green: 244.0/255, blue: 244.0/255, alpha: 1)
         
-        trackImageView.layer.cornerRadius = 6
+        trackAlbumImage.layer.cornerRadius = 6
         
         
     }

@@ -8,9 +8,47 @@
 
 import UIKit
 import MGSwipeTableCell
+import PlaybackButton
 
 
 class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate {
+    
+    var auth = SPTAuth.defaultInstance()!
+    var session:SPTSession! {
+        didSet {
+            if (jukeBox?.isPendingHost)! {
+                initializePlayer(authSession: session)
+            }
+        }
+    }
+    
+    var player: SPTAudioStreamingController?
+    var loginUrl: URL?
+    
+    var jukeBox: JukeBoxManager? {
+        didSet{
+            jukeBox?.delegate = self
+        }
+    }
+    var playerIsActive: Bool = false
+    var isNewUser: Bool = true
+    
+    var songTimer = SongTimer()
+    
+    var trackArray: [Song] = [] {
+        didSet {
+            playListTable.reloadData()
+            updateCurrentTrackInfo()
+            if (jukeBox?.isHost)! {
+                if !playerIsActive {
+                    hostPlayNextSong()
+                    playerIsActive = true
+                }
+            }
+            //            print("\(trackArray[0].isExplicit)")
+            //need to fetch album art
+        }
+    }
     
     var manager = DataManager.shared()
 
@@ -31,6 +69,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var trackProgressView: UIProgressView!
     
+    @IBOutlet weak var durationLabel: UILabel!
+    
+    @IBOutlet weak var timeElapsedLabel: UILabel!
+    
+    @IBOutlet weak var playbackButton: PlaybackButton!
+    
     //Search View Wrapper And Search Results Table
     
     var searchWrapper: UIView!
@@ -42,14 +86,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var resultsTable: UITableView!
     var tapView: UIView!
     
-    var filteredSongs: [Song]?
+    var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
-    
-    
-    
-    
-    
     
     //playlist Table
     
@@ -80,8 +119,269 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         
+        if jukeBox?.isPendingHost == true {
+//            performSegue(withIdentifier: "addMusicSegue", sender: self)
+            
+            self.showSearch()
+            
+        }
+    }
+    
+    
+    
+    //MARK: Song changing logic
+    
+    func hostPlayNextSong() {
+        
+        //on first play, we do not want to remove the first song from the array
+        
+        if playerIsActive {
+            trackArray.removeFirst()
+        }
+        
+        guard let firstSong = trackArray.first else {
+            print("No Song")
+            //can handle no song in here
+            return
+        }
+        
+        //play new song and adjust timers / button state
+        self.player?.playSpotifyURI(firstSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+        songTimer.setMaxSongtime(milliseconds: Int(firstSong.duration))
+        playbackButton.setButtonState(.playing, animated: false)
+        //        view.layoutIfNeeded()
+        
+        //send new song event to connected peers
+        let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+        
+        songTimer.startTimer()
+        //won't update - is this getting called before the button is instantiated?
+        
+    }
+    
+    func nonHostPlayNextSongFrom(_ event: Event) {
+        
+        //on first play, we do not want to remove the first song from the array
+        if playerIsActive {
+            trackArray.removeFirst()
+        }
+        
+        songTimer.countDownTimer.invalidate()
+        playbackButton.setButtonState(.playing, animated: true)
+        updateTimersFrom(event)
+        songTimer.startTimer()
+        playerIsActive = true
+        
+        
+    }
+    @IBAction func didTapPlaybackButton(_ sender: Any) {
+        
+        toggleHostPlayState()
+        
+    }
+    
+    func toggleHostPlayState() {
+        
+        if (jukeBox?.isHost)! {
+            
+            if self.playbackButton.buttonState == .playing {
+                
+                pausePlayback()
+                
+            } else {
+                
+                resumePlayback()
+                
+            }
+            //regardless of host state, we send a toggle event to all users to have them change state
+            sendTogglePlayEvent()
+            
+        }
+    }
+    
+    func pausePlayback() {
+        self.player?.setIsPlaying(false, callback: nil)
+        self.playbackButton.setButtonState(.pausing, animated: true)
+        songTimer.pauseTimer()
+        
+    }
+    
+    func resumePlayback() {
+        self.player?.setIsPlaying(true, callback: nil)
+        self.playbackButton.setButtonState(.playing, animated: true)
+        songTimer.pauseTimer()
+        
+    }
+    
+    func sendTogglePlayEvent() {
+        
+        guard let firstSong = trackArray.first else {
+            print("No Song")
+            //can handle no song in here
+            return
+        }
+        
+        let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+        
+    }
+    
+    func sendAddNewSongEvent(song: Song) {
+        
+        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox?.send(event: newEvent as NSData)
+    }
+    
+    func updateCurrentTrackInfo() {
+        currentTrackLabel.text = trackArray[0].title
+        currentArtistLabel.text = trackArray[0].artist
+        //album art =
+        //isExplicit =
+        
+    }
+    
+    func updateTimersFrom(_ event: Event) {
+        self.songTimer.totalSongTime = Float(event.totalSongTime)
+        self.songTimer.timeRemaining = event.timeRemaining
+        self.songTimer.timeElapsed = event.timeElapsed
+    }
+    
+    
+    func togglePlayButtonState() {
+        if self.playbackButton.buttonState == .pausing {
+            self.playbackButton.setButtonState(.playing, animated: true)
+        } else {
+            self.playbackButton.setButtonState(.pausing, animated: true)
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
+        
+        if segue.identifier == "first" {
+            //wrap both viewcontrollers in a protocol, add the object to a protocol and then cast the segue source to the protocol type. Figure out how ot make it a computed property, make a second selectedSong that reaches into this
+            
+            let initialVC = segue.source as! SongViewController
+            guard let newSong = initialVC.selectedSong else {
+                print("no song returned")
+                return
+            }
+            
+            trackArray.append(newSong)
+            print("adding new song")
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isPendingHost = false
+                jukeBox?.isHost = true
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
+                print("browsing for peers")
+                return
+            }
+            
+            sendAddNewSongEvent(song: newSong)
+            
+        } else if segue.identifier == "newSearchSong" {
+            
+            let initialVC = segue.source as! AddMusicViewController
+            guard let newSong = initialVC.selectedSong else {
+                print("no song returned")
+                return
+            }
+            trackArray.append(newSong)
+            if (jukeBox?.isPendingHost)! {
+                jukeBox?.isPendingHost = false
+                jukeBox?.isHost = true
+                jukeBox?.serviceBrowser.startBrowsingForPeers()
+                return
+            }
+            sendAddNewSongEvent(song: newSong)
+        }
+    }
+    
+    func updateProgressBar(){
+        trackProgressView.progressTintColor = UIColor.blue
+        trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
+        trackProgressView.layoutIfNeeded()
+    }
+    
+        func initializePlayer(authSession:SPTSession){
+            if self.player == nil {
+                self.player = SPTAudioStreamingController.sharedInstance()
+                self.player!.playbackDelegate = self
+                self.player!.delegate = self
+                try! player!.start(withClientId: auth.clientID)
+                self.player!.login(withAccessToken: authSession.accessToken!)
+    
+            }
+        }
+    
+        func audioStreaming(_ audioStreaming: SPTAudioStreamingController!, didReceive event: SpPlaybackEvent) {
+    
+        }
+    
+        func audioStreamingDidLogin(_ audioStreaming: SPTAudioStreamingController!) {
+            // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
+            print("logged in")
+            print("\(session.accessToken)")
+    
+            print("\(session.encryptedRefreshToken)")
+            print("\(auth.clientID)")
+        }
+    
+        func hostSendAllSongs() {
+            //send all songs to new users
+            for song in trackArray {
+                let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+                let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                jukeBox?.send(event: newEvent as NSData)
+            }
+        }
+    
+        func syncTimersForNewUser() {
+            let event = Event(songAction: .newUserFinishedSyncing, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox?.send(event: newEvent as NSData)
+        }
+    
+        func hostSendNewConnectionEvent() {
+    
+            let event = Event(songAction: .newConnectionDetected, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox?.send(event: newEvent as NSData)
+            
+        }
+        
+    
+
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        
+//        
+//    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let txt = textField.text else { return true }
+        let text = (txt as NSString).replacingCharacters(in: range, with: string) as String
+        
+        if textField.text?.isEmpty ?? true {
+            resultsTable.reloadData()
+        } else {
+            manager.spotifySearch(searchString: text) { (songs) in
+                DispatchQueue.main.async {
+                    self.filteredSongs = songs
+                    self.resultsTable.reloadData()
+                }
+            }
+        }
+
+        return true
     }
     
     func searchWrapperSetup() {
@@ -130,7 +430,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tapView.heightAnchor.constraint(equalTo: searchField.heightAnchor, multiplier: 1.0, constant: 0).isActive = true
         tapView.topAnchor.constraint(equalTo: searchField.topAnchor, constant: 0).isActive = true
         searchWrapper.bringSubview(toFront: tapView)
-        let search = UITapGestureRecognizer(target: self, action: #selector(showSearch(_:)))
+        let search = UITapGestureRecognizer(target: self, action: #selector(showSearch))
         tapView.addGestureRecognizer(search)
         
         resultsTable = UITableView()
@@ -140,9 +440,11 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         resultsTable.isHidden = true
         
         let categoryNib = UINib(nibName: "SearchCategoryCell", bundle: nil)
-        //let searchTrackNib = UINib
+        let trackNib = UINib(nibName: "SearchTrackCell", bundle: nil)
         
-        resultsTable.register(categoryNib, forCellReuseIdentifier: "Cell")
+        resultsTable.register(categoryNib, forCellReuseIdentifier: "CategoryCell")
+        
+        resultsTable.register(trackNib, forCellReuseIdentifier: "TrackCell")
         
         
         
@@ -157,7 +459,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
  
     }
     
-    func showSearch(_ sender: UITapGestureRecognizer) {
+    func showSearch() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {
             self.view.bringSubview(toFront: self.searchWrapper)
             self.searchWrapper.sendSubview(toBack: self.tapView)
@@ -184,7 +486,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         playListTable.delegate = self
         
         let nib = UINib(nibName: "PlaylistTableCell", bundle: nil)
-        playListTable.register(nib, forCellReuseIdentifier: "Cell")
+        playListTable.register(nib, forCellReuseIdentifier: "PlaylistCell")
         
 
         jukeView.addSubview(playListTable)
@@ -214,10 +516,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             if (searchField.text?.isEmpty)! {
                 return addMusicOptions.count
             } else {
-                return 7
+                return filteredSongs.count
             }
         case playListTable:
-            return 7
+            return trackArray.count
         default:
             break
         }
@@ -274,16 +576,16 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case resultsTable:
             if (searchField.text?.isEmpty)! {
                 resultsTable.isScrollEnabled = false
-                let cell = resultsTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchCategoryCell
+                let cell = resultsTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SearchCategoryCell
                 cell.categoryNameLabel.text = addMusicOptions[indexPath.row]
                 cell.backgroundColor = resultsTable.backgroundColor
                 
                 return cell
             } else {
                 resultsTable.isScrollEnabled = true
-                let cell = resultsTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchTrackCell
-                cell.trackNameLabel.text = "Track Name"
-                cell.trackArtistLabel.text = "Track Artist"
+                let cell = resultsTable.dequeueReusableCell(withIdentifier: "TrackCell", for: indexPath) as! SearchTrackCell
+                cell.trackNameLabel.text = filteredSongs[indexPath.row].title
+                cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
                 cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
                 cell.trackAlbumImage.image = #imageLiteral(resourceName: "kaytra")
                 cell.backgroundColor = resultsTable.backgroundColor
@@ -303,6 +605,53 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
+        switch tableView {
+        case resultsTable:
+            
+            if !(searchField.text?.isEmpty ?? false) {
+                
+                
+                selectedSong = filteredSongs[indexPath.row]
+                
+                guard let selectedTrack = selectedSong else {
+                    print("error, no track")
+                    return
+                }
+                
+                
+                trackArray.append(selectedTrack)
+                if (jukeBox?.isPendingHost)! {
+                    jukeBox?.isPendingHost = false
+                    jukeBox?.isHost = true
+                    jukeBox?.serviceBrowser.startBrowsingForPeers()
+                    return
+                }
+                sendAddNewSongEvent(song: selectedTrack)
+            } else {
+                
+                switch indexPath.row {
+                case 0:
+                    performSegue(withIdentifier: "playlist", sender: self)
+                case 1:
+                    performSegue(withIdentifier: "playlist", sender: self) //update this to recommendation
+                case 2:
+                    performSegue(withIdentifier: "playlist", sender: self) //update this to saved music
+                case 3:
+                    performSegue(withIdentifier: "playlist", sender: self) //Recently Played
+                default:
+                    return
+                }
+            }
+        case playListTable:
+            return
+        default:
+           break
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -372,43 +721,103 @@ extension UIViewController {
     }
 }
 
-//extension TableViewController : JukeBoxManagerDelegate {
-//    
-//    func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
-//        OperationQueue.main.addOperation {
-//            //self.connectionsLabel.text = "Connections: \(connectedDevices)"
-//        }
-//    }
-//    
-//    //MARK: NEW-----------
-//    func newSong(manager: JukeBoxManager, song: Song) {
-//        OperationQueue.main.addOperation {
-//            self.trackArray.append(song)
-//            //            self.player!.queueSpotifyURI(song.songURI, callback: nil)
-//            
-//        }
-//    }
-//}
-//
-//extension TableViewController: SongTimerProgressBarDelegate {
-//    
-//    func progressBarNeedsUpdate() {
-//        self.updateProgressBar()
-//    }
-//    
-//    func songDidEnd() {
-//        playerIsActive = false
-//        playbackButton.setButtonState(.pausing, animated: true)
-//        trackArray.remove(at: 0)
-//        songTitleLabel.text = trackArray[0].title
-//        artistNameLabel.text = trackArray[0].artist
-//        didTapPlaybackButton(self)
-//    }
-//    
-//    func labelsNeedUpdate() {
-//        durationLabel?.text = songTimer.timeString(time: TimeInterval(songTimer.timeRemaining))
-//        timeElapsedLabel.text = songTimer.timeString(time: TimeInterval(songTimer.timeElapsed))
-//    }
-//}
+extension TestViewController : JukeBoxManagerDelegate {
+    
+    func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
+        OperationQueue.main.addOperation {
+            //this is called once a new connection has been established
+            //now we should send the event
+            if (self.jukeBox?.isHost)!{
+                self.hostSendNewConnectionEvent()
+                print("connect to \(connectedDevices)")
+            }
+            
+        }
+    }
+    
+    func newEvent(manager: JukeBoxManager, event: Event) {
+        OperationQueue.main.addOperation {
+            
+            switch event.songAction {
+                
+            case .addSong:
+                print("add song")
+                self.trackArray.append(event.song)
+                
+            case .removeSong:
+                print("remove Song")
+                
+            case .togglePlay:
+                print("toggle play")
+                self.updateTimersFrom(event)
+                self.songTimer.pauseTimer()
+                self.togglePlayButtonState()
+                
+            case .startNewSong:
+                self.nonHostPlayNextSongFrom(event)
+                
+            case .newUserSyncResponse:
+                if self.isNewUser {
+                    self.trackArray.append(event.song)
+                    
+                }
+                print("sync data sent by host to new user")
+                
+            case .newUserFinishedSyncing:
+                if self.isNewUser {
+                    self.updateTimersFrom(event)
+                    self.songTimer.startTimer()
+                    self.togglePlayButtonState()
+                    self.playerIsActive = true
+                    print("sync request sync should finish")
+                    self.isNewUser = false
+                }
+                
+            case .newUserSyncRequest:
+                if (self.jukeBox?.isHost)! {
+                    self.hostSendAllSongs()
+                    self.syncTimersForNewUser()
+                    print("sync request received")
+                }
+                
+            case .newConnectionDetected:
+                if self.isNewUser {
+                    let song = Song(withDefaultString: "empty")
+                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
+                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                    self.jukeBox?.send(event: newEvent as NSData)
+                    print("sync request sent")
+                    
+                }
+                
+            }
+            
+        }
+    }
+    
+}
+
+//MARK: SongtimerProgressBarDelegate Methods
+
+extension TestViewController: SongTimerDelegate {
+    
+    func progressBarNeedsUpdate() {
+        self.updateProgressBar()
+    }
+    
+    func songDidEnd() {
+        if (jukeBox?.isHost)! {
+            hostPlayNextSong()
+        }
+    }
+    
+    func labelsNeedUpdate() {
+        durationLabel?.text = songTimer.timeString(time: TimeInterval(songTimer.timeRemaining))
+        timeElapsedLabel.text = songTimer.timeString(time: TimeInterval(songTimer.timeElapsed))
+    }
+    func syncResumeTapped(resumeTapped: Bool) {
+        self.songTimer.resumeTapped = resumeTapped
+    }
+}
 
 
