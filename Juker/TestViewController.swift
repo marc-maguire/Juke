@@ -35,10 +35,17 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var searchWrapper: UIView!
     var searchField: UITextField!
+    var searchFieldWidth: NSLayoutConstraint!
+    var searchFieldExpandedWidth: NSLayoutConstraint!
+    var searchWrapperHeight: NSLayoutConstraint!
+    var searchWrapperExpandedBottomAnchor: NSLayoutConstraint!
     var resultsTable: UITableView!
+    var tapView: UIView!
+    
     var filteredSongs: [Song]?
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
+    
     
     
     
@@ -73,23 +80,39 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        
+    }
+    
     func searchWrapperSetup() {
         searchWrapper = UIView()
         view.addSubview(searchWrapper)
+        searchWrapper.backgroundColor = view.backgroundColor
         
         searchWrapper.translatesAutoresizingMaskIntoConstraints = false
         searchWrapper.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1.0, constant: 0).isActive = true
         searchWrapper.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         searchWrapper.topAnchor.constraint(equalTo: view.topAnchor, constant: 60).isActive = true
-        searchWrapper.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        searchWrapperHeight = searchWrapper.heightAnchor.constraint(equalToConstant: 40)
+        searchWrapperHeight.isActive = true
         
+        searchWrapperExpandedBottomAnchor = searchWrapper.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: 0)
+        searchWrapperExpandedBottomAnchor.isActive = false
         
         searchField = UITextField()
+        searchField.delegate = self
         searchWrapper.addSubview(searchField)
+        
         
         searchField.translatesAutoresizingMaskIntoConstraints = false
         
-        searchField.widthAnchor.constraint(equalTo: searchWrapper.widthAnchor, multiplier: 0.67, constant: 0).isActive = true
+        searchFieldWidth = searchField.widthAnchor.constraint(equalTo: searchWrapper.widthAnchor, multiplier: 0.67, constant: 0)
+        searchFieldWidth.isActive = true
+        searchFieldExpandedWidth = searchField.widthAnchor.constraint(equalTo: self.searchWrapper.widthAnchor, multiplier: 0.80, constant: 0)
+        searchFieldExpandedWidth.isActive = false
+        
+        
+        
         searchField.centerXAnchor.constraint(equalTo: searchWrapper.centerXAnchor).isActive = true
         
         searchField.topAnchor.constraint(equalTo: searchWrapper.topAnchor, constant: 0).isActive = true
@@ -99,9 +122,22 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         searchField.attributedPlaceholder = NSAttributedString(string: "Search for a track")
         
+        tapView = UIView()
+        searchWrapper.addSubview(tapView)
+        tapView.translatesAutoresizingMaskIntoConstraints = false
+        tapView.widthAnchor.constraint(equalTo: searchField.widthAnchor, multiplier: 1.0, constant: 0).isActive = true
+        tapView.centerXAnchor.constraint(equalTo: searchWrapper.centerXAnchor, constant: 0).isActive = true
+        tapView.heightAnchor.constraint(equalTo: searchField.heightAnchor, multiplier: 1.0, constant: 0).isActive = true
+        tapView.topAnchor.constraint(equalTo: searchField.topAnchor, constant: 0).isActive = true
+        searchWrapper.bringSubview(toFront: tapView)
+        let search = UITapGestureRecognizer(target: self, action: #selector(showSearch(_:)))
+        tapView.addGestureRecognizer(search)
+        
         resultsTable = UITableView()
         resultsTable.dataSource = self
         resultsTable.delegate = self
+        resultsTable.translatesAutoresizingMaskIntoConstraints = false
+        resultsTable.isHidden = true
         
         let categoryNib = UINib(nibName: "SearchCategoryCell", bundle: nil)
         //let searchTrackNib = UINib
@@ -111,17 +147,34 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         searchWrapper.addSubview(resultsTable)
+        resultsTable.backgroundColor = searchWrapper.backgroundColor
+        
         resultsTable.widthAnchor.constraint(equalTo: searchWrapper.widthAnchor, multiplier: 1.0, constant: 0).isActive = true
         
         resultsTable.centerXAnchor.constraint(equalTo: searchWrapper.centerXAnchor).isActive = true
         resultsTable.topAnchor.constraint(equalTo: searchField.bottomAnchor, constant: 0).isActive = true
         resultsTable.bottomAnchor.constraint(equalTo: searchWrapper.bottomAnchor, constant: 0).isActive = true
-        
-        
-        
-        
-        
+ 
     }
+    
+    func showSearch(_ sender: UITapGestureRecognizer) {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {
+            self.view.bringSubview(toFront: self.searchWrapper)
+            self.searchWrapper.sendSubview(toBack: self.tapView)
+            self.tapView.isUserInteractionEnabled = false
+            self.searchFieldWidth.isActive = false
+            self.searchFieldExpandedWidth.isActive = true
+            
+            self.searchWrapperHeight.isActive = false
+            self.searchWrapperExpandedBottomAnchor.isActive = true
+            
+            self.resultsTable.isHidden = false
+            self.updateViewConstraints()
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+    }
+    
+    
     
     func playlistTableSetup() {
         
@@ -160,8 +213,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case resultsTable:
             if (searchField.text?.isEmpty)! {
                 return addMusicOptions.count
+            } else {
+                return 7
             }
-            break
         case playListTable:
             return 7
         default:
@@ -183,9 +237,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let font = UIFont(name: "HelveticaNeue-Light", size: 14)
         
         if direction == MGSwipeDirection.leftToRight {
-//            let upvote = MGSwipeButton(title: "👏🏼", backgroundColor: UIColor.init(red: 0, green: 0, blue: 0, alpha: 0), padding: 15, callback: { (sender) -> Bool in
-//                
-//            })
             
             // reported issue of possible retain cycle in MGSwipeButton callback. Use [unowned self] if problem arises
             
@@ -204,12 +255,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             return [upvote]
         } else {
-            let downvote = MGSwipeButton(title: "👎🏼", backgroundColor: UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0), padding: 15, callback: { (sender) -> Bool in
+            let downvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "dislikeHeart"), backgroundColor: UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0), padding: 15, callback: { (sender) -> Bool in
                 print("downvoted")
                 return true
             })
             downvote.titleLabel?.font = font
-            expansionSettings.expansionColor = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0)
+            //expansionSettings.expansionColor = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0)
             return [downvote]
         }
         
@@ -222,37 +273,46 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         switch tableView {
         case resultsTable:
             if (searchField.text?.isEmpty)! {
+                resultsTable.isScrollEnabled = false
                 let cell = resultsTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchCategoryCell
+                cell.categoryNameLabel.text = addMusicOptions[indexPath.row]
+                cell.backgroundColor = resultsTable.backgroundColor
                 
                 return cell
             } else {
+                resultsTable.isScrollEnabled = true
                 let cell = resultsTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SearchTrackCell
-                
+                cell.trackNameLabel.text = "Track Name"
+                cell.trackArtistLabel.text = "Track Artist"
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+                cell.trackAlbumImage.image = #imageLiteral(resourceName: "kaytra")
+                cell.backgroundColor = resultsTable.backgroundColor
                 return cell
                 
             }
+        case playListTable:
+            let cell = playListTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PlaylistTableCell
+            cell.delegate = self
+            cell.selectionStyle = UITableViewCellSelectionStyle.none
+            //cell.backgroundColor = resultsTable.backgroundColor
+            
+            return cell
             
         default:
-            <#code#>
+            break
         }
         
-        let cell = playListTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PlaylistTableCell
-        cell.delegate = self
-        cell.selectionStyle = UITableViewCellSelectionStyle.none
-
-        return cell
+        return UITableViewCell()
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-//        switch tableView {
-//        case resultsTable:
-//            
-//        default:
-//
-//        }
-        
-        return 120
+        switch tableView {
+        case resultsTable:
+            return 110
+        default:
+            return 120
+        }
     }
 
     func addCurve(startPoint: CGPoint, endPoint: CGPoint, controlPoint: CGPoint) {
@@ -276,6 +336,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func showPlaylist(_ sender: UISwipeGestureRecognizer) {
         
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
+            
+            self.view.bringSubview(toFront: self.jukeView)
             
             self.jukeHeight.constant = self.view.bounds.size.height - 100
             

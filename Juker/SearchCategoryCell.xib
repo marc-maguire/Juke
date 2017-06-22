@@ -6,30 +6,38 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="KGk-i7-Jjw" customClass="SearchCategoryCell" customModule="Juker" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="87" id="KGk-i7-Jjw" customClass="SearchCategoryCell" customModule="Juker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="422" height="87"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <rect key="frame" x="0.0" y="0.0" width="422" height="87"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suJ-x2-yav">
-                        <rect key="frame" x="24" y="11" width="42" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suJ-x2-yav">
+                        <rect key="frame" x="42" y="-0.5" width="338" height="87"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.96078431372549022" green="0.99215686274509807" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="suJ-x2-yav" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Qu5-eg-lXY"/>
+                    <constraint firstItem="suJ-x2-yav" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="WwK-VA-yCq"/>
+                    <constraint firstItem="suJ-x2-yav" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.8" id="e4j-q1-eyu"/>
+                    <constraint firstItem="suJ-x2-yav" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lxI-T6-naZ"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="categoryNameLabel" destination="suJ-x2-yav" id="tso-0y-3z6"/>
             </connections>
+            <point key="canvasLocation" x="86" y="75.5"/>
         </tableViewCell>
     </objects>
 </document>

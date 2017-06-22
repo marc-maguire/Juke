@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="404" height="118"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="mac" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-wj-5Mg">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tame" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-wj-5Mg">
                         <rect key="frame" x="8" y="9" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
@@ -50,6 +50,6 @@
     </objects>
     <resources>
         <image name="explicit3" width="1002" height="1002"/>
-        <image name="mac" width="1280" height="824"/>
+        <image name="tame" width="1000" height="1000"/>
     </resources>
 </document>

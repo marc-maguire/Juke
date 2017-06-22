@@ -90,7 +90,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.95675891637802124" green="0.95692259073257446" blue="0.95674854516983032" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" id="4O2-OJ-LDa"/>
@@ -105,7 +105,7 @@
                                 </connections>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.96136969327926636" green="0.99342042207717896" blue="0.55463910102844238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.99215686274509807" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ZQW-Of-urC" firstAttribute="width" secondItem="KXt-gA-Pox" secondAttribute="width" multiplier="0.67" id="5f9-n5-vcM"/>
                             <constraint firstItem="ZQW-Of-urC" firstAttribute="top" secondItem="jmu-jH-Iq2" secondAttribute="bottom" constant="121" id="AB8-yn-Hig"/>
