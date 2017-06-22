@@ -92,8 +92,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
         if jukeBox?.isPendingHost == true {
             performSegue(withIdentifier: "addMusicSegue", sender: self)
     }
+        if self.isNewUser {
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(4), execute: {
-            if self.isNewUser {
+            
             //this is where the connection issue is, if we sleep, it pauses the app and doesn't connect
             //send event to host to notify them
             let song = Song(withDefaultString: "empty")
@@ -101,8 +102,9 @@ class TableViewController: UIViewController, UITableViewDataSource, UITableViewD
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             self.jukeBox?.send(event: newEvent as NSData)
             print("sync request sent")
-        }
+        
         })
+        }
 
             }
     
@@ -441,7 +443,7 @@ extension TableViewController : JukeBoxManagerDelegate {
                     self.playerIsActive = true
 //                self.nonHostPlayNextSongFrom(event)
                     print("sync request sync should finish")
-//                self.isNewUser = false
+                self.isNewUser = false
 //                    self.tableView.reloadData()
                 }
             case .newUserSyncRequest:
