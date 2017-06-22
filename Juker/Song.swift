@@ -18,6 +18,18 @@ class Song: NSObject, NSCoding {
     var duration: TimeInterval
     var isExplicit: Bool
     
+    init(withDefaultString: String){
+
+        self.title = withDefaultString
+        self.artist = withDefaultString
+        self.songURI = withDefaultString
+        self.album = withDefaultString
+        self.albumURI = withDefaultString
+        self.duration = TimeInterval(5)
+        self.isExplicit = false
+    
+    }
+    
     init?(trackDict: [String:AnyObject]) {
         
         

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -61,16 +62,24 @@
                                     <segue destination="jU1-9O-B9Q" kind="show" identifier="host" id="4Pg-RD-pGz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDa-78-qtL">
-                                <rect key="frame" x="164" y="415" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDa-78-qtL">
+                                <rect key="frame" x="48" y="415" width="282" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="gV0-je-VWe"/>
+                                    <constraint firstAttribute="width" constant="282" id="nEP-as-IOe"/>
+                                </constraints>
                                 <connections>
                                     <action selector="acceptInviteButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="IVB-lH-dso"/>
+                                    <segue destination="jU1-9O-B9Q" kind="show" identifier="guest" id="b4l-Y4-Bai"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="CDa-78-qtL" secondAttribute="trailing" constant="29" id="GIo-t8-f8f"/>
+                            <constraint firstItem="2Rn-1n-Bnz" firstAttribute="top" secondItem="CDa-78-qtL" secondAttribute="bottom" constant="198" id="PJJ-cv-7nL"/>
+                            <constraint firstItem="CDa-78-qtL" firstAttribute="leading" secondItem="NCd-xQ-Ee1" secondAttribute="leadingMargin" constant="32" id="y5g-pG-tHn"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="inviteButton" destination="CDa-78-qtL" id="4mP-Hb-csm"/>
@@ -78,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-671" y="216"/>
+            <point key="canvasLocation" x="-671.20000000000005" y="215.44227886056973"/>
         </scene>
         <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">
@@ -89,4 +98,7 @@
             <point key="canvasLocation" x="135" y="164"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="b4l-Y4-Bai"/>
+    </inferredMetricsTieBreakers>
 </document>

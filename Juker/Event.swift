@@ -15,6 +15,10 @@ class Event: NSObject, NSCoding {
         case removeSong = "removeSong"
         case togglePlay = "togglePlay"
         case startNewSong = "startNewSong"
+        case newUserSyncResponse = "newUserSyncResponse"
+        case newUserFinishedSyncing = "newUserFinishedSyncing"
+        case newUserSyncRequest = "newUserSyncRequest"
+        
     }
 
     var songAction: SongAction

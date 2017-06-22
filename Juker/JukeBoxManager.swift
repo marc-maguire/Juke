@@ -25,7 +25,7 @@ class JukeBoxManager: NSObject {
     
     var isPendingHost: Bool = false
     var isHost:Bool = false
-    var isAcceptingInvites: Bool = false
+//    var isAcceptingInvites: Bool = false
     
     var delegate : JukeBoxManagerDelegate?
     
@@ -45,7 +45,8 @@ class JukeBoxManager: NSObject {
     }
     
     lazy var session : MCSession = {
-        let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .required)
+        let session = MCSession(peer: self.myPeerId, securityIdentity: nil, encryptionPreference: .none)
+        //changed encryption from .required to .none for test
         session.delegate = self
         return session
     }()
@@ -80,11 +81,15 @@ extension JukeBoxManager : MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         NSLog("%@", "didReceiveInvitationFromPeer \(peerID)")
         //can we notify the userType Vc at this point which would make the button visible?
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID)"])
-        if isAcceptingInvites == true {
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "receivedInvite"), object: nil, userInfo: ["hostName": "\(peerID.displayName)"])
+       //i think that the invite is coming before we are accepting, and then we can't accept it after this point
+        //PROBLEM SPOT 3
+//        if isAcceptingInvites == true {
         invitationHandler(true, self.session)
-            print("Accepted invite from host")
-        }
+        
+            
+//        }
+        //notify the host that there is a new connection so they will send sync info
     }
     
 }
@@ -98,7 +103,7 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
         NSLog("%@", "foundPeer: \(peerID)")
         if isHost {
-            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 10)
+            browser.invitePeer(peerID, to: self.session, withContext: nil, timeout: 60)
             NSLog("%@", "invitePeer: \(peerID)")
             
             //need to handle enable / disable based on host
@@ -149,7 +154,7 @@ extension JukeBoxManager : MCSessionDelegate {
 protocol JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager : JukeBoxManager, connectedDevices: [String])
-    //MARK: NEW-----------
+    
     func newEvent(manager: JukeBoxManager, event: Event)
     
     

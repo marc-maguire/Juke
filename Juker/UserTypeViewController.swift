@@ -21,8 +21,8 @@ class UserTypeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.updateInviteButtonWith(notification:)), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
-       
+//       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.updateInviteButtonWith(notification:)), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
+//       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.beginSegue), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
         //how to get the value out of the dictionary?
 
         // Do any additional setup after loading the view.
@@ -32,25 +32,31 @@ class UserTypeViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @objc func updateInviteButtonWith(notification: NSNotification) {
-        if let info = notification.userInfo as? Dictionary<String,String> {
-            // Check if value present before using it
-            if let hostName = info["hostName"] {
-                print(hostName)
-                inviteButton.isHidden = false
-                inviteButton.titleLabel?.text = hostName
-                //update button state here with name of host, make it visible
+//    @objc func updateInviteButtonWith(notification: NSNotification) {
+//        if let info = notification.userInfo as? Dictionary<String,String> {
+//            // Check if value present before using it
+//            if let hostName = info["hostName"] {
+//                print(hostName)
+//                
+//                inviteButton.isHidden = false
+//                inviteButton.titleLabel?.textColor = UIColor.black
+//                inviteButton.titleLabel?.text = hostName
+//                //update button state here with name of host, make it visible
+//            }
+//            else {
+//                print("no value for key\n")
+//            }
+//        }
+//        else {
+//            print("wrong userInfo type")
+//        }
+//        
+//    }
+ 
+        @objc func beginSegue() {
+            performSegue(withIdentifier: "guest", sender: self)
             }
-            else {
-                print("no value for key\n")
-            }
-        }
-        else {
-            print("wrong userInfo type")
-        }
-        
-    }
-    
+   
     @IBAction func hostButtonTapped(_ sender: Any) {
         jukeBox.isPendingHost = true
         
@@ -62,17 +68,26 @@ class UserTypeViewController: UIViewController {
 
 
     @IBAction func acceptInviteButtonTapped(_ sender: Any) {
-        jukeBox.isAcceptingInvites = true
+//        jukeBox.isAcceptingInvites = true
+        //go to the tableViewController
+        
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "host" {
             let dvc = segue.destination as! TableViewController
+            dvc.isNewUser = false
             dvc.jukeBox = jukeBox
             dvc.session = session
+            
+            
         }
-        if segue.identifier == "notHost" {
-            //dont set session
+        if segue.identifier == "guest" {
+            let dvc = segue.destination as! TableViewController
+            dvc.jukeBox = jukeBox
+            dvc.session = session
+            //session is not set because no playing
+            //might need session if playing loner than an hour
             
         }
 
