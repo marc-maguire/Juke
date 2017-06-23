@@ -22,6 +22,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    var shouldShowCategories = true
+    
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
@@ -133,7 +135,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-    //MARK: Song changing logic
+    //MARK: - Song changing logic
     
     func hostPlayNextSong() {
         
@@ -360,19 +362,19 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
     
-
-//    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        
-//        
-//    }
+    // MARK: - TextField Delegate Methods
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let txt = textField.text else { return true }
         let text = (txt as NSString).replacingCharacters(in: range, with: string) as String
         
-        if textField.text?.isEmpty ?? true {
+       
+        if text == "" {
+            shouldShowCategories = true
             resultsTable.reloadData()
         } else {
+            shouldShowCategories = false
+            
             manager.spotifySearch(searchString: text) { (songs) in
                 DispatchQueue.main.async {
                     self.filteredSongs = songs
@@ -513,7 +515,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch tableView {
         case resultsTable:
-            if (searchField.text?.isEmpty)! {
+            if shouldShowCategories {
                 return addMusicOptions.count
             } else {
                 return filteredSongs.count
@@ -574,7 +576,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch tableView {
         case resultsTable:
-            if (searchField.text?.isEmpty)! {
+            if shouldShowCategories {
                 resultsTable.isScrollEnabled = false
                 let cell = resultsTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SearchCategoryCell
                 cell.categoryNameLabel.text = addMusicOptions[indexPath.row]
