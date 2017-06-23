@@ -37,7 +37,11 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var songTimer = SongTimer()
     
-    var currentlyPlayingSong: Song!
+    var currentlyPlayingSong: Song! {
+        didSet {
+            updateCurrentTrackInfo()
+        }
+    }
     var trackArray: [Song] = [] {
         didSet {
             playListTable.reloadData()
@@ -48,7 +52,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     playerIsActive = true
                 }
             }
-            updateCurrentTrackInfo()
+ 
             //            print("\(trackArray[0].isExplicit)")
             //need to fetch album art
         }
@@ -256,11 +260,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateCurrentTrackInfo() {
+//        if !isNewUser {
         currentTrackLabel.text = currentlyPlayingSong.title
         currentArtistLabel.text = currentlyPlayingSong.artist
         //album art =
         //isExplicit =
-        
+//        }
     }
     
     func updateTimersFrom(_ event: Event) {
@@ -301,7 +306,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 hideSearch()
                 return
             }
-            
+//            updateCurrentTrackInfo()
+            //didnt fix the labels
             sendAddNewSongEvent(song: newSong)
             hideSearch()
             
@@ -364,7 +370,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     
         func syncTimersForNewUser() {
-            let event = Event(songAction: .newUserFinishedSyncing, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox?.send(event: newEvent as NSData)
         }
@@ -837,12 +843,18 @@ extension TestViewController : JukeBoxManagerDelegate {
                 
             case .newUserFinishedSyncing:
                 if self.isNewUser {
+                    self.currentlyPlayingSong = event.song
+//                    self.trackArray.removeFirst()
+                    
+                   
+                    self.playListTable.reloadData()
                     self.updateTimersFrom(event)
                     self.songTimer.startTimer()
                     self.togglePlayButtonState()
                     self.playerIsActive = true
                     print("sync request sync should finish")
                     self.isNewUser = false
+                    
                 }
                 
             case .newUserSyncRequest:
