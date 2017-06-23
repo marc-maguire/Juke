@@ -294,6 +294,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             sendAddNewSongEvent(song: newSong)
+            hideSearch()
             
         } else if segue.identifier == "newSearchSong" {
             
