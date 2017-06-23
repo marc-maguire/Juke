@@ -154,13 +154,15 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-        if playerIsActive {
-            currentlyPlayingSong = firstSong
-            trackArray.removeFirst()
-        }
+//        if playerIsActive {
+//            currentlyPlayingSong = firstSong
+//            trackArray.removeFirst()
+//        }
         
 
         currentlyPlayingSong = firstSong
+        trackArray.removeFirst()
+        playListTable.reloadData()
         //play new song and adjust timers / button state
         self.player?.playSpotifyURI(currentlyPlayingSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
         songTimer.setMaxSongtime(milliseconds: Int(currentlyPlayingSong.duration))
@@ -180,10 +182,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func nonHostPlayNextSongFrom(_ event: Event) {
         
         //on first play, we do not want to remove the first song from the array
-        if playerIsActive {
-            currentlyPlayingSong = event.song
-            trackArray.removeFirst()
-        }
+        currentlyPlayingSong = event.song
+        trackArray.removeFirst()
+        playListTable.reloadData()
+
         
         songTimer.countDownTimer.invalidate()
         playbackButton.setButtonState(.playing, animated: true)
