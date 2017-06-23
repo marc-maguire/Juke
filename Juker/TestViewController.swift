@@ -37,16 +37,18 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var songTimer = SongTimer()
     
+    var currentlyPlayingSong: Song!
     var trackArray: [Song] = [] {
         didSet {
             playListTable.reloadData()
-            updateCurrentTrackInfo()
+//            updateCurrentTrackInfo()
             if (jukeBox?.isHost)! {
                 if !playerIsActive {
                     hostPlayNextSong()
                     playerIsActive = true
                 }
             }
+            updateCurrentTrackInfo()
             //            print("\(trackArray[0].isExplicit)")
             //need to fetch album art
         }
@@ -146,24 +148,27 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //on first play, we do not want to remove the first song from the array
         
-        if playerIsActive {
-            trackArray.removeFirst()
-        }
-        
         guard let firstSong = trackArray.first else {
             print("No Song")
             //can handle no song in here
             return
         }
         
+        if playerIsActive {
+            currentlyPlayingSong = firstSong
+            trackArray.removeFirst()
+        }
+        
+
+        currentlyPlayingSong = firstSong
         //play new song and adjust timers / button state
-        self.player?.playSpotifyURI(firstSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
-        songTimer.setMaxSongtime(milliseconds: Int(firstSong.duration))
+        self.player?.playSpotifyURI(currentlyPlayingSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
+        songTimer.setMaxSongtime(milliseconds: Int(currentlyPlayingSong.duration))
         playbackButton.setButtonState(.playing, animated: false)
         //        view.layoutIfNeeded()
         
         //send new song event to connected peers
-        let event = Event(songAction: .startNewSong, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox?.send(event: newEvent as NSData)
         
@@ -176,6 +181,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         //on first play, we do not want to remove the first song from the array
         if playerIsActive {
+            currentlyPlayingSong = event.song
             trackArray.removeFirst()
         }
         
@@ -248,8 +254,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateCurrentTrackInfo() {
-        currentTrackLabel.text = trackArray[0].title
-        currentArtistLabel.text = trackArray[0].artist
+        currentTrackLabel.text = currentlyPlayingSong.title
+        currentArtistLabel.text = currentlyPlayingSong.artist
         //album art =
         //isExplicit =
         
@@ -290,6 +296,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 jukeBox?.isHost = true
                 jukeBox?.serviceBrowser.startBrowsingForPeers()
                 print("browsing for peers")
+                hideSearch()
                 return
             }
             
@@ -311,6 +318,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
             sendAddNewSongEvent(song: newSong)
+           
         }
     }
     
@@ -716,6 +724,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         switch tableView {
         case resultsTable:
             return 110
+//        case playListTable:
+//            
+//            return indexPath.row == 0 ? 0 : 120
+            
         default:
             return 120
         }
