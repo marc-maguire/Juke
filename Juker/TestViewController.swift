@@ -478,6 +478,25 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }, completion: nil)
     }
     
+    func hideSearch() {
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {
+            self.view.sendSubview(toBack: self.searchWrapper)
+            self.searchWrapper.bringSubview(toFront: self.tapView)
+            self.tapView.isUserInteractionEnabled = true
+            self.searchFieldExpandedWidth.isActive = false
+            self.searchFieldWidth.isActive = true
+            
+            self.searchWrapperExpandedBottomAnchor.isActive = false
+            self.searchWrapperHeight.isActive = true
+            
+            self.resultsTable.isHidden = true
+            self.updateViewConstraints()
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+
+    }
+    
     
     
     func playlistTableSetup() {
@@ -595,7 +614,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
             }
         case playListTable:
-            let cell = playListTable.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! PlaylistTableCell
+            let cell = playListTable.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.none
             //cell.backgroundColor = resultsTable.backgroundColor
@@ -615,26 +634,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         switch tableView {
         case resultsTable:
             
-            if !(searchField.text?.isEmpty ?? false) {
-                
-                
-                selectedSong = filteredSongs[indexPath.row]
-                
-                guard let selectedTrack = selectedSong else {
-                    print("error, no track")
-                    return
-                }
-                
-                
-                trackArray.append(selectedTrack)
-                if (jukeBox?.isPendingHost)! {
-                    jukeBox?.isPendingHost = false
-                    jukeBox?.isHost = true
-                    jukeBox?.serviceBrowser.startBrowsingForPeers()
-                    return
-                }
-                sendAddNewSongEvent(song: selectedTrack)
-            } else {
+            if shouldShowCategories {
                 
                 switch indexPath.row {
                 case 0:
@@ -648,7 +648,31 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 default:
                     return
                 }
+                
+            } else {
+                
+                selectedSong = filteredSongs[indexPath.row]
+                
+                guard let selectedTrack = selectedSong else {
+                    print("error, no track")
+                    return
+                }
+                
+                trackArray.append(selectedTrack)
+                
+                if (jukeBox?.isPendingHost)! {
+                    jukeBox?.isPendingHost = false
+                    jukeBox?.isHost = true
+                    jukeBox?.serviceBrowser.startBrowsingForPeers()
+                    hideSearch()
+                    return
+                }
+                
+                sendAddNewSongEvent(song: selectedTrack)
+                hideSearch()
+                
             }
+            
         case playListTable:
             return
         default:
@@ -701,6 +725,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }, completion: nil)
         
     }
+    
     
     @IBAction func hidePlaylist(_ sender: UISwipeGestureRecognizer) {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: .curveEaseIn, animations: {
