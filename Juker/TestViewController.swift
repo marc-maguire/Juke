@@ -91,6 +91,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
+    //var keyboardDismiss: UITapGestureRecognizer!
     
     //playlist Table
     
@@ -99,8 +100,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        view.addGestureRecognizer(keyboardDismiss)
+//        keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        view.addGestureRecognizer(keyboardDismiss)
 
         //Initial Quadcurve setup
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
@@ -126,7 +127,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidAppear(true)
         
         if jukeBox?.isPendingHost == true {
-//            performSegue(withIdentifier: "addMusicSegue", sender: self)
+
             
             self.showSearch()
             
@@ -463,6 +464,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func showSearch() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear, animations: {
+            //self.view.removeGestureRecognizer(self.keyboardDismiss)
+            self.shouldShowCategories = true
             self.view.bringSubview(toFront: self.searchWrapper)
             self.searchWrapper.sendSubview(toBack: self.tapView)
             self.tapView.isUserInteractionEnabled = false
@@ -489,11 +492,17 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             self.searchWrapperExpandedBottomAnchor.isActive = false
             self.searchWrapperHeight.isActive = true
-            
+            self.shouldShowCategories = true
+            self.searchField.text = ""
+            self.resultsTable.reloadData()
             self.resultsTable.isHidden = true
             self.updateViewConstraints()
+            self.view.endEditing(true)
             self.view.layoutIfNeeded()
-        }, completion: nil)
+        }, completion: { (true) in
+            self.filteredSongs = []
+            self.selectedSong = nil
+        })
 
     }
     
@@ -591,6 +600,18 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        if scrollView == resultsTable {
+            searchField.resignFirstResponder()
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == resultsTable {
+            searchField.resignFirstResponder()
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch tableView {
@@ -617,6 +638,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let cell = playListTable.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
             cell.delegate = self
             cell.selectionStyle = UITableViewCellSelectionStyle.none
+            
+            cell.trackNameLabel.text = trackArray[indexPath.row].title
+            cell.trackArtistLabel.text = trackArray[indexPath.row].artist
+            
             //cell.backgroundColor = resultsTable.backgroundColor
             
             return cell
@@ -670,6 +695,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 sendAddNewSongEvent(song: selectedTrack)
                 hideSearch()
+                
                 
             }
             
