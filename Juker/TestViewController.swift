@@ -114,10 +114,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         originalHeight = jukeHeight.constant
         albumImage.layer.cornerRadius = 10
+        songTimer.delegate = self
+        labelsNeedUpdate()
         
 
         playlistTableSetup()
         searchWrapperSetup()
+        
+        
         
         
     }
@@ -290,6 +294,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
             sendAddNewSongEvent(song: newSong)
+            hideSearch()
             
         } else if segue.identifier == "newSearchSong" {
             
@@ -310,7 +315,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateProgressBar(){
-        trackProgressView.progressTintColor = UIColor.blue
+        trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
         trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         trackProgressView.layoutIfNeeded()
     }
