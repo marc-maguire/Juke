@@ -300,7 +300,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func sendTogglePlayEvent() {
         
-        guard let firstSong = trackArray.first else {
+        guard let firstSong = currentlyPlayingSong else {
             print("No Song")
             //can handle no song in here
             return
