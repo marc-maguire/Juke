@@ -13,7 +13,14 @@ import PlaybackButton
 
 class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate {
     
-    var imageCache = [String:UIImage]()
+    var imageCache = [String:UIImage]() {
+        willSet {
+            if imageCache.count >= 100 {
+                self.imageCache.removeAll()
+            }
+        }
+    }
+    var playlistImageCache = [String: UIImage]()
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession! {
@@ -734,7 +741,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                             self.imageCache[imageURL] = image
                             // Update the cell
                             DispatchQueue.main.async(execute: {
-                                cell.trackAlbumImage.image = self.imageCache[imageURL]
+                                cell.trackAlbumImage.image = image
                             })
                         }
                         else {
@@ -773,7 +780,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let imageURL = song.images[0]["url"] as! String
             
             // If this image is already cached, don't re-download
-            if let img = imageCache[imageURL] {
+            if let img = playlistImageCache[imageURL] {
                 cell.trackAlbumImage.image = img
             }
             else {
@@ -789,10 +796,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         
                         let image = UIImage(data: data!)
                         // Store the image in to our cache
-                        self.imageCache[imageURL] = image
+                        self.playlistImageCache[imageURL] = image
                         // Update the cell
                         DispatchQueue.main.async(execute: {
-                            cell.trackAlbumImage.image = self.imageCache[imageURL]
+                            cell.trackAlbumImage.image = image
                         })
                     }
                     else {
