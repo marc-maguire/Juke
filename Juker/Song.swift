@@ -17,6 +17,7 @@ class Song: NSObject, NSCoding {
     var albumURI: String
     var duration: TimeInterval
     var isExplicit: Bool
+    var images: [[String:AnyObject]]
     
     init(withDefaultString: String){
 
@@ -25,6 +26,7 @@ class Song: NSObject, NSCoding {
         self.songURI = withDefaultString
         self.album = withDefaultString
         self.albumURI = withDefaultString
+        self.images = [["default":"default" as AnyObject]]
         self.duration = TimeInterval(5)
         self.isExplicit = false
     
@@ -33,7 +35,7 @@ class Song: NSObject, NSCoding {
     init?(trackDict: [String:AnyObject]) {
         
         
-        guard let album = trackDict["album"], let artists = album["artists"] as? [[String:AnyObject]] else {
+        guard let album = trackDict["album"], let artists = album["artists"] as? [[String:AnyObject]], let images = album["images"] else {
             return nil
         }
         
@@ -49,6 +51,7 @@ class Song: NSObject, NSCoding {
         self.albumURI = album["uri"] as! String
         self.duration = trackDict["duration_ms"] as! TimeInterval
         self.isExplicit = trackDict["explicit"] as! Bool
+        self.images = images as! [[String:AnyObject]]
         super.init()
         
     }
@@ -61,6 +64,7 @@ class Song: NSObject, NSCoding {
         self.albumURI = aDecoder.decodeObject(forKey: "albumURI") as! String
         self.duration = aDecoder.decodeDouble(forKey: "duration")
         self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
+        self.images = aDecoder.decodeObject(forKey: "images") as! [[String : AnyObject]]
 
     }
     
@@ -72,6 +76,7 @@ class Song: NSObject, NSCoding {
         aCoder.encode(albumURI, forKey: "albumURI")
         aCoder.encode(duration, forKey: "duration")
         aCoder.encode(isExplicit, forKey: "explicit")
+        aCoder.encode(images, forKey: "images")
     }
     
 }
