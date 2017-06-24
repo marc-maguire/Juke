@@ -393,7 +393,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateProgressBar(){
         trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
         trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
-        trackProgressView.layoutIfNeeded()
+        //.layoutIfNeeded()
     }
     
         func initializePlayer(authSession:SPTSession){
