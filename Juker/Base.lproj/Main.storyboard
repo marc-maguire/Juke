@@ -89,12 +89,25 @@
                                             <constraint firstAttribute="bottom" secondItem="TCu-qr-YCY" secondAttribute="bottom" constant="37" id="s4s-as-6OM"/>
                                         </constraints>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKE-fl-gxv" customClass="PlaybackButton" customModule="PlaybackButton">
+                                        <rect key="frame" x="162" y="167" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="AnG-jX-O0y"/>
+                                            <constraint firstAttribute="width" constant="50" id="Dp2-hK-0dO"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.26386024740000003" green="0.26386024740000003" blue="0.26386024740000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <connections>
+                                            <action selector="didTapPlaybackButton:" destination="Omk-3F-Lga" eventType="touchUpInside" id="6Qc-yn-N3D"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
                                 <constraints>
+                                    <constraint firstItem="dKE-fl-gxv" firstAttribute="top" secondItem="Lbr-9n-GbT" secondAttribute="bottom" constant="49.5" id="0sy-NE-aqi"/>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="width" secondItem="hSu-bR-tyR" secondAttribute="width" id="4O2-OJ-LDa"/>
                                     <constraint firstItem="eJG-7l-Ipq" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="Asm-Rn-hmt"/>
+                                    <constraint firstItem="dKE-fl-gxv" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="EqH-Vj-wwX"/>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="top" secondItem="hSu-bR-tyR" secondAttribute="top" id="HSE-5L-nuB"/>
                                     <constraint firstAttribute="height" constant="267" id="IAJ-HI-xvC"/>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="mWc-tD-pmP"/>
@@ -104,15 +117,6 @@
                                     <outletCollection property="gestureRecognizers" destination="eXU-qp-3Ew" appends="YES" id="IEZ-fq-fXU"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dKE-fl-gxv" customClass="PlaybackButton" customModule="PlaybackButton">
-                                <rect key="frame" x="164" y="278" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="didTapPlaybackButton:" destination="Omk-3F-Lga" eventType="touchUpInside" id="6Qc-yn-N3D"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.99215686274509807" blue="0.55294117647058827" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>

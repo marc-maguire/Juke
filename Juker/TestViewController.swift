@@ -435,6 +435,11 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchFieldExpandedWidth = searchField.widthAnchor.constraint(equalTo: self.searchWrapper.widthAnchor, multiplier: 0.80, constant: 0)
         searchFieldExpandedWidth.isActive = false
         
+        let font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        
+        searchField.textColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
+        searchField.tintColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
+        
         
         
         searchField.centerXAnchor.constraint(equalTo: searchWrapper.centerXAnchor).isActive = true
