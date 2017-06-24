@@ -11,7 +11,7 @@ import MGSwipeTableCell
 import PlaybackButton
 
 
-class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate {
+class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate, DraggableViewDelegate {
     
     var imageCache = [String:UIImage]() {
         willSet {
@@ -139,6 +139,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         originalHeight = jukeHeight.constant
         albumImage.layer.cornerRadius = 10
         songTimer.delegate = self
+        albumImage.delegate = self
         labelsNeedUpdate()
         
 
@@ -160,6 +161,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.showSearch()
             
         }
+    }
+    
+    func cardSwipedRight(card: UIView) {
+        print("upvoted")
+    }
+    
+    func cardSwipedLeft(card: UIView) {
+        print("downvoted")
     }
     
     

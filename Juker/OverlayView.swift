@@ -25,7 +25,7 @@ class OverlayView: UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
-        imageView = UIImageView(image: UIImage(named: "noButton"))
+        imageView = UIImageView(image: #imageLiteral(resourceName: "heart2"))
         self.addSubview(imageView)
     }
     
@@ -36,9 +36,9 @@ class OverlayView: UIView{
         _mode = mode
         
         if _mode == GGOverlayViewMode.GGOverlayViewModeLeft {
-            imageView.image = UIImage(named: "noButton")
+            imageView.image = #imageLiteral(resourceName: "dislikeHeart")
         } else {
-            imageView.image = UIImage(named: "yesButton")
+            imageView.image = #imageLiteral(resourceName: "heart2")
         }
     }
     
