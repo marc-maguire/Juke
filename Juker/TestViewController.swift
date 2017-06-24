@@ -712,7 +712,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
                 cell.trackAlbumImage.image = UIImage(named: "kaytra")
                 cell.backgroundColor = resultsTable.backgroundColor
-                let imageURL = song.images[0]["url"] as! String
+                let imageURL = song.images[1]["url"] as! String
                 
                 // If this image is already cached, don't re-download
                 if let img = imageCache[imageURL] {
