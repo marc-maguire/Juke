@@ -21,6 +21,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     var playlistImageCache = [String: UIImage]()
+    //{
+//        didSet {
+//            if playlistImageCache[currentlyPlayingSong.images[0]["url"] as! String ] != nil {
+//                albumImage.image = playlistImageCache[currentlyPlayingSong.images[0]["url"] as! String ]
+//                
+//            }
+//        }
+//    }
     
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession! {
@@ -49,6 +57,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var currentlyPlayingSong: Song! {
         didSet {
             updateCurrentTrackInfo()
+            albumImage.image = playlistImageCache[(currentlyPlayingSong.images[0]["url"]) as! String]
         }
     }
     var trackArray: [Song] = [] {
@@ -167,14 +176,16 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-//        if playerIsActive {
-//            currentlyPlayingSong = firstSong
-//            trackArray.removeFirst()
-//        }
         
-
+        //ToDo - currentlyPlayingSong should only ever be fired once per user
+        //look up dispatch once
         currentlyPlayingSong = firstSong
         trackArray.removeFirst()
+        
+        
+        if trackArray.count == 0 {
+        loadCurrentlyPlayingSongImage()
+        }
         playListTable.reloadData()
         //play new song and adjust timers / button state
         self.player?.playSpotifyURI(currentlyPlayingSong.songURI, startingWith: 0, startingWithPosition: 0, callback: nil)
@@ -194,9 +205,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func nonHostPlayNextSongFrom(_ event: Event) {
         
-        //on first play, we do not want to remove the first song from the array
+    
         currentlyPlayingSong = event.song
         trackArray.removeFirst()
+        
         playListTable.reloadData()
 
         
@@ -207,6 +219,45 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         playerIsActive = true
         
         
+    }
+    
+    func loadCurrentlyPlayingSongImage() {
+        let song: Song = currentlyPlayingSong
+        
+        let imageURL = song.images[0]["url"] as! String
+        
+        // If this image is already cached, don't re-download
+        if let img = playlistImageCache[imageURL] {
+            albumImage.image = img
+        }
+        else {
+            // The image isn't cached, download the img data
+            // We should perform this in a background thread
+            let url = URL(string: imageURL)
+            //let request = NSURLRequest(url: url!)
+            let session = URLSession.shared
+            
+            
+            let task = session.dataTask(with: url!, completionHandler: { (data, response, error) in
+                if error == nil {
+                    
+                    let image = UIImage(data: data!)
+                    // Store the image in to our cache
+                    self.playlistImageCache[imageURL] = image
+                    // Update the cell
+                    DispatchQueue.main.async(execute: {
+                        self.albumImage.image = image
+                    })
+                }
+                else {
+                    print("Uh Oh")
+                    
+                }
+                
+            })
+            task.resume()
+        }
+
     }
     @IBAction func didTapPlaybackButton(_ sender: Any) {
         
@@ -382,6 +433,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox?.send(event: newEvent as NSData)
+            
         }
     
         func hostSendNewConnectionEvent() {
@@ -647,53 +699,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TrackCell", for: indexPath) as! SearchTrackCell
-//        
-//        let song: Song = filteredSongs[indexPath.row]
-//            
-//        cell.trackNameLabel.text = filteredSongs[indexPath.row].title
-//        cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
-//        cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-//        cell.trackAlbumImage.image = UIImage(named: "kaytra")
-//        cell.backgroundColor = resultsTable.backgroundColor
-//        let imageURL = song.images[0]["url"] as! String
-//        
-//            // If this image is already cached, don't re-download
-//            if let img = imageCache[imageURL] {
-//                cell.trackAlbumImage.image = img
-//            }
-//            else {
-//                // The image isn't cached, download the img data
-//                // We should perform this in a background thread
-//                let url = URL(string: imageURL)
-//                //let request = NSURLRequest(url: url!)
-//                let session = URLSession.shared
-//                
-//                
-//                let task = session.dataTask(with: url!, completionHandler: { (data, response, error) in
-//                    if error == nil {
-//                        
-//                        let image = UIImage(data: data!)
-//                        // Store the image in to our cache
-//                        self.imageCache[imageURL] = image
-//                        // Update the cell
-//                        DispatchQueue.main.async(execute: {
-//                            cell.trackAlbumImage.image = self.imageCache[imageURL]
-//                        })
-//                    }
-//                    else {
-//                        print("Uh Oh")
-//                        
-//                    }
-//                
-//            })
-//            task.resume()
-//        }
-//        return cell
-//    }
-    
-    
+    // MARK: - TableView Delegate Methods
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
@@ -753,13 +759,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     task.resume()
                 }
                 return cell
-//                let cell = resultsTable.dequeueReusableCell(withIdentifier: "TrackCell", for: indexPath) as! SearchTrackCell
-//                cell.trackNameLabel.text = filteredSongs[indexPath.row].title
-//                cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
-//                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-//                cell.trackAlbumImage.image = #imageLiteral(resourceName: "kaytra")
-//                cell.backgroundColor = resultsTable.backgroundColor
-//                return cell
                 
             }
         case playListTable:
@@ -999,6 +998,7 @@ extension TestViewController : JukeBoxManagerDelegate {
                     self.playerIsActive = true
                     print("sync request sync should finish")
                     self.isNewUser = false
+                    self.loadCurrentlyPlayingSongImage()
                     
                 }
                 
