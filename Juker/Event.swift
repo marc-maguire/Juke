@@ -22,6 +22,9 @@ class Event: NSObject, NSCoding {
         case newConnectionDetected = "newConnectionDetected"
         case currentSongLiked = "currentSongLiked"
         case currentSongDisliked = "currentSongDisliked"
+        case queuedSongLiked = "queuedSongLiked"
+        case queuedSongDisliked = "queuedSongDisliked"
+        case removeQueuedSong = "removeQueuedSong"
         
     }
 

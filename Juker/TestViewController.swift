@@ -201,6 +201,16 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    func incrementLikesForSongAtIndex(index: Int) {
+        
+    }
+    func incrementDislikesForSongAtIndex(index: Int) {
+        let event = Event(songAction: .queuedSongDisliked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index)
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox.send(event: newEvent as NSData)
+        
+    }
+    
     func songNeedsChanging() {
         if currentlyPlayingSong.dislikes >= 2 {
             hostPlayNextSong()
@@ -729,6 +739,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     return true
                 }
                 //send downvotequeuedSong event
+                self.incrementDislikesForSongAtIndex(index: Int(index.row))
+                
                 print("downvoted")
                 return true
             })
@@ -1081,7 +1093,30 @@ extension TestViewController : JukeBoxManagerDelegate {
                 if  self.jukeBox.isHost {
                     self.incrementCurrentSongDislikes()
                 }
-            }
+            case .queuedSongLiked:
+                print("yep")
+                
+            case .queuedSongDisliked:
+                if self.jukeBox.isHost {
+                let song: Song = self.trackArray[event.index]
+                song.dislikes += 1
+                    //check if song should be removed
+                    if song.dislikes == 2 {
+                    //host removes from array
+                    self.trackArray.remove(at: event.index)
+                    //if removed, send remove song event to guests
+                    let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: 0)
+                    let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                    self.jukeBox.send(event: newEvent as NSData)
+                    
+                    }
+                }
+            case .removeQueuedSong:
+                //host removes song before sending event, only non hosts should remove song here
+                if !self.jukeBox.isHost {
+                self.trackArray.remove(at: event.index)
+                }
+                }
             
         }
     }
