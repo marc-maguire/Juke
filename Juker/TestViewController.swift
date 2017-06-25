@@ -9,6 +9,7 @@
 import UIKit
 import MGSwipeTableCell
 import PlaybackButton
+import CoreImage
 
 
 class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate, DraggableViewDelegate {
@@ -120,9 +121,33 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //playlist Table
     
     var playListTable: UITableView!
+    
+    
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
+    var context = CIContext(options: nil)
+    
+    func blurEffect() {
+        
+        let currentFilter = CIFilter(name: "CIGaussianBlur")
+        let beginImage = CIImage(image: backgroundImage.image!)
+        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
+        currentFilter!.setValue(20, forKey: kCIInputRadiusKey)
+        
+        let cropFilter = CIFilter(name: "CICrop")
+        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
+        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
+        
+        let output = cropFilter!.outputImage
+        let cgimg = context.createCGImage(output!, from: output!.extent)
+        let processedImage = UIImage(cgImage: cgimg!)
+        backgroundImage.image = processedImage
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        blurEffect()
         
 //        keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
 //        view.addGestureRecognizer(keyboardDismiss)
@@ -540,6 +565,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
         
+        searchField.font = font
+        
         searchField.textColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
         searchField.tintColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
         
@@ -694,7 +721,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         expansionSettings.triggerAnimation.easingFunction = MGSwipeEasingFunction.cubicOut
         expansionSettings.fillOnTrigger = false
         
-        let color = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 1.0)
+        //let color = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 1.0)
         let font = UIFont(name: "HelveticaNeue-Light", size: 14)
         
         if direction == MGSwipeDirection.leftToRight {
