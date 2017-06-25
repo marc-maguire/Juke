@@ -205,6 +205,17 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     func incrementDislikesForSongAtIndex(index: Int) {
+        if jukeBox.isHost {
+            let song = trackArray[index]
+            song.dislikes += 1
+            if song.dislikes >= 2 {
+                trackArray.remove(at: index)
+                let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: index)
+                let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                self.jukeBox.send(event: newEvent as NSData)
+
+            }
+        }
         let event = Event(songAction: .queuedSongDisliked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
@@ -1105,7 +1116,7 @@ extension TestViewController : JukeBoxManagerDelegate {
                     //host removes from array
                     self.trackArray.remove(at: event.index)
                     //if removed, send remove song event to guests
-                    let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: 0)
+                    let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: event.index)
                     let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                     self.jukeBox.send(event: newEvent as NSData)
                     
