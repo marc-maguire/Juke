@@ -165,16 +165,18 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func cardSwipedRight(card: UIView) {
         print("upvoted")
-        
+        incrementSongLikes()
     }
     
     func cardSwipedLeft(card: UIView) {
         print("downvoted")
+        incrementSongDislikes()
     }
     
     func incrementSongLikes() {
         if (jukeBox?.isHost)! {
             currentlyPlayingSong.likes += 1
+            print("song likes up 1")
         } else {
             //send increase song likes event and host calls this method
             let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
@@ -188,6 +190,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func incrementSongDislikes() {
         if (jukeBox?.isHost)! {
             currentlyPlayingSong.dislikes += 1
+            print("song dislikes up 1")
             songNeedsChanging()
         } else {
             //send increase song likes event and host calls this method
@@ -199,7 +202,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func songNeedsChanging() {
-        if currentlyPlayingSong.dislikes == 2 {
+        if currentlyPlayingSong.dislikes >= 2 {
             hostPlayNextSong()
         } 
     }
