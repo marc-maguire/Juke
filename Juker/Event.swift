@@ -30,14 +30,17 @@ class Event: NSObject, NSCoding {
     var totalSongTime: Int
     var timeRemaining: Int
     var timeElapsed: Int
+    var index: Int
     
-    init(songAction: SongAction, song: Song, totalSongTime: Int, timeRemaining: Int, timeElapsed: Int) {
+    init(songAction: SongAction, song: Song, totalSongTime: Int, timeRemaining: Int, timeElapsed: Int, index: Int) {
         
         self.songAction = songAction
         self.song = song
         self.totalSongTime = totalSongTime
         self.timeRemaining = timeRemaining
         self.timeElapsed = timeElapsed
+        self.index = index
+        
         
     }
     
@@ -48,6 +51,7 @@ class Event: NSObject, NSCoding {
         self.totalSongTime = Int(aDecoder.decodeInt32(forKey: "totalSongTime"))
         self.timeRemaining = Int(aDecoder.decodeInt32(forKey: "timeRemaining"))
         self.timeElapsed = Int(aDecoder.decodeInt32(forKey: "timeElapsed"))
+        self.index = Int(aDecoder.decodeInt32(forKey: "index"))
     }
     
     func encode(with aCoder: NSCoder) {
@@ -56,6 +60,7 @@ class Event: NSObject, NSCoding {
         aCoder.encode(self.totalSongTime, forKey: "totalSongTime")
         aCoder.encode(self.timeRemaining, forKey: "timeRemaining")
         aCoder.encode(self.timeElapsed, forKey: "timeElapsed")
+        aCoder.encode(self.index, forKey: "index")
         
     }
     

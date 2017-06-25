@@ -179,7 +179,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print("song likes up 1")
         } else {
             //send increase song likes event and host calls this method
-            let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
 
@@ -194,7 +194,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             songNeedsChanging()
         } else {
             //send increase song likes event and host calls this method
-            let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
 
@@ -236,7 +236,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //        view.layoutIfNeeded()
         
         //send new song event to connected peers
-        let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -348,7 +348,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-        let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -356,7 +356,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func sendAddNewSongEvent(song: Song) {
         
-        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
     }
@@ -465,14 +465,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         func hostSendAllSongs() {
             //send all songs to new users
             for song in trackArray {
-                let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+                let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
                 let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                 jukeBox.send(event: newEvent as NSData)
             }
         }
     
         func syncTimersForNewUser() {
-            let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
             
@@ -480,7 +480,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
         func hostSendNewConnectionEvent() {
     
-            let event = Event(songAction: .newConnectionDetected, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .newConnectionDetected, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
             
@@ -702,7 +702,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             // reported issue of possible retain cycle in MGSwipeButton callback. Use [unowned self] if problem arises
             
             let upvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "heart2"), backgroundColor: UIColor.init(red: 254.0/255, green: 46.0/255, blue: 83.0/255, alpha: 0), padding: 15, callback: { (sender) -> Bool in
+                guard let index = self.playListTable.indexPath(for: cell) else {
+                    print("could not get indexduring upvote")
+                    return true
+                }
+                //send downvotequeuedSong event
                 print("upvoted")
+                
                 return true
             })
             
@@ -717,6 +723,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return [upvote]
         } else {
             let downvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "dislikeHeart"), backgroundColor: UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0), padding: 15, callback: { (sender) -> Bool in
+               
+                guard let index = self.playListTable.indexPath(for: cell) else {
+                    print("could not get index during downvote")
+                    return true
+                }
+                //send downvotequeuedSong event
                 print("downvoted")
                 return true
             })
@@ -1054,7 +1066,7 @@ extension TestViewController : JukeBoxManagerDelegate {
             case .newConnectionDetected:
                 if self.isNewUser {
                     let song = Song(withDefaultString: "empty")
-                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
+                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: 0)
                     let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                     self.jukeBox.send(event: newEvent as NSData)
                     print("sync request sent")
