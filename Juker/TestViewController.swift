@@ -33,7 +33,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession! {
         didSet {
-            if (jukeBox?.isPendingHost)! {
+            if  jukeBox.isPendingHost {
                 initializePlayer(authSession: session)
             }
         }
@@ -44,9 +44,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
     
-    var jukeBox: JukeBoxManager? {
+    var jukeBox: JukeBoxManager! {
         didSet{
-            jukeBox?.delegate = self
+            jukeBox.delegate = self
         }
     }
     var playerIsActive: Bool = false
@@ -64,7 +64,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         didSet {
             playListTable.reloadData()
 //            updateCurrentTrackInfo()
-            if (jukeBox?.isHost)! {
+            if jukeBox.isHost {
                 if !playerIsActive {
                     hostPlayNextSong()
                     playerIsActive = true
@@ -155,7 +155,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        if jukeBox?.isPendingHost == true {
+        if jukeBox.isPendingHost == true {
 
             
             self.showSearch()
@@ -174,21 +174,21 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func incrementCurrentSongLikes() {
-        if (jukeBox?.isHost)! {
+        if  jukeBox.isHost {
             currentlyPlayingSong.likes += 1
             print("song likes up 1")
         } else {
             //send increase song likes event and host calls this method
             let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox?.send(event: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
 
         }
         
     }
     
     func incrementCurrentSongDislikes() {
-        if (jukeBox?.isHost)! {
+        if  jukeBox.isHost {
             currentlyPlayingSong.dislikes += 1
             print("song dislikes up 1")
             songNeedsChanging()
@@ -196,7 +196,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //send increase song likes event and host calls this method
             let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox?.send(event: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
 
         }
     }
@@ -238,7 +238,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //send new song event to connected peers
         let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox?.send(event: newEvent as NSData)
+        jukeBox.send(event: newEvent as NSData)
         
         songTimer.startTimer()
         //won't update - is this getting called before the button is instantiated?
@@ -309,7 +309,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func toggleHostPlayState() {
         
-        if (jukeBox?.isHost)! {
+        if  jukeBox.isHost {
             
             if self.playbackButton.buttonState == .playing {
                 
@@ -350,7 +350,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox?.send(event: newEvent as NSData)
+        jukeBox.send(event: newEvent as NSData)
         
     }
     
@@ -358,7 +358,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-        jukeBox?.send(event: newEvent as NSData)
+        jukeBox.send(event: newEvent as NSData)
     }
     
     func updateCurrentTrackInfo() {
@@ -400,10 +400,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             trackArray.append(newSong)
             print("adding new song")
-            if (jukeBox?.isPendingHost)! {
-                jukeBox?.isPendingHost = false
-                jukeBox?.isHost = true
-                jukeBox?.serviceBrowser.startBrowsingForPeers()
+            if  jukeBox.isPendingHost {
+                jukeBox.isPendingHost = false
+                jukeBox.isHost = true
+                jukeBox.serviceBrowser.startBrowsingForPeers()
                 print("browsing for peers")
                 hideSearch()
                 return
@@ -421,10 +421,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             }
             trackArray.append(newSong)
-            if (jukeBox?.isPendingHost)! {
-                jukeBox?.isPendingHost = false
-                jukeBox?.isHost = true
-                jukeBox?.serviceBrowser.startBrowsingForPeers()
+            if  jukeBox.isPendingHost {
+                jukeBox.isPendingHost = false
+                jukeBox.isHost = true
+                jukeBox.serviceBrowser.startBrowsingForPeers()
                 return
             }
             sendAddNewSongEvent(song: newSong)
@@ -467,22 +467,22 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             for song in trackArray {
                 let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
                 let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-                jukeBox?.send(event: newEvent as NSData)
+                jukeBox.send(event: newEvent as NSData)
             }
         }
     
         func syncTimersForNewUser() {
             let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox?.send(event: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
             
         }
     
         func hostSendNewConnectionEvent() {
     
-            let event = Event(songAction: .newConnectionDetected, song: trackArray[0], totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let event = Event(songAction: .newConnectionDetected, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-            jukeBox?.send(event: newEvent as NSData)
+            jukeBox.send(event: newEvent as NSData)
             
         }
         
@@ -892,10 +892,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 trackArray.append(selectedTrack)
                 
-                if (jukeBox?.isPendingHost)! {
-                    jukeBox?.isPendingHost = false
-                    jukeBox?.isHost = true
-                    jukeBox?.serviceBrowser.startBrowsingForPeers()
+                if  jukeBox.isPendingHost {
+                    jukeBox.isPendingHost = false
+                    jukeBox.isHost = true
+                    jukeBox.serviceBrowser.startBrowsingForPeers()
                     hideSearch()
                     return
                 }
@@ -991,7 +991,7 @@ extension TestViewController : JukeBoxManagerDelegate {
         OperationQueue.main.addOperation {
             //this is called once a new connection has been established
             //now we should send the event
-            if (self.jukeBox?.isHost)!{
+            if  self.jukeBox.isHost{
                 self.hostSendNewConnectionEvent()
                 print("connect to \(connectedDevices)")
             }
@@ -1045,7 +1045,7 @@ extension TestViewController : JukeBoxManagerDelegate {
                 }
                 
             case .newUserSyncRequest:
-                if (self.jukeBox?.isHost)! {
+                if  self.jukeBox.isHost {
                     self.hostSendAllSongs()
                     self.syncTimersForNewUser()
                     print("sync request received")
@@ -1056,17 +1056,17 @@ extension TestViewController : JukeBoxManagerDelegate {
                     let song = Song(withDefaultString: "empty")
                     let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1)
                     let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-                    self.jukeBox?.send(event: newEvent as NSData)
+                    self.jukeBox.send(event: newEvent as NSData)
                     print("sync request sent")
                     
                 }
             case .currentSongLiked:
-                if (self.jukeBox?.isHost)! {
+                if  self.jukeBox.isHost {
                     self.incrementCurrentSongLikes()
                 }
                 
             case .currentSongDisliked:
-                if (self.jukeBox?.isHost)! {
+                if  self.jukeBox.isHost {
                     self.incrementCurrentSongDislikes()
                 }
             }
@@ -1085,7 +1085,7 @@ extension TestViewController: SongTimerDelegate {
     }
     
     func songDidEnd() {
-        if (jukeBox?.isHost)! {
+        if  jukeBox.isHost {
             hostPlayNextSong()
         }
     }
