@@ -165,14 +165,44 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func cardSwipedRight(card: UIView) {
         print("upvoted")
+        
     }
     
     func cardSwipedLeft(card: UIView) {
         print("downvoted")
     }
     
+    func incrementSongLikes() {
+        if (jukeBox?.isHost)! {
+            currentlyPlayingSong.likes += 1
+        } else {
+            //send increase song likes event and host calls this method
+            let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox?.send(event: newEvent as NSData)
+
+        }
+        
+    }
     
+    func incrementSongDislikes() {
+        if (jukeBox?.isHost)! {
+            currentlyPlayingSong.dislikes += 1
+            songNeedsChanging()
+        } else {
+            //send increase song likes event and host calls this method
+            let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed)
+            let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+            jukeBox?.send(event: newEvent as NSData)
+
+        }
+    }
     
+    func songNeedsChanging() {
+        if currentlyPlayingSong.dislikes == 2 {
+            hostPlayNextSong()
+        } 
+    }
     //MARK: - Song changing logic
     
     func hostPlayNextSong() {
@@ -1027,6 +1057,12 @@ extension TestViewController : JukeBoxManagerDelegate {
                     print("sync request sent")
                     
                 }
+            case .currentSongLiked:
+                self.incrementSongLikes()
+                
+             
+            case .currentSongDisliked:
+                self.incrementSongDislikes()
                 
             }
             

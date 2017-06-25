@@ -11,6 +11,7 @@ import Foundation
 class Event: NSObject, NSCoding {
     
     enum SongAction: String {
+        
         case addSong = "addSong"
         case removeSong = "removeSong"
         case togglePlay = "togglePlay"
@@ -19,6 +20,8 @@ class Event: NSObject, NSCoding {
         case newUserFinishedSyncing = "newUserFinishedSyncing"
         case newUserSyncRequest = "newUserSyncRequest"
         case newConnectionDetected = "newConnectionDetected"
+        case currentSongLiked = "currentSongLiked"
+        case currentSongDisliked = "currentSongDisliked"
         
     }
 

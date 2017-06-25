@@ -18,6 +18,8 @@ class Song: NSObject, NSCoding {
     var duration: TimeInterval
     var isExplicit: Bool
     var images: [[String:AnyObject]]
+    var likes: Int = 0
+    var dislikes: Int = 0
     
     init(withDefaultString: String){
 
