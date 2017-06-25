@@ -16,19 +16,19 @@ protocol DraggableViewDelegate {
 class DraggableView: UIImageView {
     
     
-    let ACTION_MARGIN: Float = 120      //%%% distance from center where the action applies. Higher = swipe further in order for the action to be called
-    let SCALE_STRENGTH: Float = 4       //%%% how quickly the card shrinks. Higher = slower shrinking
-    let SCALE_MAX:Float = 0.93          //%%% upper bar for how much the card shrinks. Higher = shrinks less
-    let ROTATION_MAX: Float = 1         //%%% the maximum rotation allowed in radians.  Higher = card can keep rotating longer
-    let ROTATION_STRENGTH: Float = 320  //%%% strength of rotation. Higher = weaker rotation
-    let ROTATION_ANGLE: Float = 3.14/8  //%%% Higher = stronger rotation angle
+    let ACTION_MARGIN: CGFloat = 120      //%%% distance from center where the action applies. Higher = swipe further in order for the action to be called
+    let SCALE_STRENGTH: CGFloat = 4       //%%% how quickly the card shrinks. Higher = slower shrinking
+    let SCALE_MAX:CGFloat = 0.93          //%%% upper bar for how much the card shrinks. Higher = shrinks less
+    let ROTATION_MAX: CGFloat = 1         //%%% the maximum rotation allowed in radians.  Higher = card can keep rotating longer
+    let ROTATION_STRENGTH: CGFloat = 320  //%%% strength of rotation. Higher = weaker rotation
+    let ROTATION_ANGLE: CGFloat = 3.14/8  //%%% Higher = stronger rotation angle
     
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
     var overlayView: OverlayView!
-    var xFromCenter: Float!
-    var yFromCenter: Float!
+    var xFromCenter: CGFloat!
+    var yFromCenter: CGFloat!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,14 +38,15 @@ class DraggableView: UIImageView {
         
         self.addGestureRecognizer(panGestureRecognizer)
         
-                overlayView = OverlayView(frame: CGRect(x: self.frame.size.width/2-100, y: 0, width: 100, height: 100))
-                overlayView.alpha = 0
-                self.addSubview(overlayView)
+//                overlayView = OverlayView(frame: CGRect(x: self.frame.size.width/2-100, y: 0, width: 100, height: 100))
+//                overlayView.alpha = 0
+//                self.addSubview(overlayView)
         
         self.isUserInteractionEnabled = true
+        self.isMultipleTouchEnabled = false
         
-        xFromCenter = 0
-        yFromCenter = 0
+//        xFromCenter = 0
+//        yFromCenter = 0
         self.originPoint = self.center
         print("successful init")
     }
@@ -64,20 +65,19 @@ class DraggableView: UIImageView {
     }
     
     func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
-        xFromCenter = Float(gestureRecognizer.translation(in: self).x)
-        yFromCenter = Float(gestureRecognizer.translation(in: self).y)
+        xFromCenter = gestureRecognizer.translation(in: self).x
+        yFromCenter = gestureRecognizer.translation(in: self).y
         
         switch gestureRecognizer.state {
         case UIGestureRecognizerState.began:
-            
             print("pan began")
         case UIGestureRecognizerState.changed:
             print("pan changed")
             print(xFromCenter)
-            let rotationStrength: Float = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+            let rotationStrength: CGFloat = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
             let rotationAngle = ROTATION_ANGLE * rotationStrength
             //let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
-            self.center = CGPoint(x: self.originPoint.x + CGFloat(xFromCenter), y: self.originPoint.y)
+            self.center = CGPoint(x: originPoint.x + xFromCenter, y: originPoint.y)
             
             let transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
             //let scaleTransform = transform.scaledBy(x: CGFloat(scale), y: CGFloat(scale))
@@ -94,12 +94,16 @@ class DraggableView: UIImageView {
             afterSwipeAction(offsetX: xFromCenter)
  
         case UIGestureRecognizerState.possible:
+            print("possible")
             fallthrough
         case UIGestureRecognizerState.cancelled:
+            print("cancelled")
             fallthrough
         case UIGestureRecognizerState.failed:
+            print("failed")
             fallthrough
         default:
+            print("default")
             break
         }
     }
@@ -113,7 +117,7 @@ class DraggableView: UIImageView {
         overlayView.alpha = CGFloat(min(fabsf(Float(distance))/100, 0.4))
     }
     
-    func afterSwipeAction(offsetX: Float) -> Void {
+    func afterSwipeAction(offsetX: CGFloat) -> Void {
         
         if offsetX > ACTION_MARGIN {
             self.rightAction()

@@ -116,41 +116,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
-    //var keyboardDismiss: UITapGestureRecognizer!
+    
     
     //playlist Table
     
     var playListTable: UITableView!
-    
-    
-    @IBOutlet weak var backgroundImage: UIImageView!
-    
-    var context = CIContext(options: nil)
-    
-    func blurEffect() {
-        
-        let currentFilter = CIFilter(name: "CIGaussianBlur")
-        let beginImage = CIImage(image: backgroundImage.image!)
-        currentFilter!.setValue(beginImage, forKey: kCIInputImageKey)
-        currentFilter!.setValue(20, forKey: kCIInputRadiusKey)
-        
-        let cropFilter = CIFilter(name: "CICrop")
-        cropFilter!.setValue(currentFilter!.outputImage, forKey: kCIInputImageKey)
-        cropFilter!.setValue(CIVector(cgRect: beginImage!.extent), forKey: "inputRectangle")
-        
-        let output = cropFilter!.outputImage
-        let cgimg = context.createCGImage(output!, from: output!.extent)
-        let processedImage = UIImage(cgImage: cgimg!)
-        backgroundImage.image = processedImage
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        blurEffect()
-        
-//        keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-//        view.addGestureRecognizer(keyboardDismiss)
 
         //Initial Quadcurve setup
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
@@ -161,19 +134,21 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
         
+        //Other Setup
         originalHeight = jukeHeight.constant
         albumImage.layer.cornerRadius = 10
         songTimer.delegate = self
         albumImage.delegate = self
         labelsNeedUpdate()
         
+        trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
+        trackProgressView.layer.cornerRadius = 0
+        trackProgressView.backgroundColor = UIColor.lightGray
+        
 
         playlistTableSetup()
         searchWrapperSetup()
-        
-        
-        
-        
+
     }
     
     
@@ -181,10 +156,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         super.viewDidAppear(true)
         
         if jukeBox?.isPendingHost == true {
-
-            
             self.showSearch()
-            
         }
     }
     
@@ -458,7 +430,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateProgressBar(){
-        trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
         trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         //.layoutIfNeeded()
     }

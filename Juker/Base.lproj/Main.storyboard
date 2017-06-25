@@ -23,15 +23,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="kaytra" translatesAutoresizingMaskIntoConstraints="NO" id="PnW-Nn-ECr">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZ4-W1-hAC">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kaytra" translatesAutoresizingMaskIntoConstraints="NO" id="ZQW-Of-urC" customClass="DraggableView" customModule="Juker" customModuleProvider="target">
                                 <rect key="frame" x="62" y="141" width="251" height="305"/>
                                 <constraints>
@@ -44,7 +35,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCQ-Rm-K0A">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="124"/>
                                         <subviews>
-                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJG-7l-Ipq">
+                                            <progressView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eJG-7l-Ipq">
                                                 <rect key="frame" x="62" y="13" width="251" height="8"/>
                                                 <color key="tintColor" red="0.95976224119999998" green="1" blue="0.55259284040000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -138,7 +129,6 @@
                     </view>
                     <connections>
                         <outlet property="albumImage" destination="ZQW-Of-urC" id="hLi-hx-lPX"/>
-                        <outlet property="backgroundImage" destination="PnW-Nn-ECr" id="kS0-10-nPf"/>
                         <outlet property="currentArtistLabel" destination="Lbr-9n-GbT" id="zZn-hm-dYI"/>
                         <outlet property="currentInfoWrapper" destination="gCQ-Rm-K0A" id="AU5-Jr-D9X"/>
                         <outlet property="currentTrackLabel" destination="TCu-qr-YCY" id="KY4-Qq-LDN"/>
