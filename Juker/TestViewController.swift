@@ -218,7 +218,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-        
+        songTimer.countDownTimer.invalidate()
         //ToDo - currentlyPlayingSong should only ever be fired once per user
         //look up dispatch once
         currentlyPlayingSong = firstSong
