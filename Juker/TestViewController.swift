@@ -165,15 +165,15 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func cardSwipedRight(card: UIView) {
         print("upvoted")
-        incrementSongLikes()
+        incrementCurrentSongLikes()
     }
     
     func cardSwipedLeft(card: UIView) {
         print("downvoted")
-        incrementSongDislikes()
+        incrementCurrentSongDislikes()
     }
     
-    func incrementSongLikes() {
+    func incrementCurrentSongLikes() {
         if (jukeBox?.isHost)! {
             currentlyPlayingSong.likes += 1
             print("song likes up 1")
@@ -187,7 +187,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
-    func incrementSongDislikes() {
+    func incrementCurrentSongDislikes() {
         if (jukeBox?.isHost)! {
             currentlyPlayingSong.dislikes += 1
             print("song dislikes up 1")
@@ -1061,12 +1061,14 @@ extension TestViewController : JukeBoxManagerDelegate {
                     
                 }
             case .currentSongLiked:
-                self.incrementSongLikes()
+                if (self.jukeBox?.isHost)! {
+                    self.incrementCurrentSongLikes()
+                }
                 
-             
             case .currentSongDisliked:
-                self.incrementSongDislikes()
-                
+                if (self.jukeBox?.isHost)! {
+                    self.incrementCurrentSongDislikes()
+                }
             }
             
         }
