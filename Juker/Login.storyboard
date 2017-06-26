@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -39,7 +39,7 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kf-fD-cVs">
                                         <rect key="frame" x="46.5" y="252" width="281" height="70"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
+                                            <imageView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -57,6 +57,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
+                                        <color key="tintColor" red="0.11815642565488815" green="0.84389191865921021" blue="0.37376302480697632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="WBN-1D-Bnd" firstAttribute="centerY" secondItem="9Kf-fD-cVs" secondAttribute="centerY" id="DVZ-Jg-WP7"/>
@@ -65,9 +66,9 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To get started, please connect your Spotify account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1X-OQ-9uS">
-                                        <rect key="frame" x="47" y="66" width="281" height="60"/>
+                                        <rect key="frame" x="47" y="66" width="281" height="80"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="LCI-wS-9nB"/>
+                                            <constraint firstAttribute="height" constant="80" id="LCI-wS-9nB"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                         <nil key="textColor"/>
@@ -159,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="522" y="179"/>
+            <point key="canvasLocation" x="-154" y="179"/>
         </scene>
         <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">

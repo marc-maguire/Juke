@@ -61,6 +61,8 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         loginButtonWrapper.layer.cornerRadius = 35
         
         slideButton.layer.cornerRadius = 35
+        slideButton.tintColor = UIColor(red: 30.0/255, green: 215.0/255, blue: 95.0/255, alpha: 1.0)
+        
         loginButtonWrapper.layer.borderColor = UIColor(red: 30.0/255, green: 215.0/255, blue: 96.0/255, alpha: 1.0).cgColor
         loginButtonWrapper.layer.borderWidth = 2
         
