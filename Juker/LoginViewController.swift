@@ -63,6 +63,12 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        
+    }
+    
     func addCurve(startPoint: CGPoint, endPoint: CGPoint, controlPoint: CGPoint) {
         
         let layer = CAShapeLayer()
