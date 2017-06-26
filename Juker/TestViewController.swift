@@ -12,7 +12,7 @@ import PlaybackButton
 
 
 class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate, DraggableViewDelegate {
-
+    
     //MARK: - Properties
     
     var imageCache = [String:UIImage]() {
@@ -49,7 +49,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: - Data Model Properties
     
-     var currentlyPlayingSong: Song! {
+    var currentlyPlayingSong: Song! {
         didSet {
             updateCurrentTrackInfo()
             albumImage.image = playlistImageCache[(currentlyPlayingSong.images[0]["url"]) as! String]
@@ -105,9 +105,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var resultsTable: UITableView!
     var tapView: UIView!
     
-
     
-       
+    
+    
+    //MARK: - Lifecycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -146,6 +147,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         }
     }
+    
+    //MARK: - User Voting Methods
     
     func cardSwipedRight(card: UIView) {
         print("upvoted")
@@ -206,12 +209,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
     }
     
+    //MARK: - Song Player State Handling
+    
     func songNeedsChanging() {
         if currentlyPlayingSong.dislikes >= 2 {
             hostPlayNextSong()
         }
     }
-    //MARK: - Song changing logic
     
     func hostPlayNextSong() {
         
@@ -437,6 +441,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print("\(auth.clientID)")
     }
     
+    //MARK: - MultiPeer Event Handling Methods
+    
     func hostSendAllSongs() {
         //send all songs to new users
         for song in trackArray {
@@ -497,7 +503,33 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-    //MARK: - SearchWrapper setup and methods
+    //MARK: - Programmatic View Setup and Methods
+    
+    func playlistTableSetup() {
+        
+        playListTable = UITableView()
+        
+        playListTable.dataSource = self
+        playListTable.delegate = self
+        
+        let nib = UINib(nibName: "PlaylistTableCell", bundle: nil)
+        playListTable.register(nib, forCellReuseIdentifier: "PlaylistCell")
+        
+        
+        jukeView.addSubview(playListTable)
+        
+        playListTable.backgroundColor = jukeView.backgroundColor
+        
+        playListTable.translatesAutoresizingMaskIntoConstraints = false
+        playListTable.widthAnchor.constraint(equalTo: jukeView.widthAnchor, multiplier: 1).isActive = true
+        playListTable.centerXAnchor.constraint(equalTo: jukeView.centerXAnchor).isActive = true
+        playListTable.bottomAnchor.constraint(equalTo: jukeView.bottomAnchor).isActive = true
+        
+        playListTable.topAnchor.constraint(equalTo: currentInfoWrapper.bottomAnchor).isActive = true
+        
+        playListTable.isHidden = true
+        
+    }
     
     func searchWrapperSetup() {
         searchWrapper = UIView()
@@ -616,32 +648,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     
-    func playlistTableSetup() {
-        
-        playListTable = UITableView()
-        
-        playListTable.dataSource = self
-        playListTable.delegate = self
-        
-        let nib = UINib(nibName: "PlaylistTableCell", bundle: nil)
-        playListTable.register(nib, forCellReuseIdentifier: "PlaylistCell")
-        
-        
-        jukeView.addSubview(playListTable)
-        
-        playListTable.backgroundColor = jukeView.backgroundColor
-        
-        playListTable.translatesAutoresizingMaskIntoConstraints = false
-        playListTable.widthAnchor.constraint(equalTo: jukeView.widthAnchor, multiplier: 1).isActive = true
-        playListTable.centerXAnchor.constraint(equalTo: jukeView.centerXAnchor).isActive = true
-        playListTable.bottomAnchor.constraint(equalTo: jukeView.bottomAnchor).isActive = true
-        
-        playListTable.topAnchor.constraint(equalTo: currentInfoWrapper.bottomAnchor).isActive = true
-        
-        playListTable.isHidden = true
-        
-        
-    }
+    
     
     //MARK: - TableView DataSource and Delegate Methods
     
@@ -921,7 +928,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    //MARK: Quad Curve Methods
+    //MARK: - Quad Curve Methods
     
     func setupQuadCurve() {
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
@@ -985,14 +992,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
 }
 
+//MARK: - Extensions
+
 extension UIViewController {
     //still needed?
     func hideKeyboard() {
         self.view.endEditing(true)
     }
 }
-
-//MARK: Multipeer Connectivity Event Handling
 
 extension TestViewController : JukeBoxManagerDelegate {
     
@@ -1115,8 +1122,6 @@ extension TestViewController : JukeBoxManagerDelegate {
     }
     
 }
-
-//MARK: SongtimerProgressBarDelegate Methods
 
 extension TestViewController: SongTimerDelegate {
     
