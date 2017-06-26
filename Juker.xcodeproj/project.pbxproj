@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		189CE6ADF1AC812E2EF8718B /* Pods_Juker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */; };
-		9241B5251EF08C030059335C /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5241EF08C030059335C /* TableViewController.swift */; };
 		9241B5271EF08C660059335C /* JukeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5261EF08C660059335C /* JukeTableViewCell.swift */; };
-		9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */; };
 		9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52C1EF1E2F40059335C /* Playlist.swift */; };
 		9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52E1EF309430059335C /* PlaylistViewController.swift */; };
 		9241B5311EF3094C0059335C /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5301EF3094C0059335C /* SongViewController.swift */; };
@@ -47,9 +45,7 @@
 
 /* Begin PBXFileReference section */
 		4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Juker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9241B5241EF08C030059335C /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		9241B5261EF08C660059335C /* JukeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeTableViewCell.swift; sourceTree = "<group>"; };
-		9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMusicViewController.swift; sourceTree = "<group>"; };
 		9241B52C1EF1E2F40059335C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		9241B52E1EF309430059335C /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		9241B5301EF3094C0059335C /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
@@ -156,8 +152,6 @@
 		D0AF20C81EFC3FF000D34E56 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9241B5241EF08C030059335C /* TableViewController.swift */,
-				9241B5281EF1A4DC0059335C /* AddMusicViewController.swift */,
 				9241B52E1EF309430059335C /* PlaylistViewController.swift */,
 				9241B5301EF3094C0059335C /* SongViewController.swift */,
 				92F2D10D1EF9FE0D00C4C434 /* LoginViewController.swift */,
@@ -392,7 +386,6 @@
 				9248BB261F014C710016B95D /* Unwindable.swift in Sources */,
 				D014D06B1EF49CFD00A2E525 /* DraggableView.swift in Sources */,
 				92F2D10E1EF9FE0D00C4C434 /* LoginViewController.swift in Sources */,
-				9241B5291EF1A4DC0059335C /* AddMusicViewController.swift in Sources */,
 				D09105F81EEF5D5800AD29BB /* DataManager.swift in Sources */,
 				92F2D1101EF9FE1500C4C434 /* UserTypeViewController.swift in Sources */,
 				D09106001EF068F000AD29BB /* ConfigCreds.swift in Sources */,
@@ -403,7 +396,6 @@
 				D0AF20BA1EFB3A5500D34E56 /* SearchTrackCell.swift in Sources */,
 				928F843E1EF6FB0000614716 /* SongTimer.swift in Sources */,
 				D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */,
-				9241B5251EF08C030059335C /* TableViewController.swift in Sources */,
 				9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */,
 				9241B5311EF3094C0059335C /* SongViewController.swift in Sources */,
 				9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */,
