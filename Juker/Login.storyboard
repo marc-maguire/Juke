@@ -39,7 +39,7 @@
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kf-fD-cVs">
                                         <rect key="frame" x="46.5" y="252" width="281" height="70"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                 <gestureRecognizers/>
                                                 <constraints>
@@ -49,11 +49,17 @@
                                                     <outletCollection property="gestureRecognizers" destination="8DF-Uy-Y1j" appends="YES" id="bHc-D1-vEx"/>
                                                 </connections>
                                             </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connect" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hcs-A8-01K">
+                                                <rect key="frame" x="88" y="23" width="105" height="25"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="WBN-1D-Bnd" firstAttribute="centerY" secondItem="9Kf-fD-cVs" secondAttribute="centerY" id="DVZ-Jg-WP7"/>
-                                            <constraint firstItem="WBN-1D-Bnd" firstAttribute="leading" secondItem="9Kf-fD-cVs" secondAttribute="leading" id="Iq6-z1-G5j"/>
                                             <constraint firstAttribute="height" constant="70" id="QYj-PQ-1yk"/>
                                             <constraint firstItem="WBN-1D-Bnd" firstAttribute="height" secondItem="9Kf-fD-cVs" secondAttribute="height" id="zWg-eB-bmT"/>
                                         </constraints>
@@ -93,6 +99,7 @@
                     <connections>
                         <outlet property="loginButtonWrapper" destination="9Kf-fD-cVs" id="hpi-uw-jzy"/>
                         <outlet property="slideButton" destination="WBN-1D-Bnd" id="hhh-AU-BYE"/>
+                        <outlet property="slideLabel" destination="Hcs-A8-01K" id="nj4-vp-cSD"/>
                         <outlet property="welcomeWrapper" destination="vqn-CG-bfq" id="FFa-ef-MkT"/>
                         <segue destination="HbG-gg-NFg" kind="show" identifier="userType" id="FMU-we-OtT"/>
                     </connections>

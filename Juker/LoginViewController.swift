@@ -19,8 +19,16 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     var endPointX: CGFloat!
     var originPoint: CGPoint!
     var xFromCenter: CGFloat!
+    var panBackground: UIView!
+    var panBackgroundWidthAnchor: NSLayoutConstraint!
+    var panBackgroundExpandedWidthAnchor: NSLayoutConstraint!
+    var slideButtonLeadAnchor: NSLayoutConstraint!
+    var slideBtnBackground: UIView!
+    var slideBtnBackgroundLeadAnchor: NSLayoutConstraint!
     
     @IBOutlet weak var welcomeWrapper: UIView!
+    
+    @IBOutlet weak var slideLabel: UILabel!
     
     @IBOutlet weak var loginButtonWrapper: UIView!
 
@@ -28,10 +36,7 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
+
         print("login max X: \(loginButtonWrapper.bounds.maxX)")
         print("login minX: \(loginButtonWrapper.bounds.minX)")
         
@@ -48,15 +53,20 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         let p2 = CGPoint(x: welcomeWrapper.bounds.width, y: welcomeWrapper.bounds.origin.y + 2)
         let controlP = CGPoint(x: welcomeWrapper.bounds.width / 2, y: welcomeWrapper.bounds.origin.y - 120)
         
+        slideButtonLeadAnchor = slideButton.leadingAnchor.constraint(equalTo: loginButtonWrapper.leadingAnchor, constant: 0)
+        slideButtonLeadAnchor.isActive = true
+        
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
         
         loginButtonWrapper.layer.cornerRadius = 35
+        
         slideButton.layer.cornerRadius = 35
         loginButtonWrapper.layer.borderColor = UIColor(red: 30.0/255, green: 215.0/255, blue: 96.0/255, alpha: 1.0).cgColor
         loginButtonWrapper.layer.borderWidth = 2
         
         loginButtonWrapper.layer.masksToBounds = true
         slideButton.layer.masksToBounds = true
+        panBackgroundSetup()
         setup()
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateAfterFirstLogin), name: NSNotification.Name(rawValue: "loginSuccessfull"), object: nil)
@@ -86,6 +96,42 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         path.stroke()
         
     }
+    
+    func panBackgroundSetup() {
+        
+        slideBtnBackground = UIView()
+        slideBtnBackground.translatesAutoresizingMaskIntoConstraints = false
+        loginButtonWrapper.insertSubview(slideBtnBackground, belowSubview: slideButton)
+        
+        
+        
+        slideBtnBackground.heightAnchor.constraint(equalTo: slideButton.heightAnchor, multiplier: 0.9, constant: 0).isActive = true
+        slideBtnBackground.leadingAnchor.constraint(equalTo: slideButton.leadingAnchor).isActive = true
+        slideBtnBackground.centerYAnchor.constraint(equalTo: slideButton.centerYAnchor).isActive = true
+        slideBtnBackground.widthAnchor.constraint(equalTo: slideButton.widthAnchor, multiplier: 0.9, constant: 0).isActive = true
+        slideBtnBackground.backgroundColor = UIColor.white
+        slideBtnBackground.layer.borderColor = UIColor(red: 30.0/255, green: 215.0/255, blue: 96.0/255, alpha: 1.0).cgColor
+        slideBtnBackground.layer.masksToBounds = true
+        slideBtnBackground.layer.cornerRadius = 35
+        
+        
+        
+        
+        
+        panBackground = UIView()
+        panBackground.translatesAutoresizingMaskIntoConstraints = false
+        loginButtonWrapper.insertSubview(panBackground, belowSubview: slideBtnBackground)
+        loginButtonWrapper.insertSubview(slideLabel, aboveSubview: panBackground)
+        panBackground.heightAnchor.constraint(equalTo: loginButtonWrapper.heightAnchor, multiplier: 1.0, constant: 0).isActive = true
+        panBackground.leadingAnchor.constraint(equalTo: loginButtonWrapper.leadingAnchor).isActive = true
+        panBackground.centerYAnchor.constraint(equalTo: loginButtonWrapper.centerYAnchor).isActive = true
+        panBackgroundWidthAnchor = panBackground.widthAnchor.constraint(equalToConstant: 70)
+        panBackgroundWidthAnchor.isActive = true
+        panBackground.backgroundColor = UIColor(red: 31.0/255, green: 231.0/255, blue: 103/255, alpha: 1.0)
+        panBackground.layer.masksToBounds = true
+        panBackground.layer.cornerRadius = 35
+
+    }
 
     func setup() {
         auth.clientID = ConfigCreds.clientID
@@ -103,35 +149,46 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     @IBAction func authPan(_ sender: UIPanGestureRecognizer) {
         
         xFromCenter = sender.translation(in: self.view).x
+        
         let rightEdge = CGFloat(loginButtonWrapper.bounds.size.width - (slideButton.bounds.size.width / 2))
+        
+        let xRatio = xFromCenter / (loginButtonWrapper.bounds.size.width / 2)
+        
         
         let leftEdge = CGFloat(loginButtonWrapper.bounds.origin.x + (slideButton.bounds.size.width / 2))
         
         
-        let loginMaxX = loginButtonWrapper.bounds.maxX
-        let loginMinX = loginButtonWrapper.bounds.minX
-        
-        let buttonMaxX = slideButton.frame.maxX
-        let buttonMinX = slideButton.frame.minX
+//        let loginMaxX = loginButtonWrapper.bounds.maxX
+//        let loginMinX = loginButtonWrapper.bounds.minX
+//        
+//        let buttonMaxX = slideButton.frame.maxX
+//        let buttonMinX = slideButton.frame.minX
         
         switch sender.state {
             
         case .began, .changed:
             
-            print("button max X: \(slideButton.frame.maxX)")
             
+            
+            print("button max X: \(slideButton.frame.maxX)")
             print(rightEdge)
             print(slideButton.center.x)
-            print(sender.view?.center.x)
+            
+            //print(sender.view?.center.x)
             
             
 //            print("button min X: \(slideButton.frame.minX)")
             
             if (sender.view?.center.x)! >= leftEdge && (sender.view?.center.x)! <= rightEdge {
-                sender.view?.center = CGPoint(x: originPoint.x + xFromCenter, y: originPoint.y)
+                slideButtonLeadAnchor.constant = xFromCenter
+                panBackgroundWidthAnchor.constant = 70 + xFromCenter
+                slideLabel.layer.opacity = Float(1 - xRatio)
             }
+            //panBackgroundExpandedWidthAnchor.isActive = true
+            self.view.updateConstraints()
+            self.view.layoutIfNeeded()
             
-
+            
         case .ended:
             
             if (sender.view?.center.x)! >= rightEdge {
@@ -145,10 +202,12 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
                     }
                 }
             } else {
-                
                 UIView.animate(withDuration: 0.2, animations: {() -> Void in
-                    self.slideButton.center = self.originPoint
-                    
+                    self.slideButtonLeadAnchor.constant = 0
+                    self.slideLabel.layer.opacity = 1.0
+                    self.panBackgroundWidthAnchor.constant = 70
+                    self.view.updateConstraints()
+                    self.view.layoutIfNeeded()
                 })
                 
             }
