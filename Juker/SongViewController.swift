@@ -8,11 +8,16 @@
 
 import UIKit
 
-class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SongViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, Unwindable {
 
     @IBOutlet weak var tableView: UITableView!
     var tracksArray: [Song] = []
     var selectedSong: Song?
+    var unwindSong: Song {
+        get {
+            return selectedSong!
+        }
+    }
     var manager = DataManager.shared()
     
     override func viewDidLoad() {
@@ -59,3 +64,4 @@ class SongViewController: UIViewController, UITableViewDelegate, UITableViewData
     */
 
 }
+

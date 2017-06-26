@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 class Event: NSObject, NSCoding {
     
     enum SongAction: String {
@@ -27,6 +28,13 @@ class Event: NSObject, NSCoding {
         case removeQueuedSong = "removeQueuedSong"
         
     }
+    
+//    enum PlaybackState: String {
+//        case playing = "playing"
+//        case pausing = "pausing"
+//    }
+
+
 
     var songAction: SongAction
     var song: Song
@@ -34,8 +42,9 @@ class Event: NSObject, NSCoding {
     var timeRemaining: Int
     var timeElapsed: Int
     var index: Int
+    var playbackState: String
     
-    init(songAction: SongAction, song: Song, totalSongTime: Int, timeRemaining: Int, timeElapsed: Int, index: Int) {
+    init(songAction: SongAction, song: Song, totalSongTime: Int, timeRemaining: Int, timeElapsed: Int, index: Int, playbackState: String) {
         
         self.songAction = songAction
         self.song = song
@@ -43,6 +52,7 @@ class Event: NSObject, NSCoding {
         self.timeRemaining = timeRemaining
         self.timeElapsed = timeElapsed
         self.index = index
+        self.playbackState = playbackState
         
         
     }
@@ -55,6 +65,7 @@ class Event: NSObject, NSCoding {
         self.timeRemaining = Int(aDecoder.decodeInt32(forKey: "timeRemaining"))
         self.timeElapsed = Int(aDecoder.decodeInt32(forKey: "timeElapsed"))
         self.index = Int(aDecoder.decodeInt32(forKey: "index"))
+        self.playbackState = aDecoder.decodeObject(forKey: "playbackState") as! String
     }
     
     func encode(with aCoder: NSCoder) {
@@ -64,6 +75,8 @@ class Event: NSObject, NSCoding {
         aCoder.encode(self.timeRemaining, forKey: "timeRemaining")
         aCoder.encode(self.timeElapsed, forKey: "timeElapsed")
         aCoder.encode(self.index, forKey: "index")
+        aCoder.encode(self.playbackState, forKey: "playbackState")
+        
         
     }
     
