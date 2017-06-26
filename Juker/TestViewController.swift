@@ -21,15 +21,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     var playlistImageCache = [String: UIImage]()
-    //{
-    //        didSet {
-    //            if playlistImageCache[currentlyPlayingSong.images[0]["url"] as! String ] != nil {
-    //                albumImage.image = playlistImageCache[currentlyPlayingSong.images[0]["url"] as! String ]
-    //
-    //            }
-    //        }
-    //    }
-
     var auth = SPTAuth.defaultInstance()!
     var session:SPTSession! {
         didSet {
@@ -38,12 +29,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-
     var shouldShowCategories = true
-
     var player: SPTAudioStreamingController?
     var loginUrl: URL?
-
     var jukeBox: JukeBoxManager! {
         didSet{
             jukeBox.delegate = self
@@ -51,9 +39,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     var playerIsActive: Bool = false
     var isNewUser: Bool = true
-
     var songTimer = SongTimer()
-
     var currentlyPlayingSong: Song! {
         didSet {
             updateCurrentTrackInfo()
@@ -63,16 +49,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var trackArray: [Song] = [] {
         didSet {
             playListTable.reloadData()
-            //            updateCurrentTrackInfo()
             if jukeBox.isHost {
                 if !playerIsActive {
                     hostPlayNextSong()
                     playerIsActive = true
                 }
             }
-
-            //            print("\(trackArray[0].isExplicit)")
-            //need to fetch album art
         }
     }
 
@@ -80,12 +62,11 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var jukeView: UIView!
     @IBOutlet weak var albumImage: DraggableView!
-
     @IBOutlet weak var jukeHeight: NSLayoutConstraint!
     var originalHeight: CGFloat!
     var expandedHeight: Bool!
 
-    // Currently Playing Info
+    //MARK: - Currently Playing Song Views
 
     @IBOutlet weak var currentInfoWrapper: UIView!
 
@@ -101,7 +82,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     @IBOutlet weak var playbackButton: PlaybackButton!
 
-    //Search View Wrapper And Search Results Table
+    //MARK: - Search View Wrapper and Results Table
 
     var searchWrapper: UIView!
     var searchField: UITextField!
@@ -115,26 +96,26 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
-    //var keyboardDismiss: UITapGestureRecognizer!
 
     //playlist Table
 
     var playListTable: UITableView!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        //        keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        //        view.addGestureRecognizer(keyboardDismiss)
-
-        //Initial Quadcurve setup
+    
+    func setupQuadCurve() {
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
 
         let p1 = CGPoint(x: jukeView.bounds.origin.x, y: jukeView.bounds.origin.y + 2)
         let p2 = CGPoint(x: jukeView.bounds.width, y: jukeView.bounds.origin.y + 2)
         let controlP = CGPoint(x: jukeView.bounds.width / 2, y: jukeView.bounds.origin.y - 120)
-
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        
+        setupQuadCurve()
+
 
         originalHeight = jukeHeight.constant
         albumImage.layer.cornerRadius = 10
@@ -294,18 +275,15 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             albumImage.image = img
         }
         else {
-            // The image isn't cached, download the img data
-            // We should perform this in a background thread
+            // The image isn't cached, download the img data on a background thread
+            
             let url = URL(string: imageURL)
-            //let request = NSURLRequest(url: url!)
             let session = URLSession.shared
-
-
             let task = session.dataTask(with: url!, completionHandler: { (data, response, error) in
                 if error == nil {
 
                     let image = UIImage(data: data!)
-                    // Store the image in to our cache
+                    // Store the image in our cache
                     self.playlistImageCache[imageURL] = image
                     // Update the cell
                     DispatchQueue.main.async(execute: {
@@ -383,12 +361,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func updateCurrentTrackInfo() {
-        //        if !isNewUser {
+    
         currentTrackLabel.text = currentlyPlayingSong.title
         currentArtistLabel.text = currentlyPlayingSong.artist
-        //album art =
         //isExplicit =
-        //        }
     }
 
     func updateTimersFrom(_ event: Event) {
@@ -434,7 +410,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateProgressBar(){
         trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
         trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
-        //.layoutIfNeeded()
     }
 
     func initializePlayer(authSession:SPTSession){
@@ -456,7 +431,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         // after a user authenticates a session, the SPTAudioStreamingController is then initialized and this method called
         print("logged in")
         print("\(session.accessToken)")
-
         print("\(session.encryptedRefreshToken)")
         print("\(auth.clientID)")
     }
@@ -471,6 +445,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func syncTimersForNewUser() {
+        
         let currentState = playbackButton.buttonState
         var playbackState: String!
 
