@@ -53,7 +53,7 @@
 		9241B52C1EF1E2F40059335C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		9241B52E1EF309430059335C /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		9241B5301EF3094C0059335C /* SongViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
-		9248BB251F014C710016B95D /* Unwindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Unwindable.swift; path = Juker/Unwindable.swift; sourceTree = "<group>"; };
+		9248BB251F014C710016B95D /* Unwindable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Unwindable.swift; sourceTree = "<group>"; };
 		928F843D1EF6FB0000614716 /* SongTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SongTimer.swift; sourceTree = "<group>"; };
 		928F843F1EF83C4700614716 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		92F2D1091EF9FDD100C4C434 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
@@ -122,6 +122,14 @@
 				AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		D0713A5D1F0165D000C23DAC /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				9248BB251F014C710016B95D /* Unwindable.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		D0AF20C61EFC3F7100D34E56 /* Models */ = {
@@ -215,7 +223,6 @@
 		D0C8A6C91EEC45A30058031D = {
 			isa = PBXGroup;
 			children = (
-				9248BB251F014C710016B95D /* Unwindable.swift */,
 				D0C8A6D41EEC45A30058031D /* Juker */,
 				D0C8A6D31EEC45A30058031D /* Products */,
 				D0C8A6F01EEC46C00058031D /* Juker-Bridging-Header.h */,
@@ -235,6 +242,7 @@
 		D0C8A6D41EEC45A30058031D /* Juker */ = {
 			isa = PBXGroup;
 			children = (
+				D0713A5D1F0165D000C23DAC /* Protocols */,
 				D0AF20CE1EFC413F00D34E56 /* Utilities */,
 				D0AF20C91EFC403700D34E56 /* Views */,
 				D0AF20C81EFC3FF000D34E56 /* ViewControllers */,
