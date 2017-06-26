@@ -31,7 +31,7 @@ class JukeBoxManager: NSObject {
     
     //MARK: NEW-----------
     func send(event : NSData) {
-        NSLog("%@", "sendSong: \(event) to \(session.connectedPeers.count) peers")
+//        NSLog("%@", "sendSong: \(event) to \(session.connectedPeers.count) peers")
         
         if session.connectedPeers.count > 0 {
             do {

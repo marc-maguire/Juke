@@ -66,6 +66,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
+    var likedSongs: [Song] = []
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
@@ -163,6 +164,15 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func incrementCurrentSongLikes() {
         if  jukeBox.isHost {
             currentlyPlayingSong.likes += 1
+            //need to check if song should be added to liked array
+            if currentlyPlayingSong.likes >= 2 {
+                //append to likedSongs as long as likedSongs does not already contain it
+                if !likedSongs.contains(currentlyPlayingSong) {
+                    likedSongs.append(currentlyPlayingSong)
+                    print("Adding \(currentlyPlayingSong.title) to liked songs")
+                    print("\(likedSongs)")
+                }
+            }
             print("song likes up 1")
         } else {
             //send increase song likes event and host calls this method
@@ -189,6 +199,23 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func incrementLikesForSongAtIndex(index: Int) {
+        if jukeBox.isHost {
+            let song = trackArray[index]
+            song.likes += 1
+            if song.likes >= 2 {
+                //append to likedSongs as long as likedSongs does not already contain it
+                if !likedSongs.contains(song) {
+                    likedSongs.append(song)
+                    print("Adding \(song.title) to liked songs")
+                    print("\(likedSongs)")
+                }
+            }
+        } else {
+        let event = Event(songAction: .queuedSongLiked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play")
+        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+        jukeBox.send(event: newEvent as NSData)
+        }
+        
         
     }
     func incrementDislikesForSongAtIndex(index: Int) {
@@ -202,11 +229,11 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 self.jukeBox.send(event: newEvent as NSData)
                 
             }
-        }
+        } else {
         let event = Event(songAction: .queuedSongDisliked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play")
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
-        
+        }
     }
     
     //MARK: - Song Player State Handling
@@ -216,6 +243,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             hostPlayNextSong()
         }
     }
+    
     
     func hostPlayNextSong() {
         
@@ -879,7 +907,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     print("could not get indexduring upvote")
                     return true
                 }
-                //send downvotequeuedSong event
+                //send upvoted event
+                self.incrementLikesForSongAtIndex(index: Int(index.row))
                 print("upvoted")
                 
                 return true
@@ -1094,23 +1123,24 @@ extension TestViewController : JukeBoxManagerDelegate {
                     self.incrementCurrentSongDislikes()
                 }
             case .queuedSongLiked:
-                print("yep")
+                self.incrementLikesForSongAtIndex(index: event.index)
                 
             case .queuedSongDisliked:
-                if self.jukeBox.isHost {
-                    let song: Song = self.trackArray[event.index]
-                    song.dislikes += 1
-                    //check if song should be removed
-                    if song.dislikes == 2 {
-                        //host removes from array
-                        self.trackArray.remove(at: event.index)
-                        //if removed, send remove song event to guests
-                        let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: event.index, playbackState: "Play")
-                        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
-                        self.jukeBox.send(event: newEvent as NSData)
-                        
-                    }
-                }
+                self.incrementDislikesForSongAtIndex(index: event.index)
+                //                if self.jukeBox.isHost {
+                //                    let song: Song = self.trackArray[event.index]
+                //                    song.dislikes += 1
+                //                    //check if song should be removed
+                //                    if song.dislikes == 2 {
+                //                        //host removes from array
+                //                        self.trackArray.remove(at: event.index)
+                //                        //if removed, send remove song event to guests
+                //                        let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: event.index, playbackState: "Play")
+                //                        let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
+                //                        self.jukeBox.send(event: newEvent as NSData)
+                //
+                //                    }
+            //                }
             case .removeQueuedSong:
                 //host removes song before sending event, only non hosts should remove song here
                 if !self.jukeBox.isHost {

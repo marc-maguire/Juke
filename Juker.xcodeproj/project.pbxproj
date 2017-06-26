@@ -284,7 +284,7 @@
 				TargetAttributes = {
 					D0C8A6D11EEC45A30058031D = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = SLXQD48E5E;
+						DevelopmentTeam = 2L6K3A6G3C;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -528,7 +528,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = SLXQD48E5E;
+				DEVELOPMENT_TEAM = 2L6K3A6G3C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Juker",
@@ -536,7 +536,7 @@
 				INFOPLIST_FILE = Juker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -552,7 +552,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = SLXQD48E5E;
+				DEVELOPMENT_TEAM = 2L6K3A6G3C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Juker",
@@ -560,7 +560,7 @@
 				INFOPLIST_FILE = Juker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
