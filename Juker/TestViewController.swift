@@ -115,7 +115,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
-    //var keyboardDismiss: UITapGestureRecognizer!
+    
     
     //playlist Table
     
@@ -123,9 +123,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        keyboardDismiss = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-//        view.addGestureRecognizer(keyboardDismiss)
 
         //Initial Quadcurve setup
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
@@ -136,19 +133,21 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
         
+        //Other Setup
         originalHeight = jukeHeight.constant
         albumImage.layer.cornerRadius = 10
         songTimer.delegate = self
         albumImage.delegate = self
         labelsNeedUpdate()
         
+        trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
+        trackProgressView.layer.cornerRadius = 0
+        trackProgressView.backgroundColor = UIColor.lightGray
+        
 
         playlistTableSetup()
         searchWrapperSetup()
-        
-        
-        
-        
+
     }
     
     
@@ -454,7 +453,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func updateProgressBar(){
-        trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
         trackProgressView.setProgress(Float(songTimer.timeElapsed) / songTimer.totalSongTime, animated: true)
         //.layoutIfNeeded()
     }
@@ -560,6 +558,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchFieldExpandedWidth.isActive = false
         
         let font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        
+        searchField.font = font
         
         searchField.textColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
         searchField.tintColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
@@ -715,7 +715,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         expansionSettings.triggerAnimation.easingFunction = MGSwipeEasingFunction.cubicOut
         expansionSettings.fillOnTrigger = false
         
-        let color = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 1.0)
+        //let color = UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 1.0)
         let font = UIFont(name: "HelveticaNeue-Light", size: 14)
         
         if direction == MGSwipeDirection.leftToRight {

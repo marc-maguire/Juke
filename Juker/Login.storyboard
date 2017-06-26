@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -18,28 +20,81 @@
                         <viewControllerLayoutGuide type="top" id="Omo-ev-3n2"/>
                         <viewControllerLayoutGuide type="bottom" id="u0l-io-oMN"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="zsU-98-oDH">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="zsU-98-oDH">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BUz-aj-iBj">
-                                <rect key="frame" x="188" y="253" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="login"/>
-                                <connections>
-                                    <action selector="loginPressed:" destination="nGr-sN-DSE" eventType="touchUpInside" id="Cas-SK-WMe"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqn-CG-bfq">
+                                <rect key="frame" x="0.0" y="295" width="375" height="372"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0O0-4b-oCZ">
+                                        <rect key="frame" x="46" y="21" width="278" height="51"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kf-fD-cVs">
+                                        <rect key="frame" x="46.5" y="216" width="281" height="70"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
+                                                <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                <gestureRecognizers/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="WBN-1D-Bnd" secondAttribute="height" id="JIW-GI-ox0"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="8DF-Uy-Y1j" appends="YES" id="bHc-D1-vEx"/>
+                                                </connections>
+                                            </imageView>
+                                        </subviews>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="WBN-1D-Bnd" firstAttribute="centerY" secondItem="9Kf-fD-cVs" secondAttribute="centerY" id="DVZ-Jg-WP7"/>
+                                            <constraint firstItem="WBN-1D-Bnd" firstAttribute="leading" secondItem="9Kf-fD-cVs" secondAttribute="leading" id="Iq6-z1-G5j"/>
+                                            <constraint firstAttribute="height" constant="70" id="QYj-PQ-1yk"/>
+                                            <constraint firstItem="WBN-1D-Bnd" firstAttribute="height" secondItem="9Kf-fD-cVs" secondAttribute="height" id="zWg-eB-bmT"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To get started, please connect your Spotify account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1X-OQ-9uS">
+                                        <rect key="frame" x="46" y="92" width="278" height="84"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="9Kf-fD-cVs" firstAttribute="centerX" secondItem="vqn-CG-bfq" secondAttribute="centerX" id="1of-cW-k2y"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Kf-fD-cVs" secondAttribute="bottom" constant="86" id="cLy-XL-h82"/>
+                                    <constraint firstItem="9Kf-fD-cVs" firstAttribute="width" secondItem="vqn-CG-bfq" secondAttribute="width" multiplier="0.75" id="jEO-p4-szo"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="u0l-io-oMN" firstAttribute="top" secondItem="vqn-CG-bfq" secondAttribute="bottom" id="412-pV-sSP"/>
+                            <constraint firstItem="vqn-CG-bfq" firstAttribute="width" secondItem="zsU-98-oDH" secondAttribute="width" id="4hj-pG-TV3"/>
+                            <constraint firstItem="vqn-CG-bfq" firstAttribute="top" secondItem="Omo-ev-3n2" secondAttribute="bottom" constant="275" id="947-AU-yv6"/>
+                            <constraint firstItem="vqn-CG-bfq" firstAttribute="centerX" secondItem="zsU-98-oDH" secondAttribute="centerX" id="xPV-DQ-kCe"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="loginButtonWrapper" destination="9Kf-fD-cVs" id="hpi-uw-jzy"/>
+                        <outlet property="slideButton" destination="WBN-1D-Bnd" id="hhh-AU-BYE"/>
+                        <outlet property="welcomeWrapper" destination="vqn-CG-bfq" id="FFa-ef-MkT"/>
                         <segue destination="HbG-gg-NFg" kind="show" identifier="userType" id="FMU-we-OtT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fnd-5C-0T6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="8DF-Uy-Y1j">
+                    <connections>
+                        <action selector="authPan:" destination="nGr-sN-DSE" id="Ou5-Qp-dOM"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1375" y="217"/>
+            <point key="canvasLocation" x="-1431.2" y="178.56071964017991"/>
         </scene>
         <!--User Type View Controller-->
         <scene sceneID="6Vt-Ah-pLl">
@@ -87,7 +142,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-671.20000000000005" y="215.44227886056973"/>
+            <point key="canvasLocation" x="522" y="179"/>
         </scene>
         <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">
@@ -95,10 +150,13 @@
                 <viewControllerPlaceholder storyboardIdentifier="Main" storyboardName="Main" id="jU1-9O-B9Q" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j95-g0-S9w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="135" y="164"/>
+            <point key="canvasLocation" x="1018" y="179"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Spotify_Icon_RGB_Green" width="170" height="170"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="b4l-Y4-Bai"/>
+        <segue reference="4Pg-RD-pGz"/>
     </inferredMetricsTieBreakers>
 </document>
