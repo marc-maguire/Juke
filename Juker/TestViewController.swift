@@ -410,16 +410,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
         
-        if segue.identifier == "first" {
+        
             //wrap both viewcontrollers in a protocol, add the object to a protocol and then cast the segue source to the protocol type. Figure out how ot make it a computed property, make a second selectedSong that reaches into this
-            
-            let initialVC = segue.source as! SongViewController
-            guard let newSong = initialVC.selectedSong else {
-                print("no song returned")
-                return
-            }
-            
-            trackArray.append(newSong)
+            let unwindVC = segue.source as! Unwindable
+            let unwindSong = unwindVC.unwindSong
+        
+            trackArray.append(unwindSong)
             print("adding new song")
             if  jukeBox.isPendingHost {
                 jukeBox.isPendingHost = false
@@ -431,27 +427,27 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
 //            updateCurrentTrackInfo()
             //didnt fix the labels
-            sendAddNewSongEvent(song: newSong)
+            sendAddNewSongEvent(song: unwindSong)
             hideSearch()
-            
-        } else if segue.identifier == "newSearchSong" {
-            
-            let initialVC = segue.source as! AddMusicViewController
-            guard let newSong = initialVC.selectedSong else {
-                print("no song returned")
-                return
-            }
-            trackArray.append(newSong)
-            if  jukeBox.isPendingHost {
-                jukeBox.isPendingHost = false
-                jukeBox.isHost = true
-                jukeBox.serviceBrowser.startBrowsingForPeers()
-                return
-            }
-            sendAddNewSongEvent(song: newSong)
-           
-        }
     }
+//        } else if segue.identifier == "newSearchSong" {
+//            
+//            let initialVC = segue.source as! AddMusicViewController
+//            guard let newSong = initialVC.selectedSong else {
+//                print("no song returned")
+//                return
+//            }
+//            trackArray.append(newSong)
+//            if  jukeBox.isPendingHost {
+//                jukeBox.isPendingHost = false
+//                jukeBox.isHost = true
+//                jukeBox.serviceBrowser.startBrowsingForPeers()
+//                return
+//            }
+//            sendAddNewSongEvent(song: newSong)
+//           
+//        }
+//    }
     
     func updateProgressBar(){
         trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
