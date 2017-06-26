@@ -411,7 +411,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func prepareForUnwind(segue: UIStoryboardSegue){
 
 
-            //wrap both viewcontrollers in a protocol, add the object to a protocol and then cast the segue source to the protocol type. Figure out how ot make it a computed property, make a second selectedSong that reaches into this
+            //wrap all endpoint viewcontrollers where a song is selected in a protocol, add the object to a protocol and then cast the segue source to the protocol type.
+        
             let unwindVC = segue.source as! Unwindable
             let unwindSong = unwindVC.unwindSong
 
@@ -425,29 +426,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 hideSearch()
                 return
             }
-            //            updateCurrentTrackInfo()
-            //didnt fix the labels
+
             sendAddNewSongEvent(song: unwindSong)
             hideSearch()
     }
-//        } else if segue.identifier == "newSearchSong" {
-//
-//            let initialVC = segue.source as! AddMusicViewController
-//            guard let newSong = initialVC.selectedSong else {
-//                print("no song returned")
-//                return
-//            }
-//            trackArray.append(newSong)
-//            if  jukeBox.isPendingHost {
-//                jukeBox.isPendingHost = false
-//                jukeBox.isHost = true
-//                jukeBox.serviceBrowser.startBrowsingForPeers()
-//                return
-//            }
-//            sendAddNewSongEvent(song: newSong)
-//
-//        }
-//    }
 
     func updateProgressBar(){
         trackProgressView.progressTintColor = UIColor(red: 245.0/255, green: 255.0/255, blue: 141.0/255, alpha: 1.0)
