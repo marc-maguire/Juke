@@ -18,7 +18,7 @@ class JukeBoxManager: NSObject {
     //user could choose unique name and have it displayed here
     //can archive so the user doesn't need to type it every time
     
-    private let myPeerId = MCPeerID(displayName: UIDevice.current.name)
+    let myPeerId = MCPeerID(displayName: UIDevice.current.name)
     
     private let serviceAdvertiser : MCNearbyServiceAdvertiser
     let serviceBrowser : MCNearbyServiceBrowser

@@ -152,11 +152,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: - User Voting Methods
     
     func cardSwipedRight(card: UIView) {
+        //don't need the card parameter if we can remove it
         print("upvoted")
         incrementCurrentSongLikes()
     }
     
     func cardSwipedLeft(card: UIView) {
+        //don't need the card parameter if we can remove it
         print("downvoted")
         incrementCurrentSongDislikes()
     }
@@ -176,7 +178,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             print("song likes up 1")
         } else {
             //send increase song likes event and host calls this method
-            let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+            let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
             
@@ -191,7 +193,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             songNeedsChanging()
         } else {
             //send increase song likes event and host calls this method
-            let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+            let event = Event(songAction: .currentSongDisliked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
             
@@ -211,7 +213,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         } else {
-        let event = Event(songAction: .queuedSongLiked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play")
+        let event = Event(songAction: .queuedSongLiked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         }
@@ -224,13 +226,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             song.dislikes += 1
             if song.dislikes >= 2 {
                 trackArray.remove(at: index)
-                let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: index, playbackState: "Play")
+                let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
                 let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                 self.jukeBox.send(event: newEvent as NSData)
                 
             }
         } else {
-        let event = Event(songAction: .queuedSongDisliked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play")
+        let event = Event(songAction: .queuedSongDisliked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         }
@@ -273,7 +275,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //        view.layoutIfNeeded()
         
         //send new song event to connected peers
-        let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+        let event = Event(songAction: .startNewSong, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -382,7 +384,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return
         }
         
-        let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+        let event = Event(songAction: .togglePlay, song: firstSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -390,7 +392,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func sendAddNewSongEvent(song: Song) {
         
-        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+        let event = Event(songAction: .addSong, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
     }
@@ -474,7 +476,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func hostSendAllSongs() {
         //send all songs to new users
         for song in trackArray {
-            let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+            let event = Event(songAction: .newUserSyncResponse, song: song, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
             jukeBox.send(event: newEvent as NSData)
         }
@@ -492,7 +494,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else {
             playbackState = "Play"
         }
-        let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: playbackState)
+        let event = Event(songAction: .newUserFinishedSyncing, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: playbackState, sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -500,7 +502,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func hostSendNewConnectionEvent() {
         
-        let event = Event(songAction: .newConnectionDetected, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play")
+        let event = Event(songAction: .newConnectionDetected, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
         
@@ -1107,7 +1109,7 @@ extension TestViewController : JukeBoxManagerDelegate {
             case .newConnectionDetected:
                 if self.isNewUser {
                     let song = Song(withDefaultString: "empty")
-                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: 0, playbackState: "Play")
+                    let event = Event(songAction: .newUserSyncRequest, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: 0, playbackState: "Play", sender: self.jukeBox.myPeerId.displayName)
                     let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
                     self.jukeBox.send(event: newEvent as NSData)
                     print("sync request sent")

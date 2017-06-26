@@ -20,6 +20,7 @@ class Song: NSObject, NSCoding {
     var images: [[String:AnyObject]]
     var likes: Int = 0
     var dislikes: Int = 0
+    var voters: [String] = []
     
     init(withDefaultString: String){
 
@@ -67,6 +68,7 @@ class Song: NSObject, NSCoding {
         self.duration = aDecoder.decodeDouble(forKey: "duration")
         self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
         self.images = aDecoder.decodeObject(forKey: "images") as! [[String : AnyObject]]
+        self.voters = aDecoder.decodeObject(forKey: "voters") as! [String]
 
     }
     
@@ -79,6 +81,7 @@ class Song: NSObject, NSCoding {
         aCoder.encode(duration, forKey: "duration")
         aCoder.encode(isExplicit, forKey: "explicit")
         aCoder.encode(images, forKey: "images")
+        aCoder.encode(voters, forKey: "voters")
     }
     
 }
