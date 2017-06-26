@@ -29,6 +29,9 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
         print("login max X: \(loginButtonWrapper.bounds.maxX)")
         print("login minX: \(loginButtonWrapper.bounds.minX)")
         
@@ -51,6 +54,7 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         slideButton.layer.cornerRadius = 35
         loginButtonWrapper.layer.borderColor = UIColor(red: 30.0/255, green: 215.0/255, blue: 96.0/255, alpha: 1.0).cgColor
         loginButtonWrapper.layer.borderWidth = 2
+        
         loginButtonWrapper.layer.masksToBounds = true
         slideButton.layer.masksToBounds = true
         setup()
@@ -92,7 +96,11 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     
     @IBAction func authPan(_ sender: UIPanGestureRecognizer) {
         
-        xFromCenter = sender.translation(in: loginButtonWrapper).x
+        xFromCenter = sender.translation(in: self.view).x
+        let rightEdge = CGFloat(loginButtonWrapper.bounds.size.width - (slideButton.bounds.size.width / 2))
+        
+        let leftEdge = CGFloat(loginButtonWrapper.bounds.origin.x + (slideButton.bounds.size.width / 2))
+        
         
         let loginMaxX = loginButtonWrapper.bounds.maxX
         let loginMinX = loginButtonWrapper.bounds.minX
@@ -105,15 +113,23 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         case .began, .changed:
             
             print("button max X: \(slideButton.frame.maxX)")
+            
+            print(rightEdge)
+            print(slideButton.center.x)
+            print(sender.view?.center.x)
+            
+            
 //            print("button min X: \(slideButton.frame.minX)")
             
-            if buttonMinX >= loginMinX && buttonMaxX <= loginMaxX {
-                slideButton.center = CGPoint(x: originPoint.x + xFromCenter, y: originPoint.y)
+            if (sender.view?.center.x)! >= leftEdge && (sender.view?.center.x)! <= rightEdge {
+                sender.view?.center = CGPoint(x: originPoint.x + xFromCenter, y: originPoint.y)
             }
+            
 
         case .ended:
             
-            if buttonMaxX >= loginMaxX {
+            if (sender.view?.center.x)! >= rightEdge {
+                
                 UIApplication.shared.open(loginUrl!, options: [:]) { (didFinish) in
                     if didFinish {
                         if self.auth.canHandle(self.auth.redirectURL) {

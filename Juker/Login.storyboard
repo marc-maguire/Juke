@@ -27,15 +27,17 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqn-CG-bfq">
                                 <rect key="frame" x="0.0" y="295" width="375" height="372"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0O0-4b-oCZ">
-                                        <rect key="frame" x="46" y="21" width="278" height="51"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0O0-4b-oCZ">
+                                        <rect key="frame" x="47" y="5" width="281" height="51"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="51" id="Sxd-yc-08N"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="45"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Kf-fD-cVs">
-                                        <rect key="frame" x="46.5" y="216" width="281" height="70"/>
+                                        <rect key="frame" x="46.5" y="252" width="281" height="70"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Spotify_Icon_RGB_Green" translatesAutoresizingMaskIntoConstraints="NO" id="WBN-1D-Bnd">
                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
@@ -56,10 +58,12 @@
                                             <constraint firstItem="WBN-1D-Bnd" firstAttribute="height" secondItem="9Kf-fD-cVs" secondAttribute="height" id="zWg-eB-bmT"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To get started, please connect your Spotify account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1X-OQ-9uS">
-                                        <rect key="frame" x="46" y="92" width="278" height="84"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To get started, please connect your Spotify account" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1X-OQ-9uS">
+                                        <rect key="frame" x="47" y="66" width="281" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="LCI-wS-9nB"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -67,8 +71,14 @@
                                 <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="9Kf-fD-cVs" firstAttribute="centerX" secondItem="vqn-CG-bfq" secondAttribute="centerX" id="1of-cW-k2y"/>
-                                    <constraint firstAttribute="bottom" secondItem="9Kf-fD-cVs" secondAttribute="bottom" constant="86" id="cLy-XL-h82"/>
+                                    <constraint firstItem="0O0-4b-oCZ" firstAttribute="width" secondItem="vqn-CG-bfq" secondAttribute="width" multiplier="0.75" id="BcM-3c-d39"/>
+                                    <constraint firstItem="g1X-OQ-9uS" firstAttribute="centerX" secondItem="vqn-CG-bfq" secondAttribute="centerX" id="Kma-6a-wCW"/>
+                                    <constraint firstItem="g1X-OQ-9uS" firstAttribute="width" secondItem="vqn-CG-bfq" secondAttribute="width" multiplier="0.75" id="X6c-UX-o5d"/>
+                                    <constraint firstAttribute="bottom" secondItem="9Kf-fD-cVs" secondAttribute="bottom" constant="50" id="cLy-XL-h82"/>
                                     <constraint firstItem="9Kf-fD-cVs" firstAttribute="width" secondItem="vqn-CG-bfq" secondAttribute="width" multiplier="0.75" id="jEO-p4-szo"/>
+                                    <constraint firstItem="0O0-4b-oCZ" firstAttribute="centerX" secondItem="vqn-CG-bfq" secondAttribute="centerX" id="rfG-Eh-37a"/>
+                                    <constraint firstItem="0O0-4b-oCZ" firstAttribute="top" secondItem="vqn-CG-bfq" secondAttribute="top" constant="5" id="vcL-IM-GkZ"/>
+                                    <constraint firstItem="g1X-OQ-9uS" firstAttribute="top" secondItem="0O0-4b-oCZ" secondAttribute="bottom" constant="10" id="xwk-d0-xhi"/>
                                 </constraints>
                             </view>
                         </subviews>
