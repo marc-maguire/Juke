@@ -693,8 +693,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 cell.trackNameLabel.text = filteredSongs[indexPath.row].title
                 cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
-                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-                cell.trackAlbumImage.image = UIImage(named: "kaytra")
+                if filteredSongs[indexPath.row].isExplicit {
+                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+                } else {
+                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
+                }
+                cell.trackAlbumImage.image = #imageLiteral(resourceName: "placeholder-rect")
                 cell.backgroundColor = resultsTable.backgroundColor
                 let imageURL = song.images[1]["url"] as! String
                 
@@ -744,8 +748,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //put it in here
             //watch out for cache size
             
-            cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-            cell.trackAlbumImage.image = UIImage(named: "kaytra")
+            if song.isExplicit {
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+            } else {
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
+            }
+            cell.trackAlbumImage.image = #imageLiteral(resourceName: "placeholder-rect")
             cell.backgroundColor = playListTable.backgroundColor
             let imageURL = song.images[0]["url"] as! String
             
