@@ -933,11 +933,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     if song.hasBeenVotedOnBy(peer: self.jukeBox.myPeerId.displayName) {
                         
                     } else {
-                    song.voters.append(self.jukeBox.myPeerId.displayName)
-//                    self.incrementLikesForSongAtIndex(index: Int(index.row))
+                        song.voters.append(self.jukeBox.myPeerId.displayName)
+                        self.incrementLikesForSongAtIndex(index: Int(index.row))
+                    }
+                } else {
+                    self.incrementLikesForSongAtIndex(index: Int(index.row))
                 }
-                }
-                self.incrementLikesForSongAtIndex(index: Int(index.row))
+                
                 print("upvoted")
                 
                 return true
