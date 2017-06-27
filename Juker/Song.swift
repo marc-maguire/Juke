@@ -70,6 +70,7 @@ class Song: NSObject, NSCoding {
         self.duration = aDecoder.decodeDouble(forKey: "duration")
         self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
         self.images = aDecoder.decodeObject(forKey: "images") as! [[String : AnyObject]]
+//        self.voters = ["default"]
         self.voters = aDecoder.decodeObject(forKey: "voters") as! [String]
         
 
