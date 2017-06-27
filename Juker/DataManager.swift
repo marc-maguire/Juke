@@ -157,6 +157,56 @@ class DataManager {
             }
         }
     }
+    func spotifySaveSongForCurrentUser(songURI: String) {
+        
+        
+        guard let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? else {
+            return
+        }
+        
+        
+        let sessionDataObj = sessionObj as! Data
+        let savedSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+        let session = savedSession
+        let token = session.accessToken
+        
+        var urlWithComponents = URLComponents()
+        let headers: HTTPHeaders = [
+            "Authorization": "Bearer \(token!)",
+            "Accept": "application/json"
+        ]
+        
+        //spotify:track:4qikXelSRKvoCqFcHLB2H2 is the songURI format
+        //remove left 14 characters
+        
+        let editedSongURI = songURI.replacingOccurrences(of: "spotify:track:", with: "")
+        
+        urlWithComponents.scheme = "https"
+        urlWithComponents.host = "api.spotify.com"
+        urlWithComponents.path = "/v1/me/tracks"
+        
+
+        let query = URLQueryItem(name: "ids", value: editedSongURI)
+        
+        urlWithComponents.queryItems = [query]
+        print(urlWithComponents)
+        
+        Alamofire.request(urlWithComponents, method: .put, parameters: nil, encoding: JSONEncoding.default, headers: headers).responseJSON { (dataResponse) in
+            if let status = dataResponse.response?.statusCode {
+                switch(status){
+                case 200:
+                    print("example success")
+                default:
+                    print("error with response status: \(status)")
+                }
+            }
+
+            print("Song did finish adding")
+            
+        }
+        
+    }
+
     //playlistURL: String, completion: @escaping ([Song]) -> ()
     func spotifyPlaylistTracks(ownerID: String, playlistID: String, completionArray: @escaping ([Song]) -> ()) {
 

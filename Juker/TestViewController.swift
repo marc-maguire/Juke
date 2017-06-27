@@ -160,6 +160,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             } else {
                 currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
                 //network call to add to hosts personal spotify
+                manager.spotifySaveSongForCurrentUser(songURI: currentlyPlayingSong.songURI)
             }
         } else {
             if currentlyPlayingSong.hasBeenVotedOnBy(peer: jukeBox.myPeerId.displayName) {
@@ -167,6 +168,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
             } else {
                 //network call to add to non hosts personal spotify
+                manager.spotifySaveSongForCurrentUser(songURI: currentlyPlayingSong.songURI)
             }
         
         }
@@ -230,7 +232,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func incrementLikesForSongAtIndex(index: Int) {
         if jukeBox.isHost {
             let song = trackArray[index]
-            //netowkr call for host to add song to spotify saved songs
+            manager.spotifySaveSongForCurrentUser(songURI: song.songURI)
             
 //            song.likes += 1
 //            if song.likes >= 2 {
@@ -242,7 +244,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 //                }
 //            }
         } else {
+            let song = trackArray[index]
+
         //network call for non host to add song to spotify saved songs
+        manager.spotifySaveSongForCurrentUser(songURI: song.songURI)
         let event = Event(songAction: .queuedSongLiked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)

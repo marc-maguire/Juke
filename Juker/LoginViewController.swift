@@ -141,7 +141,7 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         
         
         //REMEMBER TO ADD BACK SCOPES
-        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope,SPTAuthUserFollowReadScope,SPTAuthUserLibraryReadScope,SPTAuthUserReadPrivateScope,SPTAuthUserReadTopScope,SPTAuthUserReadBirthDateScope,SPTAuthUserReadEmailScope]
+        auth.requestedScopes = [SPTAuthStreamingScope, SPTAuthPlaylistReadPrivateScope,SPTAuthUserFollowReadScope,SPTAuthUserLibraryReadScope,SPTAuthUserReadPrivateScope,SPTAuthUserReadTopScope,SPTAuthUserReadBirthDateScope,SPTAuthUserReadEmailScope, SPTAuthUserLibraryModifyScope]
         
         loginUrl = auth.spotifyWebAuthenticationURL()
         
