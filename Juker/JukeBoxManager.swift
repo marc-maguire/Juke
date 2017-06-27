@@ -85,6 +85,8 @@ extension JukeBoxManager : MCNearbyServiceAdvertiserDelegate {
         
     }
     
+    
+    
 }
 
 extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
@@ -106,7 +108,9 @@ extension JukeBoxManager : MCNearbyServiceBrowserDelegate {
     
     
     func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
+        
         NSLog("%@", "lostPeer: \(peerID)")
+        
     }
     
 }
@@ -137,6 +141,7 @@ extension JukeBoxManager : MCSessionDelegate {
     
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveStream")
+        
     }
     
     func session(_ session: MCSession, didStartReceivingResourceWithName resourceName: String, fromPeer peerID: MCPeerID, with progress: Progress) {

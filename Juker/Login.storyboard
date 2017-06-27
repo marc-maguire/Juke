@@ -146,8 +146,13 @@
                                     <segue destination="jU1-9O-B9Q" kind="show" identifier="guest" id="b4l-Y4-Bai"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sgg-Fh-vSS">
+                                <rect key="frame" x="0.0" y="307" width="375" height="360"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.95686274509803915" green="0.95686274509803915" blue="0.95686274509803915" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="CDa-78-qtL" secondAttribute="trailing" constant="29" id="GIo-t8-f8f"/>
                             <constraint firstItem="2Rn-1n-Bnz" firstAttribute="top" secondItem="CDa-78-qtL" secondAttribute="bottom" constant="198" id="PJJ-cv-7nL"/>
@@ -160,7 +165,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-154" y="179"/>
+            <point key="canvasLocation" x="-226.40000000000001" y="178.56071964017991"/>
         </scene>
         <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">

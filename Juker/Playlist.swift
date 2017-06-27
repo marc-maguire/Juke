@@ -7,6 +7,7 @@
 //
 
 import UIKit
+
 class Playlist: NSObject {
     
     var name: String
