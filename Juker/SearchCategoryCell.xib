@@ -20,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="suJ-x2-yav">
-                        <rect key="frame" x="42" y="-0.5" width="338" height="87"/>
+                        <rect key="frame" x="21" y="-0.5" width="380" height="87"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -30,7 +30,7 @@
                 <constraints>
                     <constraint firstItem="suJ-x2-yav" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Qu5-eg-lXY"/>
                     <constraint firstItem="suJ-x2-yav" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="WwK-VA-yCq"/>
-                    <constraint firstItem="suJ-x2-yav" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.8" id="e4j-q1-eyu"/>
+                    <constraint firstItem="suJ-x2-yav" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.9" id="e4j-q1-eyu"/>
                     <constraint firstItem="suJ-x2-yav" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lxI-T6-naZ"/>
                 </constraints>
             </tableViewCellContentView>

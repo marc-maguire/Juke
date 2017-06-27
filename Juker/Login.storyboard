@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -135,32 +134,26 @@
                                     <segue destination="jU1-9O-B9Q" kind="show" identifier="host" id="4Pg-RD-pGz"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CDa-78-qtL">
-                                <rect key="frame" x="48" y="415" width="282" height="54"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="54" id="gV0-je-VWe"/>
-                                    <constraint firstAttribute="width" constant="282" id="nEP-as-IOe"/>
-                                </constraints>
-                                <connections>
-                                    <action selector="acceptInviteButtonTapped:" destination="HbG-gg-NFg" eventType="touchUpInside" id="IVB-lH-dso"/>
-                                    <segue destination="jU1-9O-B9Q" kind="show" identifier="guest" id="b4l-Y4-Bai"/>
-                                </connections>
-                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EYU-QH-hT4">
+                                <rect key="frame" x="0.0" y="295" width="375" height="372"/>
+                                <color key="backgroundColor" red="0.95686274510000002" green="0.95686274510000002" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="CDa-78-qtL" secondAttribute="trailing" constant="29" id="GIo-t8-f8f"/>
-                            <constraint firstItem="2Rn-1n-Bnz" firstAttribute="top" secondItem="CDa-78-qtL" secondAttribute="bottom" constant="198" id="PJJ-cv-7nL"/>
-                            <constraint firstItem="CDa-78-qtL" firstAttribute="leading" secondItem="NCd-xQ-Ee1" secondAttribute="leadingMargin" constant="32" id="y5g-pG-tHn"/>
+                            <constraint firstItem="2Rn-1n-Bnz" firstAttribute="top" secondItem="EYU-QH-hT4" secondAttribute="bottom" id="01t-fR-w8c"/>
+                            <constraint firstItem="EYU-QH-hT4" firstAttribute="width" secondItem="NCd-xQ-Ee1" secondAttribute="width" id="0sZ-Yh-rhJ"/>
+                            <constraint firstItem="EYU-QH-hT4" firstAttribute="centerX" secondItem="NCd-xQ-Ee1" secondAttribute="centerX" id="5Tw-zh-pDK"/>
+                            <constraint firstItem="EYU-QH-hT4" firstAttribute="top" secondItem="dOo-AJ-s6M" secondAttribute="bottom" constant="275" id="wwX-f8-dOy"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="inviteButton" destination="CDa-78-qtL" id="4mP-Hb-csm"/>
+                        <segue destination="jU1-9O-B9Q" kind="show" identifier="guest" id="sO7-Dr-UBW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-154" y="179"/>
+            <point key="canvasLocation" x="-226.40000000000001" y="178.56071964017991"/>
         </scene>
         <!--Main-->
         <scene sceneID="Mj5-Qc-aqg">
@@ -175,6 +168,6 @@
         <image name="Spotify_Icon_RGB_Green" width="170" height="170"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4Pg-RD-pGz"/>
+        <segue reference="sO7-Dr-UBW"/>
     </inferredMetricsTieBreakers>
 </document>

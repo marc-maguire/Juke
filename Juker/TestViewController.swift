@@ -600,10 +600,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         searchField.translatesAutoresizingMaskIntoConstraints = false
         searchFieldWidth = searchField.widthAnchor.constraint(equalTo: searchWrapper.widthAnchor, multiplier: 0.67, constant: 0)
         searchFieldWidth.isActive = true
-        searchFieldExpandedWidth = searchField.widthAnchor.constraint(equalTo: self.searchWrapper.widthAnchor, multiplier: 0.80, constant: 0)
+        searchFieldExpandedWidth = searchField.widthAnchor.constraint(equalTo: self.searchWrapper.widthAnchor, multiplier: 0.90, constant: 0)
         searchFieldExpandedWidth.isActive = false
         
-        let font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        let font = UIFont.systemFont(ofSize: 30, weight: UIFontWeightLight)
+        
+        searchField.textAlignment = .center
+        searchField.adjustsFontSizeToFitWidth = true
         
         searchField.font = font
         searchField.textColor = UIColor(red: 50.0/255, green: 50.0/255, blue: 50.0/255, alpha: 1.0)
@@ -659,6 +662,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.tapView.isUserInteractionEnabled = false
             self.searchFieldWidth.isActive = false
             self.searchFieldExpandedWidth.isActive = true
+            self.searchField.textAlignment = .left
             
             self.searchWrapperHeight.isActive = false
             self.searchWrapperExpandedBottomAnchor.isActive = true
@@ -677,6 +681,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             self.tapView.isUserInteractionEnabled = true
             self.searchFieldExpandedWidth.isActive = false
             self.searchFieldWidth.isActive = true
+            self.searchField.textAlignment = .center
             
             self.searchWrapperExpandedBottomAnchor.isActive = false
             self.searchWrapperHeight.isActive = true
@@ -741,8 +746,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
                 cell.trackNameLabel.text = filteredSongs[indexPath.row].title
                 cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
-                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-                cell.trackAlbumImage.image = UIImage(named: "kaytra")
+                if filteredSongs[indexPath.row].isExplicit {
+                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+                } else {
+                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
+                }
+                cell.trackAlbumImage.image = #imageLiteral(resourceName: "placeholder-rect")
                 cell.backgroundColor = resultsTable.backgroundColor
                 let imageURL = song.images[1]["url"] as! String
                 
@@ -792,8 +801,12 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //put it in here
             //watch out for cache size
             
-            cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
-            cell.trackAlbumImage.image = UIImage(named: "kaytra")
+            if song.isExplicit {
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+            } else {
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
+            }
+            cell.trackAlbumImage.image = #imageLiteral(resourceName: "placeholder-rect")
             cell.backgroundColor = playListTable.backgroundColor
             let imageURL = song.images[0]["url"] as! String
             
