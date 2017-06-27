@@ -11,15 +11,30 @@ import UIKit
 class UserTypeViewController: UIViewController {
     
     
-    @IBOutlet weak var inviteButton: UIButton!
+    
+    @IBOutlet weak var hostButton: UIButton!
+    
+    
+    @IBOutlet weak var hostPromptLabel: UILabel!
+    
     //when we load, if there are no invites, this should be invisible by default
     
+    @IBOutlet weak var dance: UIImageView!
 
     var session:SPTSession!
     var jukeBox: JukeBoxManager = JukeBoxManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hostButton.layer.cornerRadius = 25
+        
+        hostButton.layer.borderColor = UIColor.black.cgColor
+        
+        hostButton.layer.borderWidth = 0.5
+        
+//        dance.tintColor = UIColor.black
+//        dance.image = dance.image?.withRenderingMode(.alwaysTemplate)
         
 //       NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.updateInviteButtonWith(notification:)), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
        NotificationCenter.default.addObserver(self, selector: #selector(UserTypeViewController.beginSegue), name: NSNotification.Name(rawValue: "receivedInvite"), object: nil)
