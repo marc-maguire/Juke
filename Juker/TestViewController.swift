@@ -153,12 +153,30 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func cardSwipedRight(card: UIView) {
         //don't need the card parameter if we can remove it
+        //am I the host and if so have I already voted on the current song?
+        if self.jukeBox.isHost {
+            if currentlyPlayingSong.hasBeenVotedOnBy(peer: jukeBox.myPeerId.displayName) {
+                return
+            } else {
+                currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
+                incrementCurrentSongLikes()
+            }
+        }
         print("upvoted")
         incrementCurrentSongLikes()
     }
     
     func cardSwipedLeft(card: UIView) {
         //don't need the card parameter if we can remove it
+        
+        if self.jukeBox.isHost {
+            if currentlyPlayingSong.hasBeenVotedOnBy(peer: jukeBox.myPeerId.displayName) {
+                return
+            } else {
+                currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
+                incrementCurrentSongDislikes()
+            }
+        }
         print("downvoted")
         incrementCurrentSongDislikes()
     }
@@ -910,6 +928,15 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     return true
                 }
                 //send upvoted event
+                if self.jukeBox.isHost {
+                    let song: Song = self.trackArray[Int(index.row)]
+                    if song.hasBeenVotedOnBy(peer: self.jukeBox.myPeerId.displayName) {
+                        
+                    } else {
+                    song.voters.append(self.jukeBox.myPeerId.displayName)
+                    self.incrementLikesForSongAtIndex(index: Int(index.row))
+                }
+                }
                 self.incrementLikesForSongAtIndex(index: Int(index.row))
                 print("upvoted")
                 
@@ -933,6 +960,17 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     return true
                 }
                 //send downvotequeuedSong event
+                if self.jukeBox.isHost {
+                    let song: Song = self.trackArray[Int(index.row)]
+                    if song.hasBeenVotedOnBy(peer: self.jukeBox.myPeerId.displayName) {
+                        return true
+                    } else {
+                        song.voters.append(self.jukeBox.myPeerId.displayName)
+                        self.incrementDislikesForSongAtIndex(index: Int(index.row))
+                    }
+                }
+
+                
                 self.incrementDislikesForSongAtIndex(index: Int(index.row))
                 
                 print("downvoted")
@@ -1117,18 +1155,44 @@ extension TestViewController : JukeBoxManagerDelegate {
                 }
             case .currentSongLiked:
                 if  self.jukeBox.isHost {
-                    self.incrementCurrentSongLikes()
+                    if self.currentlyPlayingSong.hasBeenVotedOnBy(peer: event.sender) {
+                        print("you only get one vote")
+                        return
+                    } else {
+                      self.currentlyPlayingSong.voters.append(event.sender)
+                      self.incrementCurrentSongLikes()
+                    }
+                    
                 }
                 
             case .currentSongDisliked:
                 if  self.jukeBox.isHost {
+                    if self.self.currentlyPlayingSong.hasBeenVotedOnBy(peer: event.sender) {
+                        print("you only get one vote")
+                        return
+                    } else {
+                    self.currentlyPlayingSong.voters.append(event.sender)
                     self.incrementCurrentSongDislikes()
+                    }
                 }
             case .queuedSongLiked:
+                let song: Song = self.trackArray[event.index]
+                if song.hasBeenVotedOnBy(peer: event.sender) {
+                    print("you only get one vote")
+                    return
+                } else {
+                song.voters.append(event.sender)
                 self.incrementLikesForSongAtIndex(index: event.index)
-                
+                }
             case .queuedSongDisliked:
+                let song: Song = self.trackArray[event.index]
+                if song.hasBeenVotedOnBy(peer: event.sender) {
+                    print("you only get one vote")
+                    return
+                } else {
+                song.voters.append(event.sender)
                 self.incrementDislikesForSongAtIndex(index: event.index)
+                }
                 //                if self.jukeBox.isHost {
                 //                    let song: Song = self.trackArray[event.index]
                 //                    song.dislikes += 1

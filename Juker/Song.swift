@@ -20,7 +20,7 @@ class Song: NSObject, NSCoding {
     var images: [[String:AnyObject]]
     var likes: Int = 0
     var dislikes: Int = 0
-    var voters: [String] = []
+    var voters: [String]
     
     init(withDefaultString: String){
 
@@ -32,6 +32,7 @@ class Song: NSObject, NSCoding {
         self.images = [["default":"default" as AnyObject]]
         self.duration = TimeInterval(5)
         self.isExplicit = false
+        self.voters = ["default"]
     
     }
     
@@ -55,6 +56,7 @@ class Song: NSObject, NSCoding {
         self.duration = trackDict["duration_ms"] as! TimeInterval
         self.isExplicit = trackDict["explicit"] as! Bool
         self.images = images as! [[String:AnyObject]]
+        self.voters = ["default"]
         super.init()
         
     }
@@ -69,6 +71,7 @@ class Song: NSObject, NSCoding {
         self.isExplicit = aDecoder.decodeBool(forKey: "explicit")
         self.images = aDecoder.decodeObject(forKey: "images") as! [[String : AnyObject]]
         self.voters = aDecoder.decodeObject(forKey: "voters") as! [String]
+        
 
     }
     
@@ -82,6 +85,18 @@ class Song: NSObject, NSCoding {
         aCoder.encode(isExplicit, forKey: "explicit")
         aCoder.encode(images, forKey: "images")
         aCoder.encode(voters, forKey: "voters")
+    }
+    
+    func hasBeenVotedOnBy(peer: String) -> Bool {
+        if self.voters.count >= 1 {
+        if self.voters.contains(peer) {
+            return true
+        } else {
+            return false
+        }
+        } else {
+            return false
+        }
     }
     
 }
