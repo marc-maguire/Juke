@@ -159,7 +159,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             } else {
                 currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
-                incrementCurrentSongLikes()
+               
             }
         }
         print("upvoted")
@@ -174,7 +174,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             } else {
                 currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
-                incrementCurrentSongDislikes()
+               
             }
         }
         print("downvoted")
@@ -934,7 +934,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         
                     } else {
                     song.voters.append(self.jukeBox.myPeerId.displayName)
-                    self.incrementLikesForSongAtIndex(index: Int(index.row))
+//                    self.incrementLikesForSongAtIndex(index: Int(index.row))
                 }
                 }
                 self.incrementLikesForSongAtIndex(index: Int(index.row))
@@ -966,7 +966,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                         return true
                     } else {
                         song.voters.append(self.jukeBox.myPeerId.displayName)
-                        self.incrementDislikesForSongAtIndex(index: Int(index.row))
+//                        self.incrementDislikesForSongAtIndex(index: Int(index.row))
                     }
                 }
 
