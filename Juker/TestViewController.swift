@@ -159,8 +159,16 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             } else {
                 currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
-               
+                //network call to add to hosts personal spotify
             }
+        } else {
+            if currentlyPlayingSong.hasBeenVotedOnBy(peer: jukeBox.myPeerId.displayName) {
+            return
+
+            } else {
+                //network call to add to non hosts personal spotify
+            }
+        
         }
         print("upvoted")
         incrementCurrentSongLikes()
@@ -174,6 +182,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return
             } else {
                 currentlyPlayingSong.voters.append(jukeBox.myPeerId.displayName)
+                
                
             }
         }
@@ -182,19 +191,19 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func incrementCurrentSongLikes() {
-        if  jukeBox.isHost {
-            currentlyPlayingSong.likes += 1
-            //need to check if song should be added to liked array
-            if currentlyPlayingSong.likes >= 2 {
-                //append to likedSongs as long as likedSongs does not already contain it
-                if !likedSongs.contains(currentlyPlayingSong) {
-                    likedSongs.append(currentlyPlayingSong)
-                    print("Adding \(currentlyPlayingSong.title) to liked songs")
-                    print("\(likedSongs)")
-                }
-            }
-            print("song likes up 1")
-        } else {
+        if  !jukeBox.isHost {
+//            currentlyPlayingSong.likes += 1
+////            need to check if song should be added to liked array
+//            if currentlyPlayingSong.likes >= 2 {
+//                //append to likedSongs as long as likedSongs does not already contain it
+//                if !likedSongs.contains(currentlyPlayingSong) {
+//                    likedSongs.append(currentlyPlayingSong)
+//                    print("Adding \(currentlyPlayingSong.title) to liked songs")
+//                    print("\(likedSongs)")
+//                }
+//            }
+//            print("song likes up 1")
+//        } else {
             //send increase song likes event and host calls this method
             let event = Event(songAction: .currentSongLiked, song: currentlyPlayingSong, totalSongTime: Int(songTimer.totalSongTime), timeRemaining: songTimer.timeRemaining, timeElapsed: songTimer.timeElapsed, index: 0, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
             let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
@@ -221,16 +230,19 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func incrementLikesForSongAtIndex(index: Int) {
         if jukeBox.isHost {
             let song = trackArray[index]
-            song.likes += 1
-            if song.likes >= 2 {
-                //append to likedSongs as long as likedSongs does not already contain it
-                if !likedSongs.contains(song) {
-                    likedSongs.append(song)
-                    print("Adding \(song.title) to liked songs")
-                    print("\(likedSongs)")
-                }
-            }
+            //netowkr call for host to add song to spotify saved songs
+            
+//            song.likes += 1
+//            if song.likes >= 2 {
+//                //append to likedSongs as long as likedSongs does not already contain it
+//                if !likedSongs.contains(song) {
+//                    likedSongs.append(song)
+//                    print("Adding \(song.title) to liked songs")
+//                    print("\(likedSongs)")
+//                }
+//            }
         } else {
+        //network call for non host to add song to spotify saved songs
         let event = Event(songAction: .queuedSongLiked, song: currentlyPlayingSong, totalSongTime: 0, timeRemaining: 0, timeElapsed: 0, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
         let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
         jukeBox.send(event: newEvent as NSData)
