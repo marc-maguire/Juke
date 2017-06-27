@@ -147,6 +147,9 @@
                             <constraint firstItem="EYU-QH-hT4" firstAttribute="top" secondItem="dOo-AJ-s6M" secondAttribute="bottom" constant="275" id="wwX-f8-dOy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <segue destination="jU1-9O-B9Q" kind="show" identifier="guest" id="sO7-Dr-UBW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Loi-n4-AIp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -164,4 +167,7 @@
     <resources>
         <image name="Spotify_Icon_RGB_Green" width="170" height="170"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="sO7-Dr-UBW"/>
+    </inferredMetricsTieBreakers>
 </document>
