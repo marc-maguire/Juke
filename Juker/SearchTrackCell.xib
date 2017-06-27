@@ -6,41 +6,49 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TrackCell" rowHeight="135" id="KGk-i7-Jjw" customClass="SearchTrackCell" customModule="Juker" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="436" height="135"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TrackCell" rowHeight="67" id="KGk-i7-Jjw" customClass="SearchTrackCell" customModule="Juker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="436" height="67"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="436" height="134.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="436" height="66.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder-rect" translatesAutoresizingMaskIntoConstraints="NO" id="vy8-y7-M5W">
-                        <rect key="frame" x="8" y="17" width="100" height="100"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-rect" translatesAutoresizingMaskIntoConstraints="NO" id="vy8-y7-M5W">
+                        <rect key="frame" x="15" y="8" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="Zl1-HE-xyL"/>
+                            <constraint firstAttribute="height" constant="50" id="ik9-f4-v8U"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="589-PF-CwH">
-                        <rect key="frame" x="122" y="35" width="274" height="21"/>
+                        <rect key="frame" x="73" y="11" width="329" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0xw-4h-EBv">
-                        <rect key="frame" x="122" y="57" width="274" height="21"/>
+                        <rect key="frame" x="128" y="34" width="274" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explicit3" translatesAutoresizingMaskIntoConstraints="NO" id="bgS-8R-2Ql">
-                        <rect key="frame" x="228" y="35" width="21" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explicit-grey" translatesAutoresizingMaskIntoConstraints="NO" id="bgS-8R-2Ql">
+                        <rect key="frame" x="76" y="36" width="44" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="topMargin" secondItem="vy8-y7-M5W" secondAttribute="top" id="327-Dv-c3f"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="vy8-y7-M5W" secondAttribute="leading" constant="-7" id="xTI-eb-vil"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="explicitMarkerImage" destination="bgS-8R-2Ql" id="S6p-Qd-tMV"/>
@@ -48,11 +56,11 @@
                 <outlet property="trackArtistLabel" destination="0xw-4h-EBv" id="82k-Nd-LdB"/>
                 <outlet property="trackNameLabel" destination="589-PF-CwH" id="fa1-rh-R9F"/>
             </connections>
-            <point key="canvasLocation" x="-85" y="-49"/>
+            <point key="canvasLocation" x="-85" y="-96.5"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="explicit3" width="1002" height="1002"/>
+        <image name="explicit-grey" width="308" height="109"/>
         <image name="placeholder-rect" width="50" height="50"/>
     </resources>
 </document>

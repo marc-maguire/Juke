@@ -11,33 +11,33 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaylistCell" rowHeight="120" id="KGk-i7-Jjw" customClass="PlaylistTableCell" customModule="Juker" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="404" height="118"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaylistCell" rowHeight="96" id="KGk-i7-Jjw" customClass="PlaylistTableCell" customModule="Juker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="404" height="94"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="404" height="117.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="404" height="94"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder-rect" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-wj-5Mg">
-                        <rect key="frame" x="8" y="9" width="100" height="100"/>
+                        <rect key="frame" x="8" y="11" width="70" height="70"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7NH-nk-ea0">
-                        <rect key="frame" x="122" y="27" width="274" height="21"/>
+                        <rect key="frame" x="90" y="20" width="188" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Artist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXy-7D-zse">
-                        <rect key="frame" x="122" y="49" width="274" height="21"/>
+                        <rect key="frame" x="90" y="49" width="188" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explicit3" translatesAutoresizingMaskIntoConstraints="NO" id="3Pi-yO-00G">
-                        <rect key="frame" x="228" y="27" width="21" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explicit-grey" translatesAutoresizingMaskIntoConstraints="NO" id="3Pi-yO-00G">
+                        <rect key="frame" x="286" y="20" width="55" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
@@ -48,11 +48,11 @@
                 <outlet property="trackArtistLabel" destination="BXy-7D-zse" id="D0h-eO-Wk1"/>
                 <outlet property="trackNameLabel" destination="7NH-nk-ea0" id="ejI-sv-Rob"/>
             </connections>
-            <point key="canvasLocation" x="-79" y="-25"/>
+            <point key="canvasLocation" x="-79" y="-37"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="explicit3" width="1002" height="1002"/>
+        <image name="explicit-grey" width="308" height="109"/>
         <image name="placeholder-rect" width="50" height="50"/>
     </resources>
 </document>

@@ -635,6 +635,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         resultsTable.translatesAutoresizingMaskIntoConstraints = false
         resultsTable.isHidden = true
         
+        
+        
         let categoryNib = UINib(nibName: "SearchCategoryCell", bundle: nil)
         let trackNib = UINib(nibName: "SearchTrackCell", bundle: nil)
         
@@ -747,7 +749,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 cell.trackNameLabel.text = filteredSongs[indexPath.row].title
                 cell.trackArtistLabel.text = filteredSongs[indexPath.row].artist
                 if filteredSongs[indexPath.row].isExplicit {
-                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+                    cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit-grey")
                 } else {
                     cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
                 }
@@ -802,7 +804,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             //watch out for cache size
             
             if song.isExplicit {
-                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit3")
+                cell.explicitMarkerImage.image = #imageLiteral(resourceName: "explicit-grey")
             } else {
                 cell.explicitMarkerImage.image = #imageLiteral(resourceName: "placeholder-rect")
             }
@@ -907,13 +909,16 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch tableView {
         case resultsTable:
-            return 110
+            
+            
+            
+            return 90
             //        case playListTable:
             //
             //            return indexPath.row == 0 ? 0 : 120
             
         default:
-            return 120
+            return 90
         }
     }
     
