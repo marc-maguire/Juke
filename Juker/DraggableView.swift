@@ -38,9 +38,14 @@ class DraggableView: UIImageView {
         
         self.addGestureRecognizer(panGestureRecognizer)
         
-//                overlayView = OverlayView(frame: CGRect(x: self.frame.size.width/2-100, y: 0, width: 100, height: 100))
+//                overlayView = OverlayView(frame: self.frame)
 //                overlayView.alpha = 0
+//                overlayView.layer.masksToBounds = true
 //                self.addSubview(overlayView)
+//        
+//        self.bounds = super.frame
+//        self.frame = self.bounds
+//        self.layer.masksToBounds = true
         
         self.isUserInteractionEnabled = true
         
@@ -77,18 +82,19 @@ class DraggableView: UIImageView {
             let rotationStrength: CGFloat = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
             let rotationAngle = ROTATION_ANGLE * rotationStrength
             //let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
-            self.center = CGPoint(x: originPoint.x + xFromCenter, y: originPoint.y)
+            
             
             let transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
             //let scaleTransform = transform.scaledBy(x: CGFloat(scale), y: CGFloat(scale))
             self.transform = transform
-            //self.updateOverlay(distance: CGFloat(xFromCenter))
+            self.center.x = originPoint.x + xFromCenter
+            //self.updateOverlay(distance: xFromCenter)
         case UIGestureRecognizerState.ended:
             
             UIView.animate(withDuration: 0.2, animations: {() -> Void in
                 self.center = self.originPoint
                 self.transform = CGAffineTransform(rotationAngle: 0)
-                // self.overlayView.alpha = 0
+                //self.overlayView.alpha = 0
             })
 
             afterSwipeAction(offsetX: xFromCenter)

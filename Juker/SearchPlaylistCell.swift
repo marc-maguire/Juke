@@ -12,6 +12,7 @@ class SearchPlaylistCell: UITableViewCell {
 
     @IBOutlet weak var playlistNameLabel: UILabel!
     
+    @IBOutlet weak var playlistImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
