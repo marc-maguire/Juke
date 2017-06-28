@@ -57,7 +57,7 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchPlaylist", for: indexPath) as! SearchPlaylistCell
-        
+     
         let playlist = playlistArray[indexPath.row]
         
         cell.backgroundColor = tableView.backgroundColor
@@ -102,6 +102,10 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
 
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

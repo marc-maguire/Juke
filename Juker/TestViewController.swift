@@ -749,11 +749,14 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         switch tableView {
         case resultsTable:
             
+            
             if shouldShowCategories {
                 resultsTable.isScrollEnabled = false
                 let cell = resultsTable.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SearchCategoryCell
+                
                 cell.categoryNameLabel.text = addMusicOptions[indexPath.row]
                 cell.backgroundColor = resultsTable.backgroundColor
+                
                 
                 return cell
             } else {
@@ -924,15 +927,20 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
+        
         switch tableView {
+        
         case resultsTable:
             
+            if shouldShowCategories {
+                return 90
+            } else {
+                return 70
+            }
             
-            
+        case playListTable:
+
             return 90
-            //        case playListTable:
-            //
-            //            return indexPath.row == 0 ? 0 : 120
             
         default:
             return 90
