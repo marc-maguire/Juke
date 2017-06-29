@@ -965,7 +965,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             // reported issue of possible retain cycle in MGSwipeButton callback. Use [unowned self] if problem arises
             
-            let upvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "heart2"), backgroundColor: UIColor.init(red: 254.0/255, green: 46.0/255, blue: 83.0/255, alpha: 0), padding: 15, callback: { (sender) -> Bool in
+            let upvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "plus3"), backgroundColor: UIColor.init(red: 10.0/255, green: 197.0/255, blue: 2.0/255, alpha: 1.0), padding: 15, callback: { (sender) -> Bool in
                 guard let index = self.playListTable.indexPath(for: cell) else {
                     print("could not get indexduring upvote")
                     return true
@@ -988,9 +988,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return true
             })
             
-            if cell.swipeState == .swipingLeftToRight {
-                upvote.iconTintColor(UIColor.white)
-            }
+//            if cell.swipeState == .swipingLeftToRight {
+//                upvote.iconTintColor(UIColor.white)
+//            }
             
             //upvote.titleLabel?.font = font
             //expansionSettings.expansionColor = UIColor.init(red: 254.0/255, green: 46.0/255, blue: 83.0/255, alpha: 1.0)
@@ -998,7 +998,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             return [upvote]
         } else {
-            let downvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "dislikeHeart"), backgroundColor: UIColor(red: 47/255.0, green: 47/255.0, blue: 49/255.0, alpha: 0), padding: 15, callback: { (sender) -> Bool in
+            let downvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "x2"), backgroundColor: UIColor(red: 255/255.0, green: 0/255.0, blue: 58/255.0, alpha: 1.0), padding: 15, callback: { (sender) -> Bool in
                 
                 guard let index = self.playListTable.indexPath(for: cell) else {
                     print("could not get index during downvote")
