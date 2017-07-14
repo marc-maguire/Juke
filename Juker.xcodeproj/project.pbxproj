@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		189CE6ADF1AC812E2EF8718B /* Pods_Juker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */; };
+		92287C0A1F18EEF200246E7A /* screenshot in Resources */ = {isa = PBXBuildFile; fileRef = 92287C091F18EEF200246E7A /* screenshot */; };
 		9241B5271EF08C660059335C /* JukeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B5261EF08C660059335C /* JukeTableViewCell.swift */; };
 		9241B52D1EF1E2F40059335C /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52C1EF1E2F40059335C /* Playlist.swift */; };
 		9241B52F1EF309430059335C /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9241B52E1EF309430059335C /* PlaylistViewController.swift */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		4BB0DC9B43C315109EDC3DA3 /* Pods_Juker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Juker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		92287C091F18EEF200246E7A /* screenshot */ = {isa = PBXFileReference; lastKnownFileType = folder; path = screenshot; sourceTree = "<group>"; };
 		9241B5261EF08C660059335C /* JukeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeTableViewCell.swift; sourceTree = "<group>"; };
 		9241B52C1EF1E2F40059335C /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		9241B52E1EF309430059335C /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				D0C8A6D51EEC45A30058031D /* AppDelegate.swift */,
 				D0C8A6DF1EEC45A50058031D /* Assets.xcassets */,
 				D0C8A6E41EEC45A50058031D /* Info.plist */,
+				92287C091F18EEF200246E7A /* screenshot */,
 			);
 			path = Juker;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92287C0A1F18EEF200246E7A /* screenshot in Resources */,
 				D0709D9F1EF875B8003ED610 /* PlaylistTableCell.xib in Resources */,
 				D0AF20BF1EFB3A9400D34E56 /* SearchPlaylistCell.xib in Resources */,
 				D0C8A6E31EEC45A50058031D /* LaunchScreen.storyboard in Resources */,
@@ -536,7 +540,7 @@
 				INFOPLIST_FILE = Juker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker1;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -560,7 +564,7 @@
 				INFOPLIST_FILE = Juker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker1;
+				PRODUCT_BUNDLE_IDENTIFIER = alex.Juker2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Juker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;

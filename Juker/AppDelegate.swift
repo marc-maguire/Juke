@@ -23,20 +23,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         auth.sessionUserDefaultsKey = "current session"
         
         //if there is an active session - unarchive it and segue to userType VC, else show login vc to get a new session
-        if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
-            let sessionDataObj = sessionObj as! Data
-            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
-            
-            //set session on instantiated VC to be firstTimeSession
-            
-            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
-            let initialViewController : UserTypeViewController = mainStoryboard.instantiateViewController(withIdentifier: "userType") as! UserTypeViewController
-            initialViewController.session = firstTimeSession
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = initialViewController
-            self.window?.makeKeyAndVisible()
-            return true
-        }
+//        if let sessionObj:Any = UserDefaults.standard.object(forKey: "SpotifySession") as Any? {
+//            let sessionDataObj = sessionObj as! Data
+//            let firstTimeSession = NSKeyedUnarchiver.unarchiveObject(with: sessionDataObj) as! SPTSession
+//            
+//            //set session on instantiated VC to be firstTimeSession
+//            
+//            let mainStoryboard: UIStoryboard = UIStoryboard(name: "Login", bundle: nil)
+//            let initialViewController : UserTypeViewController = mainStoryboard.instantiateViewController(withIdentifier: "userType") as! UserTypeViewController
+//            initialViewController.session = firstTimeSession
+//            self.window = UIWindow(frame: UIScreen.main.bounds)
+//            self.window?.rootViewController = initialViewController
+//            self.window?.makeKeyAndVisible()
+//            return true
+//        }
 
         
         return true

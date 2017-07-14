@@ -6,24 +6,28 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaylistCell" rowHeight="96" id="KGk-i7-Jjw" customClass="PlaylistTableCell" customModule="Juker" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="404" height="94"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PlaylistCell" rowHeight="90" id="KGk-i7-Jjw" customClass="PlaylistTableCell" customModule="Juker" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="404" height="94"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="placeholder-rect" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-wj-5Mg">
-                        <rect key="frame" x="8" y="11" width="70" height="70"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder-rect" translatesAutoresizingMaskIntoConstraints="NO" id="W8l-wj-5Mg">
+                        <rect key="frame" x="8" y="10" width="70" height="70"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="70" id="hF5-hp-4hB"/>
+                            <constraint firstAttribute="width" constant="70" id="zwh-mJ-C0j"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Track Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7NH-nk-ea0">
-                        <rect key="frame" x="90" y="20" width="188" height="21"/>
+                        <rect key="frame" x="90" y="20" width="263" height="27"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <nil key="textColor"/>
@@ -37,10 +41,15 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="explicit-grey" translatesAutoresizingMaskIntoConstraints="NO" id="3Pi-yO-00G">
-                        <rect key="frame" x="286" y="20" width="55" height="21"/>
+                        <rect key="frame" x="298" y="49" width="55" height="21"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="W8l-wj-5Mg" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="0de-l8-eSm"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="W8l-wj-5Mg" secondAttribute="leading" id="6h9-gh-oRb"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="explicitMarkerImage" destination="3Pi-yO-00G" id="GOD-EM-DRB"/>
@@ -48,7 +57,7 @@
                 <outlet property="trackArtistLabel" destination="BXy-7D-zse" id="D0h-eO-Wk1"/>
                 <outlet property="trackNameLabel" destination="7NH-nk-ea0" id="ejI-sv-Rob"/>
             </connections>
-            <point key="canvasLocation" x="-79" y="-37"/>
+            <point key="canvasLocation" x="-79.5" y="-37"/>
         </tableViewCell>
     </objects>
     <resources>

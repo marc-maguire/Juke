@@ -24,9 +24,11 @@ class OverlayView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
-        imageView = UIImageView(image: #imageLiteral(resourceName: "heart2"))
+        self.backgroundColor = UIColor.black
+        imageView = UIImageView(image: #imageLiteral(resourceName: "plus"))
+        imageView.layer.masksToBounds = true
         self.addSubview(imageView)
+        layoutSubviews()
     }
     
     func setMode(mode: GGOverlayViewMode) -> Void {
@@ -38,13 +40,12 @@ class OverlayView: UIView{
         if _mode == GGOverlayViewMode.GGOverlayViewModeLeft {
             imageView.image = #imageLiteral(resourceName: "dislikeHeart")
         } else {
-            imageView.image = #imageLiteral(resourceName: "heart2")
+            imageView.image = #imageLiteral(resourceName: "plus")
         }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        imageView.frame = CGRect(x: 50, y: 50, width: 100, height: 100)
-        
+        imageView.frame = self.frame
     }
 }
