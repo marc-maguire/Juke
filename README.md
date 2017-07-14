@@ -1,5 +1,8 @@
 Juker
 
+[development]: https://github.com/marcmaguire/Juke/tree/development
+**Note: On a day to day basis, [development] will be the most up-to-date branch.
+
 Lighthouse Labs Final Project - By Marc Maguire and Alex Mitchell
 
 Timeline:
@@ -31,3 +34,6 @@ Moving forward:
 based on the flow they choose when using the app (hosting a party or joining an existing one) currently this communication is handled
 through an event object that we pass between all connected users. This doesn't follow proper programming principles and the first
 thing I will be doing after we are done presenting is refactoring this logic to conform to the State pattern.
+
+### Screenshot:
+![screenshot](screenshot/juker_screenshot.png)
