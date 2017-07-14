@@ -1,6 +1,6 @@
 Juker
 
-[development]: https://github.com/marcmaguire/Juke/tree/development
+[development]: https://github.com/marc-maguire/Juke/tree/development
 **Note: On a day to day basis, [development] will be the most up-to-date branch.
 
 Lighthouse Labs Final Project - By Marc Maguire and Alex Mitchell
