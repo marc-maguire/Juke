@@ -2,6 +2,7 @@ Juker
 
 [development]: https://github.com/marc-maguire/Juke/tree/development
 **Note: On a day to day basis, [development] will be the most up-to-date branch.
+- App will not build if cloned. We have kept the Spotify Key private. You will need to add your own .swift file that includes redirect URL and a ClientID strings. Our app references a configCreds file, but this file is not included on Github.
 
 Lighthouse Labs Final Project - By Marc Maguire and Alex Mitchell
 
