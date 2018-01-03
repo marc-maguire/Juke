@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Omk-3F-Lga">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Omk-3F-Lga">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -14,7 +14,7 @@
         <!--Test View Controller-->
         <scene sceneID="ce8-WI-Cpx">
             <objects>
-                <viewController id="Omk-3F-Lga" customClass="TestViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Omk-3F-Lga" customClass="TestViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jmu-jH-Iq2"/>
                         <viewControllerLayoutGuide type="bottom" id="jTZ-y4-k39"/>
@@ -159,7 +159,7 @@
         <!--Playlist View Controller-->
         <scene sceneID="GFQ-qh-2EO">
             <objects>
-                <viewController id="bqk-Op-qFt" customClass="PlaylistViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="playlistViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="bqk-Op-qFt" customClass="PlaylistViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ovl-fe-RvW"/>
                         <viewControllerLayoutGuide type="bottom" id="Stt-8b-vZZ"/>
@@ -176,7 +176,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="74"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m7L-Ro-Qra" id="Ncy-w8-yzc">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="74"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="73.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -214,7 +214,7 @@
         <!--Song View Controller-->
         <scene sceneID="vTp-kA-2Ci">
             <objects>
-                <viewController id="7I0-Qy-wGC" customClass="SongViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="songViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7I0-Qy-wGC" customClass="SongViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mau-gl-FQA"/>
                         <viewControllerLayoutGuide type="bottom" id="MAe-OH-jg2"/>
@@ -231,7 +231,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="72"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gu1-wI-OE2" id="ZCh-qB-d5Z">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
