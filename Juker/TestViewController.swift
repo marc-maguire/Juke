@@ -70,6 +70,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var filteredSongs = [Song]()
     var addMusicOptions = ["Playlists", "Recommendation", "Saved Music", "Recently Played"]
     var selectedSong: Song?
+	private var lastSong: Song?
     
     
     //MARK: - Album Main View Image Properties
@@ -260,6 +261,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let song = trackArray[index]
             song.dislikes += 1
             if song.dislikes >= 2 {
+				self.keepLastSong()
                 trackArray.remove(at: index)
                 let event = Event(songAction: .removeQueuedSong, song: song, totalSongTime: 1, timeRemaining: 1, timeElapsed: 1, index: index, playbackState: "Play", sender: jukeBox.myPeerId.displayName)
                 let newEvent = NSKeyedArchiver.archivedData(withRootObject: event)
@@ -272,6 +274,13 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         jukeBox.send(event: newEvent as NSData)
         }
     }
+	
+	func keepLastSong() {
+		//if the playist finishes, we will continue playing the final song until new ones are added
+		if self.trackArray.count == 1 {
+			self.lastSong = self.trackArray.last
+		}
+	}
     
     //MARK: - Song Player State Handling
     
@@ -289,6 +298,10 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         guard let firstSong = trackArray.first else {
             print("No Song")
             //can handle no song in here
+			//get a song and add to track array then call hostPlayNextSong again
+			//keep a record of the old songs
+			guard let lastSong = self.lastSong else { return }
+			self.trackArray.append(lastSong)
             return
         }
         
@@ -950,7 +963,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: - MGSwipeTableCell Methods
     
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
-        swipeSettings.transition = MGSwipeTransition.clipCenter
+//        swipeSettings.transition = MGSwipeTransition.clipCenter
+		swipeSettings.transition = MGSwipeTransition.drag
         swipeSettings.keepButtonsSwiped = false
         expansionSettings.buttonIndex = 0
         expansionSettings.threshold = 1.0
@@ -998,6 +1012,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             return [upvote]
         } else {
+			//memory leak with closure?
             let downvote = MGSwipeButton(title: "", icon: #imageLiteral(resourceName: "x2"), backgroundColor: UIColor(red: 255/255.0, green: 0/255.0, blue: 58/255.0, alpha: 1.0), padding: 15, callback: { (sender) -> Bool in
                 
                 guard let index = self.playListTable.indexPath(for: cell) else {
@@ -1139,6 +1154,7 @@ extension TestViewController : JukeBoxManagerDelegate {
                 self.trackArray.append(event.song)
                 
             case .removeSong:
+				//this isn't doing anything
                 print("remove Song")
                 
             case .togglePlay:
@@ -1271,6 +1287,7 @@ extension TestViewController: SongTimerDelegate {
     }
     
     func songDidEnd() {
+		self.keepLastSong()
         if  jukeBox.isHost {
             hostPlayNextSong()
         }
