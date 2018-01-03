@@ -33,7 +33,7 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
     @IBOutlet weak var loginButtonWrapper: UIView!
 
     @IBOutlet weak var slideButton: UIImageView!
-    
+	
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,20 +44,20 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         print("button max X: \(slideButton.frame.maxX)")
         print("button min X: \(slideButton.frame.minX)")
         
-        originPoint = slideButton.center
-        beginPointX = loginButtonWrapper.bounds.origin.x
-        endPointX = loginButtonWrapper.bounds.size.width
+//        originPoint = slideButton.center
+//        beginPointX = loginButtonWrapper.bounds.origin.x
+//        endPointX = loginButtonWrapper.bounds.size.width
+		
         
-        
-        let p1 = CGPoint(x: welcomeWrapper.bounds.origin.x, y: welcomeWrapper.bounds.origin.y + 2)
-        let p2 = CGPoint(x: welcomeWrapper.bounds.width, y: welcomeWrapper.bounds.origin.y + 2)
-        let controlP = CGPoint(x: welcomeWrapper.bounds.width / 2, y: welcomeWrapper.bounds.origin.y - 120)
-        
+		let p1 = CGPoint(x: 0, y: welcomeWrapper.bounds.origin.y)
+		let p2 = CGPoint(x: self.view.frame.width, y: welcomeWrapper.bounds.origin.y)
+		let controlP = CGPoint(x: self.view.frame.width / 2, y: welcomeWrapper.bounds.origin.y - 120)
+
         slideButtonLeadAnchor = slideButton.leadingAnchor.constraint(equalTo: loginButtonWrapper.leadingAnchor, constant: 0)
         slideButtonLeadAnchor.isActive = true
         
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
-        
+		
         loginButtonWrapper.layer.cornerRadius = 35
         
         slideButton.layer.cornerRadius = 35
@@ -89,7 +89,6 @@ class LoginViewController: UIViewController,SPTAudioStreamingDelegate, SPTAudioS
         layer.strokeColor = welcomeWrapper.layer.backgroundColor
         layer.fillColor = welcomeWrapper.layer.backgroundColor
         layer.lineWidth = 1
-        
         let path = UIBezierPath()
         
         path.move(to: startPoint)

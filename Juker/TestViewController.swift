@@ -1047,9 +1047,9 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func setupQuadCurve() {
         // At some point, will make jukeView a custom UIView Class that will initialize a quadcurve upon setup and attach gesture capabilties
         
-        let p1 = CGPoint(x: jukeView.bounds.origin.x, y: jukeView.bounds.origin.y + 2)
-        let p2 = CGPoint(x: jukeView.bounds.width, y: jukeView.bounds.origin.y + 2)
-        let controlP = CGPoint(x: jukeView.bounds.width / 2, y: jukeView.bounds.origin.y - 120)
+        let p1 = CGPoint(x: 0, y: jukeView.bounds.origin.y)
+        let p2 = CGPoint(x: self.view.frame.width, y: jukeView.bounds.origin.y)
+        let controlP = CGPoint(x: self.view.frame.width / 2, y: jukeView.bounds.origin.y - 120)
         addCurve(startPoint: p1, endPoint: p2, controlPoint: controlP)
     }
     
