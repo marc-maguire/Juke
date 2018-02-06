@@ -35,7 +35,7 @@ class Event: NSObject, NSCoding {
 //    }
 
 
-
+	//should be optionals and set to nil if not needed
     var songAction: SongAction
     var song: Song
     var totalSongTime: Int

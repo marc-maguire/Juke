@@ -87,7 +87,7 @@ class UserTypeViewController: UIViewController {
         //go to the tableViewController
         
     }
-   
+   //this is where we will need to instantiate our handler object.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "host" {
             let dvc = segue.destination as! TestViewController
@@ -95,8 +95,6 @@ class UserTypeViewController: UIViewController {
             jukeBox.isHost = true
             dvc.jukeBox = jukeBox
             dvc.session = session
-            
-            
         }
         if segue.identifier == "guest" {
             let dvc = segue.destination as! TestViewController
