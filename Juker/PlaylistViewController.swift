@@ -87,9 +87,9 @@ class PlaylistViewController: UIViewController, UITableViewDelegate, UITableView
                     // Store the image in to our cache
                     self.imageCache[imageURL] = image
                     // Update the cell
-                    DispatchQueue.main.async(execute: {
+                    DispatchQueue.main.async {
                         cell.playlistImageView.image = image
-                    })
+                    }
                 }
                 else {
                     print("Uh Oh")

@@ -47,7 +47,7 @@ class SongTimer {
         }
     }
     
-    func pauseTimer() {
+    func toggleTimer() {
         self.delegate?.syncResumeTapped(resumeTapped: resumeTapped)
         if self.resumeTapped == false {
             countDownTimer.invalidate()

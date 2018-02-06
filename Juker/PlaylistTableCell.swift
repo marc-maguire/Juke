@@ -13,11 +13,8 @@ class PlaylistTableCell: MGSwipeTableCell {
 
     
     @IBOutlet weak var trackArtistLabel: UILabel!
-
     @IBOutlet weak var trackAlbumImage: UIImageView!
-    
     @IBOutlet weak var trackNameLabel: UILabel!
-    
     @IBOutlet weak var explicitMarkerImage: UIImageView!
 
     override func awakeFromNib() {
