@@ -708,7 +708,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
             }
         case playListTable:
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
             let song: Song = trackArray[indexPath.row]
             
             cell.delegate = self
