@@ -31,10 +31,8 @@ Moving forward:
 
 - Add a backend to our app that would communicate with Spotify servers to refresh our access tokens. Currently the tokens are
   only good for 60 minutes.
-- One of the biggest difficulties with building the app was managing user state. A user has to act as either a host or a guest
-based on the flow they choose when using the app (hosting a party or joining an existing one) currently this communication is handled
-through an event object that we pass between all connected users. This doesn't follow proper programming principles and the first
-thing I will be doing after we are done presenting is refactoring this logic to conform to the State pattern.
+- Fix remaining high priority issues in the tracker.
+- Submit to the App Store!
 
 ### Screenshot:
 ![screenshot](Juker/screenshot/juker_screenshot.png)
