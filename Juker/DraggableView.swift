@@ -11,6 +11,7 @@ import UIKit
 protocol DraggableViewDelegate {
     func cardSwipedLeft(card: UIView) -> Void
     func cardSwipedRight(card: UIView) -> Void
+	func updateCenterXConstant(withFloat float: CGFloat)
 }
 
 class DraggableView: UIImageView {
@@ -32,75 +33,48 @@ class DraggableView: UIImageView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(beingDragged(gestureRecognizer:)))
-        
-        
         self.addGestureRecognizer(panGestureRecognizer)
-        
-//                overlayView = OverlayView(frame: self.frame)
-//                overlayView.alpha = 0
-//                overlayView.layer.masksToBounds = true
-//                self.addSubview(overlayView)
-//        
-//        self.bounds = super.frame
-//        self.frame = self.bounds
-//        self.layer.masksToBounds = true
-        
         self.isUserInteractionEnabled = true
-        
-        
-//        xFromCenter = 0
-//        yFromCenter = 0
-        self.originPoint = self.center
-        print("successful init")
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        
     }
     
     func setupView() -> Void {
         self.layer.cornerRadius = 4;
         self.layer.shadowRadius = 3;
         self.layer.shadowOpacity = 0.2;
-        //self.layer.shadowOffset = CGSize(1,1);
     }
     
     func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
-        xFromCenter = gestureRecognizer.translation(in: self).x
-        yFromCenter = gestureRecognizer.translation(in: self).y
+		
+		xFromCenter = gestureRecognizer.translation(in: self).x
         
         switch gestureRecognizer.state {
-        case UIGestureRecognizerState.began:
-            print("pan began")
-        case UIGestureRecognizerState.changed:
-            print("pan changed")
-            print(xFromCenter)
-            let rotationStrength: CGFloat = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
-            let rotationAngle = ROTATION_ANGLE * rotationStrength
-            //let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
-            
-            
-            let transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
-            //let scaleTransform = transform.scaledBy(x: CGFloat(scale), y: CGFloat(scale))
-            self.transform = transform
-            self.center.x = originPoint.x + xFromCenter
-            //self.updateOverlay(distance: xFromCenter)
-        case UIGestureRecognizerState.ended:
-            
-            UIView.animate(withDuration: 0.2, animations: {() -> Void in
-                self.center = self.originPoint
-                self.transform = CGAffineTransform(rotationAngle: 0)
-                //self.overlayView.alpha = 0
-            })
-
-            afterSwipeAction(offsetX: xFromCenter)
- 
-        case UIGestureRecognizerState.possible:
-            print("possible")
+		case UIGestureRecognizerState.began:
+			print("pan began")
+		case UIGestureRecognizerState.changed:
+			print("pan changed")
+			print(xFromCenter)
+			let rotationStrength: CGFloat = min(xFromCenter/ROTATION_STRENGTH, ROTATION_MAX)
+			let rotationAngle = ROTATION_ANGLE * rotationStrength
+			let transform = CGAffineTransform(rotationAngle: CGFloat(rotationAngle))
+			self.transform = transform
+			self.delegate.updateCenterXConstant(withFloat: xFromCenter)
+		case UIGestureRecognizerState.ended:
+			self.delegate.updateCenterXConstant(withFloat: 0)
+			UIView.animate(withDuration: 0.2, animations: {() -> Void in
+				
+				self.transform = CGAffineTransform(rotationAngle: 0)
+				
+			})
+			
+			afterSwipeAction(offsetX: xFromCenter)
+			
+		case UIGestureRecognizerState.possible:
+			print("possible")
             fallthrough
         case UIGestureRecognizerState.cancelled:
             print("cancelled")

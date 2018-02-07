@@ -22,8 +22,8 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-    private var playlistImageCache = [String: UIImage]()
-    
+	
+	private var playlistImageCache = [String: UIImage]()
     private var auth = SPTAuth.defaultInstance()!
     var session:SPTSession! {
         didSet {
@@ -80,6 +80,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: - Album Main View Image Properties
     @IBOutlet weak private var jukeView: UIView!
     @IBOutlet weak private var albumImage: DraggableView!
+	@IBOutlet weak var albumImageCenterXConstant: NSLayoutConstraint!
     @IBOutlet weak private var jukeHeight: NSLayoutConstraint!
     private var originalHeight: CGFloat!
     private var expandedHeight: Bool!
@@ -138,10 +139,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: - User Voting Methods
 	
-	func cardSwipedRight(card: UIView) {
-		self.handleLikeAction()
-	}
-	
 	private func handleLikeAction() {
 		guard !self.currentlyPlayingSong.hasBeenVotedOnBy(peer: jukeBox.myPeerId.displayName) else { return }
 		
@@ -155,12 +152,6 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
 	
 	fileprivate func handleLikeEvent() {
 		self.currentlyPlayingSong.likes += 1
-	}
-	
-
-    
-    func cardSwipedLeft(card: UIView) {
-		self.handleDislikeAction()
 	}
 	
 	private func handleDislikeAction() {
@@ -446,7 +437,26 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.jukeBox.send(event: newEvent as NSData)
         
     }
-    
+	//MARK: - Draggable View Delegate Methods
+	
+	func cardSwipedLeft(card: UIView) {
+		self.handleDislikeAction()
+	}
+	
+	func cardSwipedRight(card: UIView) {
+		self.handleLikeAction()
+	}
+	
+	func updateCenterXConstant(withFloat float: CGFloat) {
+		if float != 0 {
+			self.albumImageCenterXConstant.constant = float
+		} else {
+			UIView.animate(withDuration: 0.2) {
+				self.albumImageCenterXConstant.constant = float
+				self.view.layoutIfNeeded()
+			}
+		}
+	}
     
     // MARK: - TextField Delegate Methods
     
@@ -708,7 +718,7 @@ class TestViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 
             }
         case playListTable:
-            let cell = self.tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PlaylistCell", for: indexPath) as! PlaylistTableCell
             let song: Song = trackArray[indexPath.row]
             
             cell.delegate = self
