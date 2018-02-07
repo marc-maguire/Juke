@@ -1,5 +1,5 @@
 //
-//  TestViewController.swift
+//  JukeViewController.swift
 //  Juker
 //
 //  Created by Alex Mitchell on 2017-06-16.
@@ -11,7 +11,7 @@ import MGSwipeTableCell
 import PlaybackButton
 
 
-class TestViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate, DraggableViewDelegate {
+class JukeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SPTAudioStreamingDelegate, SPTAudioStreamingPlaybackDelegate, MGSwipeTableCellDelegate, UITextFieldDelegate, DraggableViewDelegate {
     
     //MARK: - Properties
     
@@ -989,7 +989,7 @@ extension UIViewController {
     }
 }
 
-extension TestViewController : JukeBoxManagerDelegate {
+extension JukeViewController : JukeBoxManagerDelegate {
     
     func connectedDevicesChanged(manager: JukeBoxManager, connectedDevices: [String]) {
         OperationQueue.main.addOperation {
@@ -1092,7 +1092,7 @@ extension TestViewController : JukeBoxManagerDelegate {
     }
 }
 
-extension TestViewController: SongTimerDelegate {
+extension JukeViewController: SongTimerDelegate {
     
     func progressBarNeedsUpdate() {
         self.updateProgressBar()

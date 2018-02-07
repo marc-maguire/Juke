@@ -90,14 +90,14 @@ class UserTypeViewController: UIViewController {
    //this is where we will need to instantiate our handler object.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "host" {
-            let dvc = segue.destination as! TestViewController
+            let dvc = segue.destination as! JukeViewController
             dvc.isNewUser = false
             jukeBox.isHost = true
             dvc.jukeBox = jukeBox
             dvc.session = session
         }
         if segue.identifier == "guest" {
-            let dvc = segue.destination as! TestViewController
+            let dvc = segue.destination as! JukeViewController
             dvc.jukeBox = jukeBox
             dvc.session = session
             //session is not set because no playing

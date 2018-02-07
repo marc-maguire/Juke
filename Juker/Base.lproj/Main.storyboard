@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Test View Controller-->
+        <!--Juke View Controller-->
         <scene sceneID="ce8-WI-Cpx">
             <objects>
-                <viewController storyboardIdentifier="mainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Omk-3F-Lga" customClass="TestViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mainViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Omk-3F-Lga" customClass="JukeViewController" customModule="Juker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jmu-jH-Iq2"/>
                         <viewControllerLayoutGuide type="bottom" id="jTZ-y4-k39"/>

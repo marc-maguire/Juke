@@ -19,7 +19,7 @@
 		92F2D10A1EF9FDD100C4C434 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92F2D1091EF9FDD100C4C434 /* Login.storyboard */; };
 		92F2D10E1EF9FE0D00C4C434 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F2D10D1EF9FE0D00C4C434 /* LoginViewController.swift */; };
 		92F2D1101EF9FE1500C4C434 /* UserTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92F2D10F1EF9FE1500C4C434 /* UserTypeViewController.swift */; };
-		D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D0681EF45E9900A2E525 /* TestViewController.swift */; };
+		D014D0691EF45E9900A2E525 /* JukeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D0681EF45E9900A2E525 /* JukeViewController.swift */; };
 		D014D06B1EF49CFD00A2E525 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06A1EF49CFD00A2E525 /* DraggableView.swift */; };
 		D014D06D1EF4A17900A2E525 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D014D06C1EF4A17900A2E525 /* OverlayView.swift */; };
 		D0709D9E1EF875B8003ED610 /* PlaylistTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */; };
@@ -59,7 +59,7 @@
 		92F2D10F1EF9FE1500C4C434 /* UserTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTypeViewController.swift; sourceTree = "<group>"; };
 		AD016FAE10147DFADBEA8590 /* Pods-Juker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.release.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.release.xcconfig"; sourceTree = "<group>"; };
 		BEAAFAC2D84E18B07F7BE268 /* Pods-Juker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Juker.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Juker/Pods-Juker.debug.xcconfig"; sourceTree = "<group>"; };
-		D014D0681EF45E9900A2E525 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		D014D0681EF45E9900A2E525 /* JukeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JukeViewController.swift; sourceTree = "<group>"; };
 		D014D06A1EF49CFD00A2E525 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		D014D06C1EF4A17900A2E525 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		D0709D9C1EF875B8003ED610 /* PlaylistTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableCell.swift; sourceTree = "<group>"; };
@@ -158,7 +158,7 @@
 				9241B5301EF3094C0059335C /* SongViewController.swift */,
 				92F2D10D1EF9FE0D00C4C434 /* LoginViewController.swift */,
 				92F2D10F1EF9FE1500C4C434 /* UserTypeViewController.swift */,
-				D014D0681EF45E9900A2E525 /* TestViewController.swift */,
+				D014D0681EF45E9900A2E525 /* JukeViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -396,7 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0AF20BE1EFB3A9400D34E56 /* SearchPlaylistCell.swift in Sources */,
-				D014D0691EF45E9900A2E525 /* TestViewController.swift in Sources */,
+				D014D0691EF45E9900A2E525 /* JukeViewController.swift in Sources */,
 				D09105FC1EEF5F4E00AD29BB /* Song.swift in Sources */,
 				D0709D9E1EF875B8003ED610 /* PlaylistTableCell.swift in Sources */,
 				9248BB261F014C710016B95D /* Unwindable.swift in Sources */,
