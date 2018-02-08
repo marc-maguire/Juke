@@ -39,23 +39,30 @@ class Song: NSObject, NSCoding {
     init?(trackDict: [String:AnyObject]) {
         
         
-        guard let album = trackDict["album"], let artists = album["artists"] as? [[String:AnyObject]], let images = album["images"] else {
+        guard let album = trackDict["album"], let artists = album["artists"] as? [[String:AnyObject]], let images = album["images"], let title = trackDict["name"] as? String, let songURI = trackDict["uri"] as? String, let albumURI = album["uri"] as? String, let duration = trackDict["duration_ms"] as? TimeInterval, let unwrappedImages = images as? [[String:AnyObject]] else {
             return nil
         }
         
-        self.title = trackDict["name"] as! String
-        //sometimes we are getting nil here
+        self.title = title
         if let artist = artists.first?["name"] {
         self.artist = artist as! String
         } else {
-            self.artist = "DJ No Name"
+            self.artist = "N/A"
         }
-        self.songURI = trackDict["uri"] as! String
-        self.album = album["name"] as! String
-        self.albumURI = album["uri"] as! String
-        self.duration = trackDict["duration_ms"] as! TimeInterval
-        self.isExplicit = trackDict["explicit"] as! Bool
-        self.images = images as! [[String:AnyObject]]
+        self.songURI = songURI
+		if let album = album["name"] as? String {
+			self.album = album
+		} else {
+			self.album = "N/A"
+		}
+        self.albumURI = albumURI
+        self.duration = duration
+		if let isExplicit = trackDict["explicit"] as? Bool {
+			self.isExplicit = isExplicit
+		} else {
+			self.isExplicit = false
+		}
+        self.images = unwrappedImages
         self.voters = ["default"]
         super.init()
         

@@ -93,11 +93,10 @@ class DataManager {
                 var searchArray = [Song]()
 
                 for item in items {
-
-                    let song = Song(trackDict: item)
-
-                    searchArray.append(song!)
-
+					
+					if let song = Song(trackDict: item) {
+						searchArray.append(song)
+					}
                 }
                 completionArray(searchArray)
                 print(searchArray)
