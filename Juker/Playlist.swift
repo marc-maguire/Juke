@@ -17,15 +17,16 @@ class Playlist: NSObject {
     var image: String
     
     
-    init(jsonDictionary: [String:AnyObject]) {
-        
-        let owner = jsonDictionary["owner"] as! [String : AnyObject]
-        let images = jsonDictionary["images"] as! [[String : AnyObject]]
-        
-        self.name = jsonDictionary["name"] as! String
-        self.trackRequestURL = jsonDictionary["href"] as! String
-        self.playlistID = jsonDictionary["id"] as! String
-        self.ownerID = owner["id"] as! String
-        self.image = images.first?["url"] as! String
+    init?(jsonDictionary: [String:AnyObject]) {
+		//Spotify API sometimes returns bad data that causes crashes on random songs where the JSON is not formatted properly
+		guard let owner = jsonDictionary["owner"] as? [String : AnyObject], let images = jsonDictionary["images"] as? [[String : AnyObject]], let name = jsonDictionary["name"] as? String, let trackRequestURL = jsonDictionary["href"] as? String, let playlistID = jsonDictionary["id"] as? String, let ownerID = owner["id"] as? String, let image = images.first?["url"] as? String else {
+			print("Spotify Playlist API returned bad data")
+			return nil
+		}
+        self.name = name
+        self.trackRequestURL = trackRequestURL
+        self.playlistID = playlistID
+        self.ownerID = ownerID
+        self.image = image
     }
 }

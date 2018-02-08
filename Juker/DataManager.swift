@@ -147,12 +147,12 @@ class DataManager {
                 let items = data["items"] as! [[String:AnyObject]]
 
                 for item in items {
-
-                    let playlist = Playlist(jsonDictionary: item)
-
-                    playlistArray.append(playlist)
-                    completionArray(playlistArray)
+					
+					if let playlist = Playlist(jsonDictionary: item) {
+						playlistArray.append(playlist)
+					}
                 }
+				completionArray(playlistArray)
                 print(data)
             }
         }
