@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="nGr-sN-DSE">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -90,7 +90,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="u0l-io-oMN" firstAttribute="top" secondItem="vqn-CG-bfq" secondAttribute="bottom" id="412-pV-sSP"/>
+                            <constraint firstAttribute="bottom" secondItem="vqn-CG-bfq" secondAttribute="bottom" id="412-pV-sSP"/>
                             <constraint firstItem="vqn-CG-bfq" firstAttribute="width" secondItem="zsU-98-oDH" secondAttribute="width" id="4hj-pG-TV3"/>
                             <constraint firstItem="vqn-CG-bfq" firstAttribute="top" secondItem="Omo-ev-3n2" secondAttribute="bottom" constant="275" id="947-AU-yv6"/>
                             <constraint firstItem="vqn-CG-bfq" firstAttribute="centerX" secondItem="zsU-98-oDH" secondAttribute="centerX" id="xPV-DQ-kCe"/>
@@ -125,9 +125,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kEu-KN-XhJ">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kEu-KN-XhJ">
                                 <rect key="frame" x="93" y="537" width="188" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="188" id="kQf-BT-d9D"/>
+                                    <constraint firstAttribute="width" secondItem="kEu-KN-XhJ" secondAttribute="height" multiplier="94:25" id="yvE-41-nQ6"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Start">
                                     <color key="titleColor" red="0.23735216698670747" green="0.23735216698670747" blue="0.23735216698670747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -137,14 +140,20 @@
                                     <segue destination="jU1-9O-B9Q" kind="show" identifier="host" id="4Pg-RD-pGz"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="party" translatesAutoresizingMaskIntoConstraints="NO" id="VKX-Gx-IWZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="party" translatesAutoresizingMaskIntoConstraints="NO" id="VKX-Gx-IWZ">
                                 <rect key="frame" x="49" y="56" width="277" height="313"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="277" id="TJm-ta-3nk"/>
+                                    <constraint firstAttribute="width" secondItem="VKX-Gx-IWZ" secondAttribute="height" multiplier="277:313" id="xAc-oj-1Xb"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pc2-nL-cEl">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pc2-nL-cEl">
                                 <rect key="frame" x="76" y="318" width="222" height="143"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="222" id="D2i-p1-33c"/>
+                                    <constraint firstAttribute="width" secondItem="pc2-nL-cEl" secondAttribute="height" multiplier="222:143" id="k21-Q1-ZXS"/>
+                                </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="Hmm! There appears to be no active parties right now. Go ahead and create one yourself">
                                         <attributes>
@@ -158,6 +167,14 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431369999995" green="0.99215686270000003" blue="0.55294117649999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="kEu-KN-XhJ" firstAttribute="centerX" secondItem="NCd-xQ-Ee1" secondAttribute="centerX" id="8xu-mf-F8H"/>
+                            <constraint firstItem="VKX-Gx-IWZ" firstAttribute="centerX" secondItem="NCd-xQ-Ee1" secondAttribute="centerX" id="Dlu-Eh-3S9"/>
+                            <constraint firstItem="pc2-nL-cEl" firstAttribute="centerX" secondItem="NCd-xQ-Ee1" secondAttribute="centerX" id="OOx-hb-4Gw"/>
+                            <constraint firstItem="2Rn-1n-Bnz" firstAttribute="top" secondItem="kEu-KN-XhJ" secondAttribute="bottom" constant="80" id="aPf-3L-4Cw"/>
+                            <constraint firstItem="VKX-Gx-IWZ" firstAttribute="top" secondItem="dOo-AJ-s6M" secondAttribute="bottom" constant="36" id="cqn-Ny-fUU"/>
+                            <constraint firstItem="pc2-nL-cEl" firstAttribute="top" secondItem="VKX-Gx-IWZ" secondAttribute="bottom" constant="-51" id="eRR-Ff-hyX"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="dance" destination="VKX-Gx-IWZ" id="t8Q-VO-RYS"/>

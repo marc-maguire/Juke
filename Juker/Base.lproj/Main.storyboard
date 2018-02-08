@@ -30,7 +30,7 @@
                                 </constraints>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSu-bR-tyR">
-                                <rect key="frame" x="0.0" y="400" width="375" height="267"/>
+                                <rect key="frame" x="0.0" y="382" width="375" height="285"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gCQ-Rm-K0A">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="124"/>
@@ -108,7 +108,7 @@
                                     <constraint firstItem="eJG-7l-Ipq" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="Asm-Rn-hmt"/>
                                     <constraint firstItem="dKE-fl-gxv" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="EqH-Vj-wwX"/>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="top" secondItem="hSu-bR-tyR" secondAttribute="top" id="HSE-5L-nuB"/>
-                                    <constraint firstAttribute="height" constant="267" id="IAJ-HI-xvC"/>
+                                    <constraint firstAttribute="height" constant="285" id="IAJ-HI-xvC"/>
                                     <constraint firstItem="gCQ-Rm-K0A" firstAttribute="centerX" secondItem="hSu-bR-tyR" secondAttribute="centerX" id="mWc-tD-pmP"/>
                                 </constraints>
                                 <connections>
@@ -121,7 +121,7 @@
                         <constraints>
                             <constraint firstItem="ZQW-Of-urC" firstAttribute="width" secondItem="KXt-gA-Pox" secondAttribute="width" multiplier="0.67" id="5f9-n5-vcM"/>
                             <constraint firstItem="ZQW-Of-urC" firstAttribute="top" secondItem="jmu-jH-Iq2" secondAttribute="bottom" constant="121" id="AB8-yn-Hig"/>
-                            <constraint firstItem="jTZ-y4-k39" firstAttribute="top" secondItem="hSu-bR-tyR" secondAttribute="bottom" id="LB0-fg-PDW"/>
+                            <constraint firstAttribute="bottom" secondItem="hSu-bR-tyR" secondAttribute="bottom" id="LB0-fg-PDW"/>
                             <constraint firstItem="hSu-bR-tyR" firstAttribute="centerX" secondItem="KXt-gA-Pox" secondAttribute="centerX" id="OKD-up-UhT"/>
                             <constraint firstItem="ZQW-Of-urC" firstAttribute="centerX" secondItem="KXt-gA-Pox" secondAttribute="centerX" id="fXL-yC-mb6"/>
                             <constraint firstItem="hSu-bR-tyR" firstAttribute="width" secondItem="KXt-gA-Pox" secondAttribute="width" id="wUR-th-NvE"/>
